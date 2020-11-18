@@ -119,7 +119,7 @@ Model() {
     //Стороны треугольника
     public void sideAll(Circle o1, Circle o2, Circle o3, Line l1, Line l2, Text t){
     //Угол
-    System.out.println(angleTriangle(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY()));
+    double angleABC=angleTriangle(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
     //Вот сюда добавить метод для расчета смещения букв от вершины
         mestopolojenie(o1,o2,o3);
         VertexGo(o1);
