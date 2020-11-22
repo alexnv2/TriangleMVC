@@ -48,7 +48,7 @@ public class  Controller extends View {
     coordinatesX.setCellValueFactory(new TreeItemPropertyValueFactory<>("propCoordX"));
     coordinatesY.setCellValueFactory(new TreeItemPropertyValueFactory<>("propCoordY"));
     angle.setCellValueFactory(new TreeItemPropertyValueFactory<>("propAngle"));
-    var rootItem=new TreeItem<>(new PropTreangleGroup("Корень"));
+    var rootItem=new TreeItem<>(new PropTreangleGroup("..."));
     rootItem.setExpanded(true);
     var group1=new TreeItem<>(new PropTreangleGroup("Вершины треугольника"));
     group1.setExpanded(true);
