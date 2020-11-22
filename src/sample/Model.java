@@ -1,8 +1,10 @@
 package sample;
 
+import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+
 import java.util.LinkedList;
 import java.util.List;
 import static java.lang.StrictMath.*;
@@ -16,21 +18,56 @@ class Model implements  Observable {
     private Text textGo;
     private Line colorLine;
     private String ColorGo;
+    private Arc arcGo;
     private double verX;
     private double verY;
     private double verX1;
     private double verY1;
     private double dx,dy;//смещение букв
+    private double arcRadius;//радиус дуги
+    private double angleStart;//начало дуги гр.
+    private double angleLength;//длина дуги гр.
 
-Model() {
-    observers = new LinkedList<>();
+    //Конструктор
+Model(){
+    observers=new LinkedList<>();
 }
-//регистрация слушателя
+
+    //Список переменных для представления View
+    //Заносятся переменные для переменные для View
+    void setVerX(double s){verX=s;}//координаты вершины от мышки
+    void setVerY(double s){verY=s;}
+    void setVerX1(double s){verX1=s;}//2 координата для сотороны
+    void setVerY1(double s){verY1=s;}
+    void setColorGo(String c) {ColorGo = c; }//цвет
+    void setDx(double s){dx=s;}//смещение букв
+    void setDy(double s){dy=s;}
+    void setArcRadius(double s) {arcRadius = s;}//радиус дуги
+    void setAngleStart(double s) {angleStart = s;}//начало дуги
+    void setAngleLength(double s) {angleLength = s;}//конец дуги
+
+    //Отдаются переменные для View
+    Line getSideAll(){return sideAll;} //Объекты линия
+    Circle getVerTex() {return  vertex;} //Точка
+    Text getTextGo(){return textGo;} //Буквы
+    Line getColorLine(){return  colorLine;} //Цвет для линий
+    Arc getArcGo(){return arcGo;}// Дуги
+    double getVerX(){return verX;}
+    double getVerY(){return verY;}
+    double getVerX1(){return  verX1;}
+    double getVerY1(){return  verY1;}
+    double getDx(){return  dx;}
+    double getDy() {return dy;}
+    public double getArcRadius() {return arcRadius;}//радиус дуги
+    public double getAngleStart() {return angleStart;}//начало дуги Х
+    public double getAngleLength() {return angleLength;}//длина дуги Y
+
+    //регистрация слушателя
     @Override
     public void registerObserver(Observer o) {
-    observers.add(o);
+        observers.add(o);
     }
-//уведомление слушателя
+    //уведомление слушателя
     @Override
     public void notifyObservers(String message) {
         for (Observer observer : observers) {
@@ -118,9 +155,7 @@ Model() {
     }
     //Стороны треугольника
     public void sideAll(Circle o1, Circle o2, Circle o3, Line l1, Line l2, Text t){
-    //Угол
-    double angleABC=angleTriangle(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
-    //Вот сюда добавить метод для расчета смещения букв от вершины
+       //Вот сюда добавить метод для расчета смещения букв от вершины
         mestopolojenie(o1,o2,o3);
         VertexGo(o1);
         TextGo(t);
@@ -131,13 +166,35 @@ Model() {
         setVerY1(o3.getCenterY());
         SideGo(l2);
     }
+    //Рисуем дуги
+    public void arcVertex(Circle o1, Circle o2, Circle o3,Arc a1){
+        double angleABC=angleTriangle(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
+        setAngleLength(angleABC);
+        setArcRadius(30);
+        double arcLight=angleTriangle(o1.getCenterX(),o1.getCenterY(), o1.getCenterX()+200, o1.getCenterY(), o3.getCenterX(), o3.getCenterY());
+
+        if(o1.getCenterY()<o3.getCenterY()){
+            arcLight=360-arcLight;
+        }
+       /* if(o1.getCenterX()>o3.getCenterX()){
+            arcLight=180-arcLight;
+        }
+
+        */
+
+        setAngleStart(arcLight);
+        setVerX(o1.getCenterX());
+        setVerY(o1.getCenterY());
+     //   System.out.println(angleABC+" "+arcLight);
+        ArcGo(a1);
+    }
+
     //Нахождение углов в треугольнике АВС координаты А, В, С
     private double angleTriangle(double x1, double y1, double x2, double y2, double x3, double y3){
     double ab=distance(x1,y1,x2,y2);
     double ac=distance(x1,y1,x3,y3);
     double bc=distance(x2,y2,x3,y3);
     return toDegrees(acos((pow(ab,2)+pow(ac,2)-pow(bc,2))/(2*ab*ac)));
-
     }
 
     private void mestopolojenie(Circle o1, Circle o2, Circle o3){
@@ -224,7 +281,7 @@ Model() {
         middlePerpendicular(o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY(), o4.getCenterX(),o4.getCenterY());
         VertexGo(o5);
     }
-    //Задаем операцию
+    //Задаем операцию для View
     //Перемещение вершин треугольника
     void VertexGo(Circle o){
         vertex=o;
@@ -245,35 +302,12 @@ Model() {
         colorLine=c;
         notifyObservers("ColorGo");
     }
-//Хранятся переменные
-   void setVerX(double s){
-    verX=s;
-   }
-   void setVerY(double s){
-    verY=s;
-   }
-   void  setVerX1(double s){verX1=s;}
-   void  setVerY1(double s){verY1=s;}
-   void setColorGo(String c) {ColorGo = c; }
-   void setDx(double s){dx=s;}
-   void setDy(double s){dy=s;}
-//Отдаются переменные
-    Line getSideAll(){return sideAll;}
-    Circle getVerTex() {
-    return  vertex;
+    //Дуги
+    void ArcGo(Arc o){
+        arcGo=o;
+        notifyObservers("ArcGo");
     }
-    Text getTextGo(){return textGo;}
-    Line getColorLine(){return  colorLine;}
-    double getVerX(){
-    return verX;
-    }
-    double getVerY(){
-        return verY;
-    }
-    double getVerX1(){return  verX1;}
-    double getVerY1(){return  verY1;}
-    double getDx(){return  dx;}
-    double getDy() {return dy;}
+
 
 }
 

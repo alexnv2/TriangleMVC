@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <MenuBar VBox.vgrow="NEVER">
         <Menu mnemonicParsing="false" text="Медианы">
             <CheckMenuItem fx:id="menuMedianaA" accelerator="Ctrl+N" mnemonicParsing="false" onAction="#onClickMedianaA" selected="false" text="Из угла А" />
@@ -35,133 +42,131 @@
     </MenuBar>
 
     <Pane fx:id="BP">
-        <Circle fx:id="iC" fill="TRANSPARENT" stroke="Red" strokeWidth="2" visible="false"/>
-        <Circle fx:id="ic" fill="darkred" radius="5" strokeWidth="2" visible="false"/>
-        <Circle fx:id="vc" fill="#ae7777" radius="5" strokeWidth="2" visible="false"/>
-        <Circle fx:id="vC" fill="TRANSPARENT" stroke="Blue" strokeWidth="2" visible="false"/>
+        <Arc fx:id="arcA" fill="TRANSPARENT"  stroke="BLUE" type="OPEN" />
+        <Arc fx:id="arcB" fill="TRANSPARENT"  stroke="RED" type="OPEN" />
+        <Arc fx:id="arcC" fill="TRANSPARENT"  stroke="GREEN" type="OPEN" />
+        <Circle fx:id="iC" fill="TRANSPARENT" stroke="Red" strokeWidth="2" visible="false" />
+        <Circle fx:id="ic" fill="darkred" radius="5" strokeWidth="2" visible="false" />
+        <Circle fx:id="vc" fill="#ae7777" radius="5" strokeWidth="2" visible="false" />
+        <Circle fx:id="vC" fill="TRANSPARENT" stroke="Blue" strokeWidth="2" visible="false" />
 
-        <Circle fx:id="A" centerX="50" centerY="200" fill="blue" onMouseDragExited="#mouseDragExited"
-                onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed"
-                onMouseReleased="#mouseReleased" radius="5"/>
-        <Circle fx:id="B" centerX="100" centerY="50" fill="RED" onMouseDragExited="#mouseDragExited"
-                onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed"
-                onMouseReleased="#mouseReleased" radius="5"/>
-        <Circle fx:id="C" centerX="200" centerY="200" fill="green" onMouseDragExited="#mouseDragExited"
-                onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed"
-                onMouseReleased="#mouseReleased" radius="5"/>
-        <Line fx:id="a" endX="200" endY="200" startX="100.0" startY="50.0" stroke="Black" strokeWidth="2.0"/>
-        <Line fx:id="b" endX="200" endY="200" startX="50" startY="200" stroke="Black" strokeWidth="2.0"/>
-        <Line fx:id="c" endX="100.0" endY="51.0" startX="50" startY="200" stroke="Black" strokeWidth="2.0"/>
+        <Circle fx:id="A" centerX="50" centerY="200" fill="blue" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
+        <Circle fx:id="B" centerX="100" centerY="50" fill="RED" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
+        <Circle fx:id="C" centerX="200" centerY="200" fill="green" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
+        <Line fx:id="a" endX="200" endY="200" startX="100.0" startY="50.0" stroke="Black" strokeWidth="2.0" />
+        <Line fx:id="b" endX="200" endY="200" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
+        <Line fx:id="c" endX="100.0" endY="51.0" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
 
-        <Circle fx:id="mA" fill="cornflowerblue" radius="5" visible="false"/>
-        <Line fx:id="ma"/>
-        <Circle fx:id="mB" fill="cornflowerblue" radius="5" visible="false"/>
-        <Line fx:id="mb"/>
-        <Circle fx:id="mC" fill="cornflowerblue" radius="5" visible="false"/>
-        <Line fx:id="mc"/>
+        <Circle fx:id="mA" fill="cornflowerblue" radius="5" visible="false" />
+        <Line fx:id="ma" />
+        <Circle fx:id="mB" fill="cornflowerblue" radius="5" visible="false" />
+        <Line fx:id="mb" />
+        <Circle fx:id="mC" fill="cornflowerblue" radius="5" visible="false" />
+        <Line fx:id="mc" />
 
-        <Circle fx:id="hA" fill="silver" radius="5" visible="false"/>
-        <Line fx:id="ha"/>
-        <Circle fx:id="hB" fill="silver" radius="5" visible="false"/>
-        <Line fx:id="hb"/>
-        <Circle fx:id="hC" fill="silver" radius="5" visible="false"/>
-        <Line fx:id="hc"/>
+        <Circle fx:id="hA" fill="silver" radius="5" visible="false" />
+        <Line fx:id="ha" />
+        <Circle fx:id="hB" fill="silver" radius="5" visible="false" />
+        <Line fx:id="hb" />
+        <Circle fx:id="hC" fill="silver" radius="5" visible="false" />
+        <Line fx:id="hc" />
 
-        <Circle fx:id="bA" fill="purple" radius="5" visible="false"/>
-        <Line fx:id="ba"/>
-        <Circle fx:id="bB" fill="purple" radius="5" visible="false"/>
-        <Line fx:id="bb"/>
-        <Circle fx:id="bC" fill="purple" radius="5" visible="false"/>
-        <Line fx:id="bic"/>
+        <Circle fx:id="bA" fill="purple" radius="5" visible="false" />
+        <Line fx:id="ba" />
+        <Circle fx:id="bB" fill="purple" radius="5" visible="false" />
+        <Line fx:id="bb" />
+        <Circle fx:id="bC" fill="purple" radius="5" visible="false" />
+        <Line fx:id="bic" />
 
-        <Line fx:id="spa"/>
-        <Line fx:id="spb"/>
-        <Line fx:id="spc"/>
+        <Line fx:id="spa" />
+        <Line fx:id="spb" />
+        <Line fx:id="spc" />
 
         <Text fx:id="poindA" strokeType="OUTSIDE" strokeWidth="0.0" text="A" x="30" y="200">
             <font>
-                <Font size="18.0"/>
+                <Font size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindB" strokeType="OUTSIDE" strokeWidth="0.0" text="B" x="100" y="40">
             <font>
-                <Font size="18.0"/>
+                <Font size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindC" strokeType="OUTSIDE" strokeWidth="0.0" text="C" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindE" strokeType="OUTSIDE" strokeWidth="0.0" text="E" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindD" strokeType="OUTSIDE" strokeWidth="0.0" text="D" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindF" strokeType="OUTSIDE" strokeWidth="0.0" text="F" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindG" strokeType="OUTSIDE" strokeWidth="0.0" text="G" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindH" strokeType="OUTSIDE" strokeWidth="0.0" text="H" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindI" strokeType="OUTSIDE" strokeWidth="0.0" text="I" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindJ" strokeType="OUTSIDE" strokeWidth="0.0" text="J" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindK" strokeType="OUTSIDE" strokeWidth="0.0" text="K" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindL" strokeType="OUTSIDE" strokeWidth="0.0" text="L" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindO" strokeType="OUTSIDE" strokeWidth="0.0" text="O" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindS" strokeType="OUTSIDE" strokeWidth="0.0" text="S" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindM" strokeType="OUTSIDE" strokeWidth="0.0" text="M" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindN" strokeType="OUTSIDE" strokeWidth="0.0" text="N" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
         <Text fx:id="poindP" strokeType="OUTSIDE" strokeWidth="0.0" text="P" visible="false" x="210" y="200">
             <font>
-                <Font name="Times New Roman" size="18.0"/>
+                <Font name="Times New Roman" size="18.0" />
             </font>
         </Text>
+
     </Pane>
 </VBox>

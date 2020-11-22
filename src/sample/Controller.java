@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -15,7 +16,8 @@ public class  Controller extends View {
     public Line a, b, c, ma, mb, mc, ha, hb, hc, ba, bb, bic, spa, spb, spc;
     public Text poindA, poindB, poindC,poindE,poindD,poindF, poindG, poindH, poindI;
     public Text poindJ,poindK,poindL, poindO, poindS, poindM, poindN, poindP;
-
+   @FXML
+    public Arc arcA, arcB, arcC;
     public CheckMenuItem menuMedianaA, menuMedianaB, menuMedianaC;
     public CheckMenuItem menuHigthA, menuHigthB, menuHigthC;
     public CheckMenuItem menuBisectorA, menuBisectorB, menuBisectorC;
@@ -216,18 +218,34 @@ public class  Controller extends View {
     public void mouseDraggen(MouseEvent mouseEvent) {
         model.setVerX(mouseEvent.getSceneX());
         model.setVerY(mouseEvent.getSceneY());
+
+
         //Стороны
         if (mouseEvent.getSource() == A) {
             model.sideAll(A,B,C,c,b,poindA);
+            //дуги
+            model.arcVertex(A,B,C,arcA);
+            model.arcVertex(B,C, A, arcB);
+            model.arcVertex(C, A, B, arcC);
             model.setColorGo("RED");
             model.ColorGo(a);
 
         }
         if (mouseEvent.getSource() == B) {
             model.sideAll(B,A,C,c,a,poindB);
+           //дуги
+            model.arcVertex(B,C, A, arcB);
+            model.arcVertex(C, A, B, arcC);
+            model.arcVertex(A,B,C,arcA);
+
         }
         if (mouseEvent.getSource() == C) {
             model.sideAll(C,A,B,b,a,poindC);
+            //дуги
+            model.arcVertex(C, A, B, arcC);
+            model.arcVertex(A,B,C,arcA);
+            model.arcVertex(B,C, A, arcB);
+
         }
         //Медианы
         if(menuMedianaA.isSelected()) {
