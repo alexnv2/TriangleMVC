@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.scene.control.TableView;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -19,6 +20,8 @@ class Model implements  Observable {
     private Line colorLine;
     private String ColorGo;
     private Arc arcGo;
+    private TableView mTableView;
+
     private double verX;
     private double verY;
     private double verX1;
@@ -46,12 +49,15 @@ Model(){
     void setAngleStart(double s) {angleStart = s;}//начало дуги
     void setAngleLength(double s) {angleLength = s;}//конец дуги
 
+
     //Отдаются переменные для View
     Line getSideAll(){return sideAll;} //Объекты линия
     Circle getVerTex() {return  vertex;} //Точка
     Text getTextGo(){return textGo;} //Буквы
     Line getColorLine(){return  colorLine;} //Цвет для линий
     Arc getArcGo(){return arcGo;}// Дуги
+    TableView getTableView(){return mTableView;}
+
     double getVerX(){return verX;}
     double getVerY(){return verY;}
     double getVerX1(){return  verX1;}
@@ -197,7 +203,7 @@ Model(){
     return toDegrees(acos((pow(ab,2)+pow(ac,2)-pow(bc,2))/(2*ab*ac)));
     }
 
-    private void mestopolojenie(Circle o1, Circle o2, Circle o3){
+    public void mestopolojenie(Circle o1, Circle o2, Circle o3){
     double dx1=o1.getCenterX()-o2.getCenterX();
     double dx2=o1.getCenterX()-o3.getCenterX();
     double dy1=o1.getCenterY()-o2.getCenterY();
@@ -307,7 +313,10 @@ Model(){
         arcGo=o;
         notifyObservers("ArcGo");
     }
-
+    void tableGo(TableView o){
+        mTableView=o;
+        notifyObservers("tableGo");
+    }
 
 }
 

@@ -2,11 +2,11 @@ package sample;
 
 public class PropTreangle {
     private String propVert;
-    private String propCoordX;
-    private String propCoordY;
-    private String propAngle;
+    private double propCoordX;
+    private double propCoordY;
+    private double propAngle;
 
-    public PropTreangle(String propVert, String propCoordX,String propCoordY, String propAngle){
+    public PropTreangle(String propVert, double propCoordX,double propCoordY, double propAngle){
         this.propVert=propVert;
         this.propCoordX=propCoordX;
         this.propCoordY=propCoordY;
@@ -18,32 +18,25 @@ public class PropTreangle {
     public String getPropVert() {
         return propVert;
     }
-
     public void setPropVert(String propVert) {
         this.propVert = propVert;
     }
-
-    public String getPropCoordX() {
+    public double getPropCoordX() {
         return propCoordX;
     }
-
-    public void setPropCoordX(String propCoordX) {
+    public void setPropCoordX(double propCoordX) {
         this.propCoordX = propCoordX;
     }
-
-    public String getPropCoordY() {
+    public double getPropCoordY() {
         return propCoordY;
     }
-
-    public void setPropCoordY(String propCoordY) {
+    public void setPropCoordY(double propCoordY) {
         this.propCoordY = propCoordY;
     }
-
-    public String getPropAngle() {
+    public double getPropAngle() {
         return propAngle;
     }
-
-    public void setPropAngle(String propAngle) {
+    public void setPropAngle(double propAngle) {
         this.propAngle = propAngle;
     }
 }

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -14,12 +16,17 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <BorderPane prefHeight="326.0" prefWidth="640.0">
       <top>
           <MenuBar BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" text="Треугольники">
+                  <RadioMenuItem fx:id="menuOxygon" mnemonicParsing="false" onAction="#onClickOxygon" text="Остроугольные"  selected="true"/>
+                  <RadioMenuItem fx:id="menuObtuse" mnemonicParsing="false" onAction="#onClickObtuse" text="Тупоугольные" />
+                  <RadioMenuItem fx:id="menuRegular" mnemonicParsing="false" onAction="#onClickRegular" text="Прямоугольные" />
+                  <RadioMenuItem fx:id="menuIsosceles" mnemonicParsing="false" onAction="#onClickIsosceles" text="Равнобедренные" />
+                  <RadioMenuItem fx:id="menuEquilateral" mnemonicParsing="false" onAction="#onClickEquilateral" text="Равносторонние" />
+              </Menu>
               <Menu mnemonicParsing="false" text="Медианы">
                   <CheckMenuItem fx:id="menuMedianaA" accelerator="Ctrl+N" mnemonicParsing="false" onAction="#onClickMedianaA" selected="false" text="Из угла А" />
                   <CheckMenuItem fx:id="menuMedianaB" accelerator="Ctrl+O" mnemonicParsing="false" onAction="#onClickMedianaB" selected="false" text="Из угла В" />
@@ -179,10 +186,10 @@
           </Pane>
       </center>
       <right>
-         <TableView fx:id="TableTreangle" prefHeight="301.0" prefWidth="290.0" BorderPane.alignment="CENTER">
+         <TableView fx:id="TableTreangle" prefHeight="301.0" prefWidth="212.0" BorderPane.alignment="CENTER">
            <columns>
 
-             <TableColumn fx:id="vertex" prefWidth="65.0" text="Вершина" />
+             <TableColumn fx:id="vertex" prefWidth="65.0" text="Углы треугольника" />
              <TableColumn fx:id="coordinates" prefWidth="102.0" text="Координаты">
                   <columns>
                      <TableColumn fx:id="coordinatesX" prefWidth="46.0" text="X" />
@@ -191,6 +198,9 @@
                </TableColumn>
                <TableColumn fx:id="angle" prefWidth="56.0" text="Угол гр." />
            </columns>
+            <BorderPane.margin>
+               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            </BorderPane.margin>
          </TableView>
       </right>
    </BorderPane>

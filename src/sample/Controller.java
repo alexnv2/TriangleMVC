@@ -1,7 +1,7 @@
 package sample;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -13,14 +13,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
-public class  Controller extends View {
+public class  Controller<group> extends View {
+
     private int accMedianaA=0;//счетчик для точек для медиан  и середииных перепендикуляров
     private int accMedianaB=0;
     private int accMedianaC=0;
     private int accCircle=0;//счетчик для центра вписанной окружности и серединного перпендикуляра
-    //Для таблицы свойств треугольника
-    private ObservableList<PropTreangle> propView = FXCollections.observableArrayList();
-
     @FXML
     public Circle A, B, C, mA, mB, mC, hA, hB, hC, bA, bB, bC, iC, ic, vc, vC;
     public Line a, b, c, ma, mb, mc, ha, hb, hc, ba, bb, bic, spa, spb, spc;
@@ -33,6 +31,8 @@ public class  Controller extends View {
     public CheckMenuItem menuBisectorA, menuBisectorB, menuBisectorC;
     public CheckMenuItem menuMiddlePerpendicularAB, menuMiddlePerpendicularBC, menuMiddlePerpendicularAC;
     public CheckMenuItem menuCircleIn, menuCircleOut;
+    public RadioMenuItem menuOxygon, menuObtuse, menuRegular, menuIsosceles, menuEquilateral;
+
     public Pane BP;
     //Таблица свойств
     @FXML
@@ -40,28 +40,39 @@ public class  Controller extends View {
     @FXML
     public TableColumn<PropTreangle, String> vertex;
     @FXML
-    public TableColumn<PropTreangle, String> coordinatesX;
+    public TableColumn<PropTreangle, Double> coordinatesX;
     @FXML
-    public TableColumn<PropTreangle, String> coordinatesY;
+    public TableColumn<PropTreangle, Double> coordinatesY;
     @FXML
-    public TableColumn<PropTreangle, String> angle;
+    public TableColumn<PropTreangle, Double> angle;
+    private ObservableList<PropTreangle> propView;
+
     @FXML
     private void initialize(){
-//Реализация интерфейса обратного вызова для заполнения колонок таблицы
+        //Реализация радиоменю
+        ToggleGroup group = new ToggleGroup();
+        menuOxygon.setToggleGroup(group);
+        menuObtuse.setToggleGroup(group);
+        menuRegular.setToggleGroup(group);
+        menuIsosceles.setToggleGroup(group);
+        menuEquilateral.setToggleGroup(group);
+        //onClickOxygon();
+    //Реализация интерфейса обратного вызова для заполнения колонок таблицы
+    initData();
     vertex.setCellValueFactory(new PropertyValueFactory<>("propVert"));
     coordinatesX.setCellValueFactory(new PropertyValueFactory<>("propCoordX"));
     coordinatesY.setCellValueFactory(new PropertyValueFactory<>("propCoordY"));
     angle.setCellValueFactory(new PropertyValueFactory<>("propAngle"));
         //Добавление списка и выделение первой стоки
-        TableTreangle.setItems(propView);
+        TableTreangle.setItems(super.propView);
         //Заполнение списка полей
-        initData();
+
     }
 
     private void initData() {
-        propView.add(new PropTreangle("A","100","100","60"));
-        propView.add(new PropTreangle("A","100","100","60"));
-        propView.add(new PropTreangle("A","100","100","60"));
+        super.propView.add(new PropTreangle("A",A.getCenterX(),A.getCenterY(),60));
+        super.propView.add(new PropTreangle("B",B.getCenterX(),B.getCenterY(),60));
+        super.propView.add(new PropTreangle("C",C.getCenterX(),C.getCenterY(),60));
     }
 
     public void onClickMedianaA() {
@@ -71,6 +82,7 @@ public class  Controller extends View {
             mA.setVisible(true);
             poindD.setVisible(true);
             model.median(B,C,A,mA,ma,poindD);
+
         }else {
             ma.setVisible(false);
             accMedianaA--;
@@ -297,7 +309,9 @@ public class  Controller extends View {
     public void mouseDraggen(MouseEvent mouseEvent) {
         model.setVerX(mouseEvent.getSceneX());
         model.setVerY(mouseEvent.getSceneY());
-
+        super.propView.set(0, new PropTreangle("A",A.getCenterX(),A.getCenterY(),arcA.getLength()));
+        super.propView.set(1, new PropTreangle("B",B.getCenterX(),B.getCenterY(),arcB.getLength()));
+        super.propView.set(2, new PropTreangle("C",C.getCenterX(),C.getCenterY(),arcC.getLength()));
 
         //Стороны
         if (mouseEvent.getSource() == A) {
@@ -308,7 +322,7 @@ public class  Controller extends View {
             model.arcVertex(C, A, B, arcC);
             model.setColorGo("RED");
             model.ColorGo(a);
-
+            model.tableGo(TableTreangle);
         }
         if (mouseEvent.getSource() == B) {
             model.sideAll(B,A,C,c,a,poindB);
@@ -316,7 +330,7 @@ public class  Controller extends View {
             model.arcVertex(B,C, A, arcB);
             model.arcVertex(C, A, B, arcC);
             model.arcVertex(A,B,C,arcA);
-
+            model.tableGo(TableTreangle);
         }
         if (mouseEvent.getSource() == C) {
             model.sideAll(C,A,B,b,a,poindC);
@@ -324,7 +338,7 @@ public class  Controller extends View {
             model.arcVertex(C, A, B, arcC);
             model.arcVertex(A,B,C,arcA);
             model.arcVertex(B,C, A, arcB);
-
+            model.tableGo(TableTreangle);
         }
         //Медианы
         if(menuMedianaA.isSelected()) {
@@ -407,5 +421,90 @@ public class  Controller extends View {
         C.setMouseTransparent(false);
         C.setCursor(Cursor.DEFAULT);
         mouseEvent.consume();
+
+    }
+    //Виды треугольников
+    //Остроугольный
+    public void onClickOxygon(ActionEvent actionEvent) {
+       model.setVerX(280);
+       model.setVerY(320);
+       model.VertexGo(A);
+       model.mestopolojenie(A,B,C);
+       model.TextGo(poindA);
+       model.setVerX1(460);
+       model.setVerY1(70);
+       model.SideGo(c);
+       model.setVerX1(560);
+       model.setVerY1(290);
+       model.SideGo(b);
+       model.setVerX(460);
+       model.setVerY(70);
+       model.mestopolojenie(B,C,A);
+       model.TextGo(poindB);
+       model.SideGo(a);
+       model.VertexGo(B);
+       model.setVerX(560);
+       model.setVerY(290);
+       model.VertexGo(C);
+       model.mestopolojenie(C,A,B);
+       model.TextGo(poindC);
+    }
+//Тупоугольный
+    public void onClickObtuse(ActionEvent actionEvent) {
+        A.setCenterX(440);
+        A.setCenterY(250);
+        B.setCenterX(260);
+        B.setCenterY(70);
+        C.setCenterX(730);
+        C.setCenterY(230);
+        side();
+    }
+//Прямоугольный
+    public void onClickRegular(ActionEvent actionEvent) {
+        A.setCenterX(310);
+        A.setCenterY(370);
+        B.setCenterX(310);
+        B.setCenterY(80);
+        C.setCenterX(700);
+        C.setCenterY(370);
+        side();
+    }
+//равнобедренный
+    public void onClickIsosceles(ActionEvent actionEvent) {
+        A.setCenterX(240);
+        A.setCenterY(430);
+        B.setCenterX(480);
+        B.setCenterY(10);
+        C.setCenterX(720);
+        C.setCenterY(430);
+        side();
+    }
+//Равносторонний
+    public void onClickEquilateral(ActionEvent actionEvent) {
+        A.setCenterX(300);
+        A.setCenterY(440);
+        B.setCenterX(470);
+        B.setCenterY(130);
+        C.setCenterX(640);
+        C.setCenterY(440);
+        side();
+    }
+    //
+
+    private void side(){
+        a.setStartX(B.getCenterX());
+        a.setStartY(B.getCenterY());
+        a.setEndX(C.getCenterX());
+        a.setEndY(C.getCenterY());
+        b.setStartX(A.getCenterX());
+        b.setStartY(A.getCenterY());
+        b.setEndX(C.getCenterX());
+        b.setEndY(C.getCenterY());
+        c.setStartX(A.getCenterX());
+        c.setStartY(A.getCenterY());
+        c.setEndX(B.getCenterX());
+        c.setEndY(B.getCenterY());
+
+
     }
 }

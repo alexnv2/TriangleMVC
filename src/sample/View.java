@@ -1,5 +1,8 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -7,6 +10,7 @@ import javafx.scene.text.Text;
 
 class View implements Observer{
 
+    public   ObservableList<PropTreangle> propView = FXCollections.observableArrayList();
 
     Model model=new Model();
 
@@ -23,6 +27,7 @@ class View implements Observer{
             case "TextGo" -> this.TextGo(model.getTextGo());//буквы
             case "ColorGo" -> this.SrokeColor(model.getColorLine());//цвет
             case "ArcGo" -> this.arcGo(model.getArcGo());//дуги
+            case "TableGo"->this.tableGo(model.getTableView(), propView);
         }
     }
 
@@ -52,6 +57,11 @@ class View implements Observer{
         arc.setRadiusY(model.getArcRadius());
         arc.setStartAngle(model.getAngleStart());
         arc.setLength(model.getAngleLength());
+    }
+    //Заполнение таблицы
+    private void tableGo(TableView tableView, ObservableList propView){
+        tableView.setItems(propView);
+
     }
     //Изменение цвета линий
     private void SrokeColor(Line line){
