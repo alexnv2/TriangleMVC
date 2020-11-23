@@ -1,12 +1,11 @@
 package sample;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableView;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Arc;
@@ -19,6 +18,8 @@ public class  Controller extends View {
     private int accMedianaB=0;
     private int accMedianaC=0;
     private int accCircle=0;//счетчик для центра вписанной окружности и серединного перпендикуляра
+    //Для таблицы свойств треугольника
+    private ObservableList<PropTreangle> propView = FXCollections.observableArrayList();
 
     @FXML
     public Circle A, B, C, mA, mB, mC, hA, hB, hC, bA, bB, bC, iC, ic, vc, vC;
@@ -33,37 +34,35 @@ public class  Controller extends View {
     public CheckMenuItem menuMiddlePerpendicularAB, menuMiddlePerpendicularBC, menuMiddlePerpendicularAC;
     public CheckMenuItem menuCircleIn, menuCircleOut;
     public Pane BP;
+    //Таблица свойств
     @FXML
-    public TreeTableView<PropTreangleGroup> treeTableTreangle;
+    public TableView<PropTreangle> TableTreangle;
     @FXML
-    public TreeTableColumn<PropTreangleGroup, String> group;
+    public TableColumn<PropTreangle, String> vertex;
     @FXML
-    public TreeTableColumn<PropTreangleGroup, String> vertex;
+    public TableColumn<PropTreangle, String> coordinatesX;
     @FXML
-    public TreeTableColumn<PropTreangleGroup, String> coordinatesX;
+    public TableColumn<PropTreangle, String> coordinatesY;
     @FXML
-    public TreeTableColumn<PropTreangleGroup, String> coordinatesY;
-    @FXML
-    public TreeTableColumn<PropTreangleGroup, String> angle;
+    public TableColumn<PropTreangle, String> angle;
     @FXML
     private void initialize(){
 //Реализация интерфейса обратного вызова для заполнения колонок таблицы
-    group.setCellValueFactory(new TreeItemPropertyValueFactory<>("propGroup"));
-    vertex.setCellValueFactory(new TreeItemPropertyValueFactory<>("propVert"));
-    coordinatesX.setCellValueFactory(new TreeItemPropertyValueFactory<>("propCoordX"));
-    coordinatesY.setCellValueFactory(new TreeItemPropertyValueFactory<>("propCoordY"));
-    angle.setCellValueFactory(new TreeItemPropertyValueFactory<>("propAngle"));
-    var rootItem=new TreeItem<>(new PropTreangleGroup("."));
-    rootItem.setExpanded(true);
-    var group1=new TreeItem<>(new PropTreangleGroup("Вершины треугольника"));
-    group1.setExpanded(true);
-    group1.getChildren().add(new TreeItem<>(new PropTreangleGroup("A","100","100","45")));
-    group1.getChildren().add(new TreeItem<>(new PropTreangleGroup("B","100","100","45")));
-    group1.getChildren().add(new TreeItem<>(new PropTreangleGroup("C","100","100","45")));
-    rootItem.getChildren().add(group1);
-    treeTableTreangle.setRoot(rootItem);
+    vertex.setCellValueFactory(new PropertyValueFactory<>("propVert"));
+    coordinatesX.setCellValueFactory(new PropertyValueFactory<>("propCoordX"));
+    coordinatesY.setCellValueFactory(new PropertyValueFactory<>("propCoordY"));
+    angle.setCellValueFactory(new PropertyValueFactory<>("propAngle"));
+        //Добавление списка и выделение первой стоки
+        TableTreangle.setItems(propView);
+        //Заполнение списка полей
+        initData();
     }
 
+    private void initData() {
+        propView.add(new PropTreangle("A","100","100","60"));
+        propView.add(new PropTreangle("A","100","100","60"));
+        propView.add(new PropTreangle("A","100","100","60"));
+    }
 
     public void onClickMedianaA() {
         if(menuMedianaA.isSelected()){

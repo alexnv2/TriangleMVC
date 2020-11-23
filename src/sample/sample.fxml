@@ -14,6 +14,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <BorderPane prefHeight="326.0" prefWidth="640.0">
       <top>
@@ -177,19 +179,19 @@
           </Pane>
       </center>
       <right>
-         <TreeTableView fx:id="treeTableTreangle" prefHeight="301.0" prefWidth="290.0" BorderPane.alignment="CENTER">
+         <TableView fx:id="TableTreangle" prefHeight="301.0" prefWidth="290.0" BorderPane.alignment="CENTER">
            <columns>
-             <TreeTableColumn fx:id="group" prefWidth="75.0" text="Группа" />
-             <TreeTableColumn fx:id="vertex" prefWidth="65.0" text="Вершина" />
-             <TreeTableColumn fx:id="coordinates" prefWidth="102.0" text="Координаты">
+
+             <TableColumn fx:id="vertex" prefWidth="65.0" text="Вершина" />
+             <TableColumn fx:id="coordinates" prefWidth="102.0" text="Координаты">
                   <columns>
-                     <TreeTableColumn fx:id="coordinatesX" prefWidth="46.0" text="X" />
-                     <TreeTableColumn fx:id="coordinatesY" prefWidth="46.0" text="Y" />
+                     <TableColumn fx:id="coordinatesX" prefWidth="46.0" text="X" />
+                     <TableColumn fx:id="coordinatesY" prefWidth="46.0" text="Y" />
                   </columns>
-               </TreeTableColumn>
-               <TreeTableColumn fx:id="angle" prefWidth="56.0" text="Угол гр." />
+               </TableColumn>
+               <TableColumn fx:id="angle" prefWidth="56.0" text="Угол гр." />
            </columns>
-         </TreeTableView>
+         </TableView>
       </right>
    </BorderPane>
 </VBox>
