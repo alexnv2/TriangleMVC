@@ -15,6 +15,11 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
 public class  Controller extends View {
+    private int accMedianaA=0;//счетчик для точек для медиан  и середииных перепендикуляров
+    private int accMedianaB=0;
+    private int accMedianaC=0;
+    private int accCircle=0;//счетчик для центра вписанной окружности и серединного перпендикуляра
+
     @FXML
     public Circle A, B, C, mA, mB, mC, hA, hB, hC, bA, bB, bC, iC, ic, vc, vC;
     public Line a, b, c, ma, mb, mc, ha, hb, hc, ba, bb, bic, spa, spb, spc;
@@ -48,7 +53,7 @@ public class  Controller extends View {
     coordinatesX.setCellValueFactory(new TreeItemPropertyValueFactory<>("propCoordX"));
     coordinatesY.setCellValueFactory(new TreeItemPropertyValueFactory<>("propCoordY"));
     angle.setCellValueFactory(new TreeItemPropertyValueFactory<>("propAngle"));
-    var rootItem=new TreeItem<>(new PropTreangleGroup("..."));
+    var rootItem=new TreeItem<>(new PropTreangleGroup("."));
     rootItem.setExpanded(true);
     var group1=new TreeItem<>(new PropTreangleGroup("Вершины треугольника"));
     group1.setExpanded(true);
@@ -62,39 +67,51 @@ public class  Controller extends View {
 
     public void onClickMedianaA() {
         if(menuMedianaA.isSelected()){
+            accMedianaA++;
             ma.setVisible(true);
             mA.setVisible(true);
             poindD.setVisible(true);
             model.median(B,C,A,mA,ma,poindD);
         }else {
             ma.setVisible(false);
-            mA.setVisible(false);
+            accMedianaA--;
+            if(accMedianaA==0) {
+                mA.setVisible(false);
+            }
             poindD.setVisible(false);
         }
     }
 
     public void onClickMedianaB() {
         if(menuMedianaB.isSelected()){
+        accMedianaB++;
         mb.setVisible(true);
         mB.setVisible(true);
         poindE.setVisible(true);
         model.median(A,C,B,mB,mb,poindE);
         }else {
             mb.setVisible(false);
-            mB.setVisible(false);
+            accMedianaB--;
+            if(accMedianaB==0) {
+                mB.setVisible(false);
+            }
             poindE.setVisible(false);
         }
     }
 
     public void onClickMedianaC() {
         if(menuMedianaC.isSelected()){
+            accMedianaC++;
             mc.setVisible(true);
             mC.setVisible(true);
             poindF.setVisible(true);
             model.median(A,B,C,mC,mc,poindF);
         }else {
             mc.setVisible(false);
-            mC.setVisible(false);
+            accMedianaC--;
+            if(accMedianaC==0) {
+                mC.setVisible(false);
+            }
             poindF.setVisible(false);
         }
     }
@@ -179,6 +196,8 @@ public class  Controller extends View {
 
     public void onClickMiddlePerpendicularAB() {
         if(menuMiddlePerpendicularAB.isSelected()){
+            accMedianaC++;
+            accCircle++;
             spc.setVisible(true);
             mC.setVisible(true);
             vc.setVisible(true);
@@ -186,14 +205,22 @@ public class  Controller extends View {
             model.middlePerpendicularAll(A,B,mC,C,vc,spc,poindM);
         }else {
             spc.setVisible(false);
-            mC.setVisible(false);
-            vc.setVisible(false);
+            accMedianaC--;
+            accCircle--;
+            if(accMedianaC==0) {
+                mC.setVisible(false);
+            }
+            if(accCircle==0) {
+                vc.setVisible(false);
+            }
             poindM.setVisible(false);
         }
     }
 
     public void onClickMiddlePerpendicularBC() {
         if(menuMiddlePerpendicularBC.isSelected()){
+            accMedianaA++;
+            accCircle++;
             spa.setVisible(true);
             mA.setVisible(true);
             vc.setVisible(true);
@@ -201,13 +228,21 @@ public class  Controller extends View {
             model.middlePerpendicularAll(B,C,mA,A,vc,spa,poindN);
        }else {
             spa.setVisible(false);
-            mA.setVisible(false);
-            vc.setVisible(false);
+            accMedianaA--;
+            accCircle--;
+            if(accMedianaA==0) {
+                mA.setVisible(false);
+            }
+            if(accCircle==0) {
+                vc.setVisible(false);
+            }
             poindN.setVisible(false);
         }
     }
     public void onClickMiddlePerpendicularAC() {
         if(menuMiddlePerpendicularAC.isSelected()){
+            accMedianaB++;
+            accCircle++;
             spb.setVisible(true);
             mB.setVisible(true);
             vc.setVisible(true);
@@ -215,8 +250,14 @@ public class  Controller extends View {
             model.middlePerpendicularAll(A,C,mB,B,vc,spb,poindP);
         }else {
             spb.setVisible(false);
-            mB.setVisible(false);
-            vc.setVisible(false);
+            accMedianaB--;
+            accCircle--;
+            if(accMedianaB==0) {
+                mB.setVisible(false);
+            }
+            if(accCircle==0) {
+                vc.setVisible(false);
+            }
             poindP.setVisible(false);
         }
     }
@@ -235,13 +276,17 @@ public class  Controller extends View {
     }
     public void onClickCircleOut() {
         if(menuCircleOut.isSelected()){
+            accCircle++;
             vC.setVisible(true);
             vc.setVisible(true);
             poindS.setVisible(true);
             model.outCircle(vC,A,B,C,vc, poindS);
         }else {
+            accCircle--;
+            if(accCircle==0) {
+                vc.setVisible(false);
+            }
             vC.setVisible(false);
-            vc.setVisible(false);
             poindS.setVisible(false);
         }
     }
