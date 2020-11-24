@@ -61,8 +61,8 @@
               <Arc fx:id="arcB" fill="TRANSPARENT" stroke="RED" type="OPEN" />
               <Arc fx:id="arcC" fill="TRANSPARENT" stroke="GREEN" type="OPEN" />
               <Circle fx:id="iC" fill="TRANSPARENT" stroke="Red" strokeWidth="2" visible="false" />
-              <Circle fx:id="ic" fill="darkred" radius="5" strokeWidth="2" visible="false" />
-              <Circle fx:id="vc" fill="RED" radius="5" strokeWidth="2" visible="false" />
+              <Circle fx:id="ic" fill="darkred" radius="3" strokeWidth="2" visible="false" />
+              <Circle fx:id="vc" fill="RED" radius="3" strokeWidth="2" visible="false" />
               <Circle fx:id="vC" fill="TRANSPARENT" stroke="Blue" strokeWidth="2" visible="false" />
       
               <Circle fx:id="A" centerX="50" centerY="200" fill="blue" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
@@ -72,25 +72,25 @@
               <Line fx:id="b" endX="200" endY="200" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
               <Line fx:id="c" endX="100.0" endY="51.0" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
       
-              <Circle fx:id="mA" fill="cornflowerblue" radius="5" visible="false" />
+              <Circle fx:id="mA" fill="cornflowerblue" radius="3" visible="false" />
               <Line fx:id="ma" />
-              <Circle fx:id="mB" fill="cornflowerblue" radius="5" visible="false" />
+              <Circle fx:id="mB" fill="cornflowerblue" radius="3" visible="false" />
               <Line fx:id="mb" />
-              <Circle fx:id="mC" fill="cornflowerblue" radius="5" visible="false" />
+              <Circle fx:id="mC" fill="cornflowerblue" radius="3" visible="false" />
               <Line fx:id="mc" />
       
-              <Circle fx:id="hA" fill="silver" radius="5" visible="false" />
+              <Circle fx:id="hA" fill="silver" radius="3" visible="false" />
               <Line fx:id="ha" />
-              <Circle fx:id="hB" fill="silver" radius="5" visible="false" />
+              <Circle fx:id="hB" fill="silver" radius="3" visible="false" />
               <Line fx:id="hb" />
-              <Circle fx:id="hC" fill="silver" radius="5" visible="false" />
+              <Circle fx:id="hC" fill="silver" radius="3" visible="false" />
               <Line fx:id="hc" />
       
-              <Circle fx:id="bA" fill="purple" radius="5" visible="false" />
+              <Circle fx:id="bA" fill="purple" radius="3" visible="false" />
               <Line fx:id="ba" />
-              <Circle fx:id="bB" fill="purple" radius="5" visible="false" />
+              <Circle fx:id="bB" fill="purple" radius="3" visible="false" />
               <Line fx:id="bb" />
-              <Circle fx:id="bC" fill="purple" radius="5" visible="false" />
+              <Circle fx:id="bC" fill="purple" radius="3" visible="false" />
               <Line fx:id="bic" />
       
               <Line fx:id="spa" />

@@ -45,8 +45,8 @@ class View implements Observer{
     }
     //Перемещение Текста
     private void TextGo(Text text){
-        text.setX(model.getVerX()+model.getDx());
-        text.setY(model.getVerY()+model.getDy());
+        text.setX(model.getDx());
+        text.setY(model.getDy());
     }
     //Дуги углов треугольника
     private void arcGo(Arc arc){

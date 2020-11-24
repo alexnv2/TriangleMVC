@@ -81,15 +81,16 @@ public class  Controller<group> extends View {
             ma.setVisible(true);
             mA.setVisible(true);
             poindD.setVisible(true);
-            model.median(B,C,A,mA,ma,poindD);
+            model.median(B,C,A,mA,ma);
+            model.mestopolojenie(mA,A,B,poindD);//Точка D
 
         }else {
             ma.setVisible(false);
             accMedianaA--;
             if(accMedianaA==0) {
                 mA.setVisible(false);
+                poindD.setVisible(false);
             }
-            poindD.setVisible(false);
         }
     }
 
@@ -99,14 +100,15 @@ public class  Controller<group> extends View {
         mb.setVisible(true);
         mB.setVisible(true);
         poindE.setVisible(true);
-        model.median(A,C,B,mB,mb,poindE);
+        model.median(A,C,B,mB,mb);
+        model.mestopolojenie(mB,A,B,poindE);//Точка Е
         }else {
             mb.setVisible(false);
             accMedianaB--;
             if(accMedianaB==0) {
                 mB.setVisible(false);
+                poindE.setVisible(false);
             }
-            poindE.setVisible(false);
         }
     }
 
@@ -116,14 +118,15 @@ public class  Controller<group> extends View {
             mc.setVisible(true);
             mC.setVisible(true);
             poindF.setVisible(true);
-            model.median(A,B,C,mC,mc,poindF);
+            model.median(A,B,C,mC,mc);
+            model.mestopolojenie(mC,B,C,poindF);//Точка F
         }else {
             mc.setVisible(false);
             accMedianaC--;
             if(accMedianaC==0) {
                 mC.setVisible(false);
+                poindF.setVisible(false);
             }
-            poindF.setVisible(false);
         }
     }
 
@@ -132,7 +135,8 @@ public class  Controller<group> extends View {
             ba.setVisible(true);
             bA.setVisible(true);
             poindG.setVisible(true);
-            model.bisectorAll(B,A,C,bA,ba,poindG);
+            model.bisectorAll(B,A,C,bA,ba);
+            model.mestopolojenie(bA,A,B,poindG);//Точка G
         }else {
             ba.setVisible(false);
             bA.setVisible(false);
@@ -144,7 +148,8 @@ public class  Controller<group> extends View {
             bb.setVisible(true);
             bB.setVisible(true);
             poindH.setVisible(true);
-            model.bisectorAll(A,B,C,bB,bb,poindH);
+            model.bisectorAll(A,B,C,bB,bb);
+            model.mestopolojenie(bB,A,B,poindH);//Точка H
         }else {
             bb.setVisible(false);
             bB.setVisible(false);
@@ -157,7 +162,8 @@ public class  Controller<group> extends View {
             bic.setVisible(true);
             bC.setVisible(true);
             poindI.setVisible(true);
-            model.bisectorAll(A,C,B,bC,bic,poindI);
+            model.bisectorAll(A,C,B,bC,bic);
+            model.mestopolojenie(bC,B,C,poindI);//Точка I
         }else {
             bic.setVisible(false);
             bC.setVisible(false);
@@ -170,7 +176,8 @@ public class  Controller<group> extends View {
             ha.setVisible(true);
             hA.setVisible(true);
             poindJ.setVisible(true);
-            model.HightTreangle(A,C,B,hA,ha,poindJ);
+            model.HightTreangle(A,C,B,hA,ha);
+            model.mestopolojenie(hA,A,B,poindJ);//Точка J
        }else {
             ha.setVisible(false);
             hA.setVisible(false);
@@ -184,7 +191,8 @@ public class  Controller<group> extends View {
             hb.setVisible(true);
             hB.setVisible(true);
             poindK.setVisible(true);
-            model.HightTreangle(B,A,C,hB,hb,poindK);
+            model.HightTreangle(B,A,C,hB,hb);
+            model.mestopolojenie(hB,A,B,poindK);//Точка K
         }else {
             hb.setVisible(false);
             hB.setVisible(false);
@@ -197,7 +205,8 @@ public class  Controller<group> extends View {
             hc.setVisible(true);
             hC.setVisible(true);
             poindL.setVisible(true);
-            model.HightTreangle(C,A,B,hC,hc,poindL);
+            model.HightTreangle(C,A,B,hC,hc);
+            model.mestopolojenie(hC,B,C,poindL);//Точка L
         }else {
             hc.setVisible(false);
             hC.setVisible(false);
@@ -212,19 +221,23 @@ public class  Controller<group> extends View {
             spc.setVisible(true);
             mC.setVisible(true);
             vc.setVisible(true);
-            poindM.setVisible(true);
-            model.middlePerpendicularAll(A,B,mC,C,vc,spc,poindM);
+            poindF.setVisible(true);
+            poindS.setVisible(true);
+            model.middlePerpendicularAll(A,B,mC,C,vc,spc,poindS);
+            model.mestopolojenie(mC,B,C,poindF);//Точка F
         }else {
             spc.setVisible(false);
             accMedianaC--;
             accCircle--;
             if(accMedianaC==0) {
                 mC.setVisible(false);
+                poindF.setVisible(false);
             }
             if(accCircle==0) {
                 vc.setVisible(false);
+                poindS.setVisible(false);
             }
-            poindM.setVisible(false);
+
         }
     }
 
@@ -235,19 +248,23 @@ public class  Controller<group> extends View {
             spa.setVisible(true);
             mA.setVisible(true);
             vc.setVisible(true);
-            poindN.setVisible(true);
-            model.middlePerpendicularAll(B,C,mA,A,vc,spa,poindN);
+            poindD.setVisible(true);
+            poindS.setVisible(true);
+            model.middlePerpendicularAll(B,C,mA,A,vc,spa,poindS);
+            model.mestopolojenie(mA,A,B,poindD);//Точка D
        }else {
             spa.setVisible(false);
             accMedianaA--;
             accCircle--;
             if(accMedianaA==0) {
                 mA.setVisible(false);
+                poindD.setVisible(false);
             }
             if(accCircle==0) {
                 vc.setVisible(false);
+                poindS.setVisible(false);
             }
-            poindN.setVisible(false);
+
         }
     }
     public void onClickMiddlePerpendicularAC() {
@@ -257,19 +274,23 @@ public class  Controller<group> extends View {
             spb.setVisible(true);
             mB.setVisible(true);
             vc.setVisible(true);
-            poindP.setVisible(true);
-            model.middlePerpendicularAll(A,C,mB,B,vc,spb,poindP);
+            poindE.setVisible(true);
+            poindS.setVisible(true);
+            model.middlePerpendicularAll(A,C,mB,B,vc,spb,poindS);
+            model.mestopolojenie(mB,A,B,poindE);//Точка E
         }else {
             spb.setVisible(false);
             accMedianaB--;
             accCircle--;
             if(accMedianaB==0) {
                 mB.setVisible(false);
+                poindE.setVisible(false);
             }
             if(accCircle==0) {
                 vc.setVisible(false);
+                poindS.setVisible(false);
             }
-            poindP.setVisible(false);
+
         }
     }
     public void onClickCircleIn() {
@@ -291,14 +312,15 @@ public class  Controller<group> extends View {
             vC.setVisible(true);
             vc.setVisible(true);
             poindS.setVisible(true);
-            model.outCircle(vC,A,B,C,vc, poindS);
+            model.outCircle(vC,A,B,C,vc,poindS);
         }else {
             accCircle--;
             if(accCircle==0) {
                 vc.setVisible(false);
+                poindS.setVisible(false);
             }
             vC.setVisible(false);
-            poindS.setVisible(false);
+
         }
     }
 
@@ -315,70 +337,85 @@ public class  Controller<group> extends View {
 
         //Стороны
         if (mouseEvent.getSource() == A) {
-            model.sideAll(A,B,C,c,b,poindA);
-            //дуги
+            model.sideAll(A,B,C,c,b);
+            model.TextGo(poindA);
             model.arcVertex(A,B,C,arcA);
             model.arcVertex(B,C, A, arcB);
             model.arcVertex(C, A, B, arcC);
+            model.mestopolojenie(A,B,C,poindA); //Угол А
             model.setColorGo("RED");
             model.ColorGo(a);
             model.tableGo(TableTreangle);
         }
         if (mouseEvent.getSource() == B) {
-            model.sideAll(B,A,C,c,a,poindB);
+            model.sideAll(B,A,C,c,a);
            //дуги
             model.arcVertex(B,C, A, arcB);
             model.arcVertex(C, A, B, arcC);
             model.arcVertex(A,B,C,arcA);
+            model.mestopolojenie(B,C,A,poindB); //Угол В
             model.tableGo(TableTreangle);
         }
         if (mouseEvent.getSource() == C) {
-            model.sideAll(C,A,B,b,a,poindC);
+            model.sideAll(C,A,B,b,a);
             //дуги
             model.arcVertex(C, A, B, arcC);
             model.arcVertex(A,B,C,arcA);
             model.arcVertex(B,C, A, arcB);
+            model.mestopolojenie(C,A,B,poindC);//Угол С
             model.tableGo(TableTreangle);
         }
         //Медианы
         if(menuMedianaA.isSelected()) {
-            model.median(B,C,A,mA,ma,poindD);
+            model.median(B,C,A,mA,ma);
+            model.mestopolojenie(mA,A,B,poindD);//Точка D
         }
         if(menuMedianaB.isSelected()) {
-            model.median(A,C,B,mB,mb,poindE);
+            model.median(A,C,B,mB,mb);
+            model.mestopolojenie(mB,A,B,poindE);//Точка Е
         }
         if(menuMedianaC.isSelected()){
-            model.median(A,B,C,mC,mc,poindF);
+            model.median(A,B,C,mC,mc);
+            model.mestopolojenie(mC,B,C,poindF);//Точка F
         }
         //Биссектрисы
         if(menuBisectorA.isSelected()){
-            model.bisectorAll(B,A,C,bA,ba, poindG);
+            model.bisectorAll(B,A,C,bA,ba);
+            model.mestopolojenie(bA,A,B,poindG);//Точка G
         }
         if(menuBisectorB.isSelected()){
-            model.bisectorAll(A,B,C,bB,bb,poindH);
+            model.bisectorAll(A,B,C,bB,bb);
+            model.mestopolojenie(bB,A,B,poindH);//Точка H
         }
         if(menuBisectorC.isSelected()){
-            model.bisectorAll(A,C,B,bC,bic,poindI);
+            model.bisectorAll(A,C,B,bC,bic);
+            model.mestopolojenie(bC,B,C,poindI);//Точка I
         }
         //Высоты
         if(menuHigthA.isSelected()) {
-            model.HightTreangle(A,C,B,hA,ha,poindJ);
+            model.HightTreangle(A,C,B,hA,ha);
+            model.mestopolojenie(hA,A,B,poindJ);//Точка J
         }
         if(menuHigthB.isSelected()){
-            model.HightTreangle(B,A,C,hB,hb,poindK);
+            model.HightTreangle(B,A,C,hB,hb);
+            model.mestopolojenie(hB,A,B,poindK);//Точка K
         }
         if(menuHigthC.isSelected()){
-            model.HightTreangle(C,A,B,hC,hc,poindL);
+            model.HightTreangle(C,A,B,hC,hc);
+            model.mestopolojenie(hC,B,C,poindL);//Точка L
         }
-        //Серединные перпенжикуляры
+        //Серединные перпендикуляры
         if(menuMiddlePerpendicularAB.isSelected()){
-            model.middlePerpendicularAll(A,B,mC,C,vc,spc,poindM);
+            model.middlePerpendicularAll(A,B,mC,C,vc,spc,poindS);
+            model.mestopolojenie(mC,B,C,poindF);//Точка F
         }
         if(menuMiddlePerpendicularBC.isSelected()){
-            model.middlePerpendicularAll(B,C,mA,A,vc,spa,poindN);
+            model.middlePerpendicularAll(B,C,mA,A,vc,spa,poindS);
+            model.mestopolojenie(mA,A,B,poindD);//Точка D
         }
         if(menuMiddlePerpendicularAC.isSelected()){
-            model.middlePerpendicularAll(A,C,mB,B,vc,spb,poindP);
+            model.middlePerpendicularAll(A,C,mB,B,vc,spb,poindS);
+            model.mestopolojenie(mB,A,B,poindE);//Точка E
         }
         //Вписанная окружность
         if(menuCircleIn.isSelected()){
@@ -386,7 +423,7 @@ public class  Controller<group> extends View {
         }
         //Описанная окружность
         if(menuCircleOut.isSelected()){
-            model.outCircle(vC,A,B,C,vc, poindS);
+            model.outCircle(vC,A,B,C,vc,poindS);
         }
     }
 
@@ -429,8 +466,8 @@ public class  Controller<group> extends View {
        model.setVerX(280);
        model.setVerY(320);
        model.VertexGo(A);
-       model.mestopolojenie(A,B,C);
-       model.TextGo(poindA);
+      // model.mestopolojenie(A,B,C);
+      // model.TextGo(poindA);
        model.setVerX1(460);
        model.setVerY1(70);
        model.SideGo(c);
@@ -439,15 +476,15 @@ public class  Controller<group> extends View {
        model.SideGo(b);
        model.setVerX(460);
        model.setVerY(70);
-       model.mestopolojenie(B,C,A);
-       model.TextGo(poindB);
+     //  model.mestopolojenie(B,C,A);
+      // model.TextGo(poindB);
        model.SideGo(a);
        model.VertexGo(B);
        model.setVerX(560);
        model.setVerY(290);
        model.VertexGo(C);
-       model.mestopolojenie(C,A,B);
-       model.TextGo(poindC);
+     //  model.mestopolojenie(C,A,B);
+      // model.TextGo(poindC);
     }
 //Тупоугольный
     public void onClickObtuse(ActionEvent actionEvent) {

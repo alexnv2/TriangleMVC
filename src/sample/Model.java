@@ -26,7 +26,7 @@ class Model implements  Observable {
     private double verY;
     private double verX1;
     private double verY1;
-    private double dx,dy;//смещение букв
+    private double dx,dy;//координаты букв
     private double arcRadius;//радиус дуги
     private double angleStart;//начало дуги гр.
     private double angleLength;//длина дуги гр.
@@ -160,11 +160,8 @@ Model(){
         return abs((ab*bc*ac)/(s*4));
     }
     //Стороны треугольника
-    public void sideAll(Circle o1, Circle o2, Circle o3, Line l1, Line l2, Text t){
-       //Вот сюда добавить метод для расчета смещения букв от вершины
-        mestopolojenie(o1,o2,o3);
+    public void sideAll(Circle o1, Circle o2, Circle o3, Line l1, Line l2){
         VertexGo(o1);
-        TextGo(t);
         setVerX1(o2.getCenterX());
         setVerY1(o2.getCenterY());
         SideGo(l1);
@@ -202,52 +199,46 @@ Model(){
     double bc=distance(x2,y2,x3,y3);
     return toDegrees(acos((pow(ab,2)+pow(ac,2)-pow(bc,2))/(2*ab*ac)));
     }
-
-    public void mestopolojenie(Circle o1, Circle o2, Circle o3){
-    double dx1=o1.getCenterX()-o2.getCenterX();
-    double dx2=o1.getCenterX()-o3.getCenterX();
-    double dy1=o1.getCenterY()-o2.getCenterY();
-    double dy2=o1.getCenterY()-o3.getCenterY();
-     if(dx1<0 ){
-        setDx(-20);
+    //Положение букв, о1, o2,o3-Уголы треугоьника, о2-надпись
+    public void mestopolojenie(Circle o1, Circle o2, Circle o3, Text t){
+    middlePerpendicular(o1.getCenterX(),o1.getCenterY(),o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY());
+    double rOut=radiusOutCircle(o1.getCenterX(),o1.getCenterY(),o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY());
+    double anglePol=angleTriangle(getVerX(),getVerY(),o1.getCenterX(),o1.getCenterY(),getVerX()+100,getVerY());
+    rOut=rOut+20;//20 px смещение
+    double xP, yP;
+    if(getVerY()<o1.getCenterY()) {
+        xP = getVerX() + (rOut * cos(toRadians(anglePol)));
+        yP = getVerY() + (rOut * sin(toRadians(anglePol)));
     }else {
-        setDx(20);
+        xP = getVerX() + (rOut * cos(toRadians(-anglePol)));
+        yP = getVerY() + (rOut * sin(toRadians(-anglePol)));
     }
-        if(dy1<0) {
-          setDy(-20);
-    }else {
-            setDy(20);
-        }
-
+    setDx(xP);
+    setDy(yP);
+    TextGo(t);
 }
 
     //Медианы
-    public void median(Circle o1,Circle o2, Circle o3, Circle o4, Line l, Text t){
+    public void median(Circle o1,Circle o2, Circle o3, Circle o4, Line l){
         setVerX(midpoint(o1.getCenterX(),o2.getCenterX()));
         setVerY(midpoint(o1.getCenterY(),o2.getCenterY()));
         VertexGo(o4);
-        mestopolojenie(o1,o2,o3);
-        TextGo(t);
         setVerX1(o3.getCenterX());
         setVerY1(o3.getCenterY());
         SideGo(l);
     }
     //Биссектрисы
-    public void bisectorAll(Circle o1,Circle o2, Circle o3, Circle o4, Line l, Text t){
+    public void bisectorAll(Circle o1,Circle o2, Circle o3, Circle o4, Line l){
         bisector(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o3.getCenterX(),o3.getCenterY());
         VertexGo(o4);
-        mestopolojenie(o1,o2,o3);
-        TextGo(t);
         setVerX1(o2.getCenterX());
         setVerY1(o2.getCenterY());
         SideGo(l);
     }
     //Высоты
-    public void HightTreangle(Circle o1, Circle o2, Circle o3, Circle o4, Line l,Text t){
+    public void HightTreangle(Circle o1, Circle o2, Circle o3, Circle o4, Line l){
         intersection(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
         VertexGo(o4);
-        mestopolojenie(o1,o2,o3);
-        TextGo(t);
         setVerX1(o1.getCenterX());
         setVerY1(o1.getCenterY());
         SideGo(l);
@@ -257,35 +248,38 @@ Model(){
         setVerX(midpoint(o1.getCenterX(),o2.getCenterX()));
         setVerY(midpoint(o1.getCenterY(),o2.getCenterY()));
         VertexGo(o3);
-        mestopolojenie(o1,o2,o3);
-        TextGo(t);
         setVerX1(getVerX());
         setVerY1(getVerY());
         middlePerpendicular(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o4.getCenterX(),o4.getCenterY());
         VertexGo(o5);
         SideGo(l);
+        setDx(o5.getCenterX()+10);
+        setDy(o5.getCenterY()+5);
+        TextGo(t);
     }
     //Вписанная окружность
-    public void inCircle(Circle o1, Circle o2, Circle o3, Circle o4, Circle o5,Text t){
+    public void inCircle(Circle o1, Circle o2, Circle o3, Circle o4, Circle o5, Text t){
         o1.setRadius(radiusInCircle(o2.getCenterX(),o2.getCenterY(), o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY()));
         inCircleX(o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY());
         inCircleY(o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY());
         VertexGo(o1);
-        mestopolojenie(o1,o2,o3);
-        TextGo(t);
         inCircleX(o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY());
         inCircleY(o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY());
         VertexGo(o5);
+        setDx(o5.getCenterX()-20);
+        setDy(o5.getCenterY()+5);
+        TextGo(t);
     }
     //Описанная окружность
     public void outCircle(Circle o1, Circle o2, Circle o3, Circle o4, Circle o5, Text t){
         o1.setRadius(radiusOutCircle(o2.getCenterX(),o2.getCenterY(), o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY()));
         middlePerpendicular(o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY(), o4.getCenterX(),o4.getCenterY());
         VertexGo(o1);
-        mestopolojenie(o1,o2,o3);
-        TextGo(t);
         middlePerpendicular(o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY(), o4.getCenterX(),o4.getCenterY());
         VertexGo(o5);
+        setDx(o5.getCenterX()+10);
+        setDy(o5.getCenterY()+5);
+        TextGo(t);
     }
     //Задаем операцию для View
     //Перемещение вершин треугольника
@@ -317,6 +311,5 @@ Model(){
         mTableView=o;
         notifyObservers("tableGo");
     }
-
 }
 
