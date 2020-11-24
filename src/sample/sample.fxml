@@ -73,29 +73,29 @@
               <Line fx:id="c" endX="100.0" endY="51.0" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
       
               <Circle fx:id="mA" fill="cornflowerblue" radius="3" visible="false" />
-              <Line fx:id="ma" />
+              <Line fx:id="ma" stroke="blue"/>
               <Circle fx:id="mB" fill="cornflowerblue" radius="3" visible="false" />
-              <Line fx:id="mb" />
+              <Line fx:id="mb" stroke="blue"/>
               <Circle fx:id="mC" fill="cornflowerblue" radius="3" visible="false" />
-              <Line fx:id="mc" />
+              <Line fx:id="mc" stroke="blue"/>
       
               <Circle fx:id="hA" fill="silver" radius="3" visible="false" />
-              <Line fx:id="ha" />
+              <Line fx:id="ha" stroke="darkred"/>
               <Circle fx:id="hB" fill="silver" radius="3" visible="false" />
-              <Line fx:id="hb" />
+              <Line fx:id="hb" stroke="darkred"/>
               <Circle fx:id="hC" fill="silver" radius="3" visible="false" />
-              <Line fx:id="hc" />
+              <Line fx:id="hc" stroke="darkred" />
       
               <Circle fx:id="bA" fill="purple" radius="3" visible="false" />
-              <Line fx:id="ba" />
+              <Line fx:id="ba"  stroke="darkgreen"/>
               <Circle fx:id="bB" fill="purple" radius="3" visible="false" />
-              <Line fx:id="bb" />
+              <Line fx:id="bb" stroke="darkgreen" />
               <Circle fx:id="bC" fill="purple" radius="3" visible="false" />
-              <Line fx:id="bic" />
+              <Line fx:id="bic" stroke="darkgreen" />
       
-              <Line fx:id="spa" />
-              <Line fx:id="spb" />
-              <Line fx:id="spc" />
+              <Line fx:id="spa" stroke="gold" />
+              <Line fx:id="spb" stroke="gold" />
+              <Line fx:id="spc" stroke="gold" />
       
               <Text fx:id="poindA" strokeType="OUTSIDE" strokeWidth="0.0" text="A" x="30" y="200">
                   <font>
@@ -167,21 +167,7 @@
                       <Font name="Times New Roman" size="18.0" />
                   </font>
               </Text>
-              <Text fx:id="poindM" strokeType="OUTSIDE" strokeWidth="0.0" text="M" visible="false" x="210" y="200">
-                  <font>
-                      <Font name="Times New Roman" size="18.0" />
-                  </font>
-              </Text>
-              <Text fx:id="poindN" strokeType="OUTSIDE" strokeWidth="0.0" text="N" visible="false" x="210" y="200">
-                  <font>
-                      <Font name="Times New Roman" size="18.0" />
-                  </font>
-              </Text>
-              <Text fx:id="poindP" strokeType="OUTSIDE" strokeWidth="0.0" text="P" visible="false" x="210" y="200">
-                  <font>
-                      <Font name="Times New Roman" size="18.0" />
-                  </font>
-              </Text>
+
       
           </Pane>
       </center>
