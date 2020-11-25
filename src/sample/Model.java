@@ -1,15 +1,18 @@
 package sample;
 
 import javafx.scene.control.TableView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
-
+import javafx.scene.web.WebView;
 import java.util.LinkedList;
 import java.util.List;
+
 import static java.lang.StrictMath.*;
-import static java.lang.StrictMath.abs;
+import static my.sample.StringConstant.*;
+
 
 class Model implements  Observable {
 
@@ -18,9 +21,12 @@ class Model implements  Observable {
     private Line sideAll;
     private Text textGo;
     private Line colorLine;
-    private String ColorGo;
+    private Color ColorGoLine;
     private Arc arcGo;
     private TableView mTableView;
+    private WebView webViewLeft;
+    private WebView weViewBotton;
+
 
     private double verX;
     private double verY;
@@ -30,6 +36,8 @@ class Model implements  Observable {
     private double arcRadius;//радиус дуги
     private double angleStart;//начало дуги гр.
     private double angleLength;//длина дуги гр.
+    private String sWebViewLeft;//text left
+    private String sWebViewBotton;//text botton
 
     //Конструктор
 Model(){
@@ -42,13 +50,14 @@ Model(){
     void setVerY(double s){verY=s;}
     void setVerX1(double s){verX1=s;}//2 координата для сотороны
     void setVerY1(double s){verY1=s;}
-    void setColorGo(String c) {ColorGo = c; }//цвет
+    void setColorGo(Color c) {ColorGoLine = c; }//цвет
     void setDx(double s){dx=s;}//смещение букв
     void setDy(double s){dy=s;}
     void setArcRadius(double s) {arcRadius = s;}//радиус дуги
     void setAngleStart(double s) {angleStart = s;}//начало дуги
     void setAngleLength(double s) {angleLength = s;}//конец дуги
-
+    void setsWebViewLeft(String s){sWebViewLeft =s;}//text right
+    void setsWebViewBotton(String s){sWebViewBotton=s;}//text botton
 
     //Отдаются переменные для View
     Line getSideAll(){return sideAll;} //Объекты линия
@@ -57,6 +66,8 @@ Model(){
     Line getColorLine(){return  colorLine;} //Цвет для линий
     Arc getArcGo(){return arcGo;}// Дуги
     TableView getTableView(){return mTableView;}
+    WebView getWebViewLeft(){return webViewLeft;}//техт
+    Color getColorGoLine(){return ColorGoLine;}
 
     double getVerX(){return verX;}
     double getVerY(){return verY;}
@@ -67,7 +78,9 @@ Model(){
     public double getArcRadius() {return arcRadius;}//радиус дуги
     public double getAngleStart() {return angleStart;}//начало дуги Х
     public double getAngleLength() {return angleLength;}//длина дуги Y
-
+    public String getsWebViewLeft(){return sWebViewLeft;}//text right
+    public String getsWebViewBotton(){return sWebViewBotton;}//text botton
+    public Color getColorGo(){return  ColorGoLine;}
     //регистрация слушателя
     @Override
     public void registerObserver(Observer o) {
@@ -79,6 +92,24 @@ Model(){
         for (Observer observer : observers) {
             observer.notification(message);
         }
+    }
+    //Текст для левой части
+    public void webViewLeftString(WebView o, int c){
+    switch (c) {
+        case 0: setsWebViewLeft(TREANLE_OPR + TREANLE_ANGL + TRANLE_NER);break;
+        case 1: setsWebViewLeft(TR_TEOREMA33+TR_TEOREMA34);break;
+    }
+    webViewGo(o);
+    }
+    //Текст для нижней части
+    public void webViewBotton(WebView o, int c){
+    switch (c) {
+        case 0: setsWebViewLeft(TR_OXYGEN);break;
+        case 1: setsWebViewLeft(TR_OBTUSE);break;
+        case 2: setsWebViewLeft(TR_REGULAR);break;
+        case 3: setsWebViewLeft(TR_ISOSCELETES);break;
+    }
+    webViewGo(o);
     }
     //Нахождение середины отрезка
     private double midpoint(double x0, double x1) {
@@ -178,7 +209,11 @@ Model(){
 
         if(o1.getCenterY()<o3.getCenterY()){
             arcLight=360-arcLight;
+        }else{
+           // arcLight=-arcLight;
+
         }
+
        /* if(o1.getCenterX()>o3.getCenterX()){
             arcLight=180-arcLight;
         }
@@ -311,5 +346,10 @@ Model(){
         mTableView=o;
         notifyObservers("tableGo");
     }
+    void webViewGo(WebView o){
+        webViewLeft =o;
+        notifyObservers("WebView");
+    }
+
 }
 

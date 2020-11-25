@@ -8,12 +8,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebView;
 
-public class  Controller<group> extends View {
+public class  Controller extends View {
 
     private int accMedianaA=0;//счетчик для точек для медиан  и середииных перепендикуляров
     private int accMedianaB=0;
@@ -23,7 +25,7 @@ public class  Controller<group> extends View {
     public Circle A, B, C, mA, mB, mC, hA, hB, hC, bA, bB, bC, iC, ic, vc, vC;
     public Line a, b, c, ma, mb, mc, ha, hb, hc, ba, bb, bic, spa, spb, spc;
     public Text poindA, poindB, poindC,poindE,poindD,poindF, poindG, poindH, poindI;
-    public Text poindJ,poindK,poindL, poindO, poindS, poindM, poindN, poindP;
+    public Text poindJ,poindK,poindL, poindO, poindS;
    @FXML
     public Arc arcA, arcB, arcC;
     public CheckMenuItem menuMedianaA, menuMedianaB, menuMedianaC;
@@ -32,6 +34,9 @@ public class  Controller<group> extends View {
     public CheckMenuItem menuMiddlePerpendicularAB, menuMiddlePerpendicularBC, menuMiddlePerpendicularAC;
     public CheckMenuItem menuCircleIn, menuCircleOut;
     public RadioMenuItem menuOxygon, menuObtuse, menuRegular, menuIsosceles, menuEquilateral;
+    @FXML
+    public WebView webViewLeft,webViewBotton;
+
 
     public Pane BP;
     //Таблица свойств
@@ -49,6 +54,7 @@ public class  Controller<group> extends View {
 
     @FXML
     private void initialize(){
+        model.webViewLeftString(webViewLeft,0);
         //Реализация радиоменю
         ToggleGroup group = new ToggleGroup();
         menuOxygon.setToggleGroup(group);
@@ -56,7 +62,7 @@ public class  Controller<group> extends View {
         menuRegular.setToggleGroup(group);
         menuIsosceles.setToggleGroup(group);
         menuEquilateral.setToggleGroup(group);
-        //onClickOxygon();
+
     //Реализация интерфейса обратного вызова для заполнения колонок таблицы
     initData();
     vertex.setCellValueFactory(new PropertyValueFactory<>("propVert"));
@@ -66,7 +72,7 @@ public class  Controller<group> extends View {
         //Добавление списка и выделение первой стоки
         TableTreangle.setItems(super.propView);
         //Заполнение списка полей
-
+        onClickOxygon();
     }
 
     private void initData() {
@@ -96,6 +102,7 @@ public class  Controller<group> extends View {
 
     public void onClickMedianaB() {
         if(menuMedianaB.isSelected()){
+
         accMedianaB++;
         mb.setVisible(true);
         mB.setVisible(true);
@@ -328,12 +335,16 @@ public class  Controller<group> extends View {
 
     }
 
-    public void mouseDraggen(MouseEvent mouseEvent) {
-        model.setVerX(mouseEvent.getSceneX());
-        model.setVerY(mouseEvent.getSceneY());
+    public void angleAccess(){
+     System.out.println(C.getCenterX()+"   "+arcC.getLength());
         super.propView.set(0, new PropTreangle("A",A.getCenterX(),A.getCenterY(),arcA.getLength()));
         super.propView.set(1, new PropTreangle("B",B.getCenterX(),B.getCenterY(),arcB.getLength()));
         super.propView.set(2, new PropTreangle("C",C.getCenterX(),C.getCenterY(),arcC.getLength()));
+    }
+
+    public void mouseDraggen(MouseEvent mouseEvent) {
+        model.setVerX(mouseEvent.getX());
+        model.setVerY(mouseEvent.getY());
 
         //Стороны
         if (mouseEvent.getSource() == A) {
@@ -343,8 +354,7 @@ public class  Controller<group> extends View {
             model.arcVertex(B,C, A, arcB);
             model.arcVertex(C, A, B, arcC);
             model.mestopolojenie(A,B,C,poindA); //Угол А
-            model.setColorGo("RED");
-            model.ColorGo(a);
+            angleAccess();
             model.tableGo(TableTreangle);
         }
         if (mouseEvent.getSource() == B) {
@@ -354,6 +364,7 @@ public class  Controller<group> extends View {
             model.arcVertex(C, A, B, arcC);
             model.arcVertex(A,B,C,arcA);
             model.mestopolojenie(B,C,A,poindB); //Угол В
+            angleAccess();
             model.tableGo(TableTreangle);
         }
         if (mouseEvent.getSource() == C) {
@@ -363,6 +374,7 @@ public class  Controller<group> extends View {
             model.arcVertex(A,B,C,arcA);
             model.arcVertex(B,C, A, arcB);
             model.mestopolojenie(C,A,B,poindC);//Угол С
+            angleAccess();
             model.tableGo(TableTreangle);
         }
         //Медианы
@@ -462,69 +474,119 @@ public class  Controller<group> extends View {
     }
     //Виды треугольников
     //Остроугольный
-    public void onClickOxygon(ActionEvent actionEvent) {
-       model.setVerX(280);
-       model.setVerY(320);
-       model.VertexGo(A);
-      // model.mestopolojenie(A,B,C);
-      // model.TextGo(poindA);
-       model.setVerX1(460);
-       model.setVerY1(70);
-       model.SideGo(c);
-       model.setVerX1(560);
-       model.setVerY1(290);
-       model.SideGo(b);
-       model.setVerX(460);
-       model.setVerY(70);
-     //  model.mestopolojenie(B,C,A);
-      // model.TextGo(poindB);
-       model.SideGo(a);
-       model.VertexGo(B);
-       model.setVerX(560);
-       model.setVerY(290);
-       model.VertexGo(C);
-     //  model.mestopolojenie(C,A,B);
-      // model.TextGo(poindC);
+    public void onClickOxygon() {
+        A.setCenterX(80);
+        A.setCenterY(320);
+        B.setCenterX(260);
+        B.setCenterY(70);
+        C.setCenterX(360);
+        C.setCenterY(290);
+        side();
+        model.webViewBotton(webViewBotton,0);
+        model.webViewLeftString(webViewLeft,0);
+        model.setColorGo(Color.BLACK);
+        model.ColorGo(a);
+        model.setColorGo(Color.BLACK);
+        model.ColorGo(b);
+        model.setColorGo(Color.BLACK);
+        model.ColorGo(c);
+        model.arcVertex(A,B,C,arcA);
+        model.arcVertex(B,C, A, arcB);
+        model.arcVertex(C, A, B, arcC);
+        angleAccess();
+        model.tableGo(TableTreangle);
     }
 //Тупоугольный
     public void onClickObtuse(ActionEvent actionEvent) {
-        A.setCenterX(440);
+        arcB.setVisible(true);
+        A.setCenterX(240);
         A.setCenterY(250);
-        B.setCenterX(260);
+        B.setCenterX(60);
         B.setCenterY(70);
-        C.setCenterX(730);
+        C.setCenterX(530);
         C.setCenterY(230);
         side();
+        model.webViewBotton(webViewBotton,1);
+        model.setColorGo(Color.BLACK);
+        model.ColorGo(a);
+        model.setColorGo(Color.BLACK);
+        model.ColorGo(b);
+        model.setColorGo(Color.BLACK);
+        model.ColorGo(c);
+        model.arcVertex(A,B,C,arcA);
+        model.arcVertex(B,C, A, arcB);
+        model.arcVertex(C, A, B, arcC);
+        angleAccess();
+        model.tableGo(TableTreangle);
+
     }
 //Прямоугольный
     public void onClickRegular(ActionEvent actionEvent) {
-        A.setCenterX(310);
+        arcB.setVisible(true);
+        A.setCenterX(110);
         A.setCenterY(370);
-        B.setCenterX(310);
+        B.setCenterX(110);
         B.setCenterY(80);
-        C.setCenterX(700);
+        C.setCenterX(500);
         C.setCenterY(370);
         side();
+        model.webViewBotton(webViewBotton,2);
+        model.ColorGo(a);
+        model.setColorGo(Color.BLACK);
+        model.ColorGo(b);
+        model.setColorGo(Color.BLACK);
+        model.ColorGo(c);
+        model.arcVertex(A,B,C,arcA);
+        model.arcVertex(B,C, A, arcB);
+        model.arcVertex(C, A, B, arcC);
+        angleAccess();
+        model.tableGo(TableTreangle);
     }
 //равнобедренный
     public void onClickIsosceles(ActionEvent actionEvent) {
-        A.setCenterX(240);
+        A.setCenterX(40);
         A.setCenterY(430);
-        B.setCenterX(480);
-        B.setCenterY(10);
-        C.setCenterX(720);
+        B.setCenterX(280);
+        B.setCenterY(124);
+        C.setCenterX(520);
         C.setCenterY(430);
         side();
+        model.webViewBotton(webViewBotton,3);
+        model.webViewLeftString(webViewLeft,1);
+        model.setColorGo(Color.RED);
+        model.ColorGo(a);
+        model.setColorGo(Color.BLACK);
+        model.ColorGo(b);
+        model.setColorGo(Color.RED);
+        model.ColorGo(c);
+        model.arcVertex(A,B,C,arcA);
+        model.arcVertex(B,C, A, arcB);
+        arcB.setVisible(false);
+        model.arcVertex(C, A, B, arcC);
+        angleAccess();
+        model.tableGo(TableTreangle);
     }
 //Равносторонний
     public void onClickEquilateral(ActionEvent actionEvent) {
-        A.setCenterX(300);
-        A.setCenterY(440);
-        B.setCenterX(470);
-        B.setCenterY(130);
-        C.setCenterX(640);
-        C.setCenterY(440);
+        arcB.setVisible(true);
+        A.setCenterX(100);
+        A.setCenterY(480);
+        B.setCenterX(349);
+        B.setCenterY(47);
+        C.setCenterX(598);
+        C.setCenterY(480);
         side();
+        model.setColorGo(Color.RED);
+        model.ColorGo(a);
+        model.setColorGo(Color.RED);
+        model.ColorGo(b);
+        model.setColorGo(Color.RED);
+        model.ColorGo(c);
+        model.arcVertex(A,B,C,arcA);
+        model.arcVertex(B,C, A, arcB);
+        model.arcVertex(C, A, B, arcC);
+        angleAccess();
+        model.tableGo(TableTreangle);
     }
     //
 
@@ -541,7 +603,9 @@ public class  Controller<group> extends View {
         c.setStartY(A.getCenterY());
         c.setEndX(B.getCenterX());
         c.setEndY(B.getCenterY());
-
+        model.mestopolojenie(A,B,C,poindA);
+        model.mestopolojenie(B,C,A,poindB);
+        model.mestopolojenie(C,A,B,poindC);
 
     }
 }

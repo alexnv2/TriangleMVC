@@ -1,16 +1,21 @@
 package sample;
 
+import com.sun.prism.paint.Paint;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 
 class View implements Observer{
 
     public   ObservableList<PropTreangle> propView = FXCollections.observableArrayList();
+
 
     Model model=new Model();
 
@@ -28,6 +33,7 @@ class View implements Observer{
             case "ColorGo" -> this.SrokeColor(model.getColorLine());//цвет
             case "ArcGo" -> this.arcGo(model.getArcGo());//дуги
             case "TableGo"->this.tableGo(model.getTableView(), propView);
+            case "WebView"->this.webLeftGo(model.getWebViewLeft());
         }
     }
 
@@ -65,6 +71,15 @@ class View implements Observer{
     }
     //Изменение цвета линий
     private void SrokeColor(Line line){
-         line.setStroke(javafx.scene.paint.Color.RED);
+       Color c=model.getColorGoLine();
+        line.setStroke(c);
     }
+
+
+private void webLeftGo(WebView webView) {
+    webView.setContextMenuEnabled(false);
+    WebEngine w=webView.getEngine();
+    w.loadContent(model.getsWebViewLeft());
+}
+
 }
