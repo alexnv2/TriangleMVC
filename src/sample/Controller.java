@@ -1,7 +1,5 @@
 package sample;
 
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -26,6 +24,7 @@ public class  Controller extends View {
     public Line a, b, c, ma, mb, mc, ha, hb, hc, ba, bb, bic, spa, spb, spc;
     public Text poindA, poindB, poindC,poindE,poindD,poindF, poindG, poindH, poindI;
     public Text poindJ,poindK,poindL, poindO, poindS;
+    public Line la, lb,lc;
    @FXML
     public Arc arcA, arcB, arcC;
     public CheckMenuItem menuMedianaA, menuMedianaB, menuMedianaC;
@@ -50,7 +49,7 @@ public class  Controller extends View {
     public TableColumn<PropTreangle, Double> coordinatesY;
     @FXML
     public TableColumn<PropTreangle, Double> angle;
-    private ObservableList<PropTreangle> propView;
+
 
     @FXML
     private void initialize(){
@@ -88,8 +87,10 @@ public class  Controller extends View {
             mA.setVisible(true);
             poindD.setVisible(true);
             model.median(B,C,A,mA,ma);
-            model.mestopolojenie(mA,A,B,poindD);//Точка D
-
+            model.mestopolojenie(mA,C,A,poindD);//Точка D
+           // System.out.println(poindD.getX()+"    "+poindD.getY());
+            model.webViewLeftString(webViewLeft,3);
+            model.webViewBotton(webViewBotton,6);
         }else {
             ma.setVisible(false);
             accMedianaA--;
@@ -102,13 +103,13 @@ public class  Controller extends View {
 
     public void onClickMedianaB() {
         if(menuMedianaB.isSelected()){
-
         accMedianaB++;
         mb.setVisible(true);
         mB.setVisible(true);
         poindE.setVisible(true);
         model.median(A,C,B,mB,mb);
         model.mestopolojenie(mB,A,B,poindE);//Точка Е
+        model.webViewLeftString(webViewLeft,3);
         }else {
             mb.setVisible(false);
             accMedianaB--;
@@ -127,6 +128,7 @@ public class  Controller extends View {
             poindF.setVisible(true);
             model.median(A,B,C,mC,mc);
             model.mestopolojenie(mC,B,C,poindF);//Точка F
+            model.webViewLeftString(webViewLeft,3);
         }else {
             mc.setVisible(false);
             accMedianaC--;
@@ -144,6 +146,8 @@ public class  Controller extends View {
             poindG.setVisible(true);
             model.bisectorAll(B,A,C,bA,ba);
             model.mestopolojenie(bA,A,B,poindG);//Точка G
+            model.webViewLeftString(webViewLeft,2);
+            model.webViewBotton(webViewBotton,5);
         }else {
             ba.setVisible(false);
             bA.setVisible(false);
@@ -157,6 +161,7 @@ public class  Controller extends View {
             poindH.setVisible(true);
             model.bisectorAll(A,B,C,bB,bb);
             model.mestopolojenie(bB,A,B,poindH);//Точка H
+            model.webViewLeftString(webViewLeft,2);
         }else {
             bb.setVisible(false);
             bB.setVisible(false);
@@ -171,6 +176,7 @@ public class  Controller extends View {
             poindI.setVisible(true);
             model.bisectorAll(A,C,B,bC,bic);
             model.mestopolojenie(bC,B,C,poindI);//Точка I
+            model.webViewLeftString(webViewLeft,2);
         }else {
             bic.setVisible(false);
             bC.setVisible(false);
@@ -182,12 +188,16 @@ public class  Controller extends View {
         if(menuHigthA.isSelected()){
             ha.setVisible(true);
             hA.setVisible(true);
+            la.setVisible(true);
             poindJ.setVisible(true);
-            model.HightTreangle(A,C,B,hA,ha);
+            model.HightTreangle(A,C,B,hA,ha,la);
             model.mestopolojenie(hA,A,B,poindJ);//Точка J
+            model.webViewLeftString(webViewLeft,4);
+            model.webViewBotton(webViewBotton,7);
        }else {
             ha.setVisible(false);
             hA.setVisible(false);
+            la.setVisible(false);
             poindJ.setVisible(false);
         }
 
@@ -197,12 +207,15 @@ public class  Controller extends View {
         if(menuHigthB.isSelected()){
             hb.setVisible(true);
             hB.setVisible(true);
+            lb.setVisible(true);
             poindK.setVisible(true);
-            model.HightTreangle(B,A,C,hB,hb);
+            model.HightTreangle(B,A,C,hB,hb,lb);
             model.mestopolojenie(hB,A,B,poindK);//Точка K
+            model.webViewLeftString(webViewLeft,4);
         }else {
             hb.setVisible(false);
             hB.setVisible(false);
+            lb.setVisible(false);
             poindK.setVisible(false);
         }
     }
@@ -211,12 +224,15 @@ public class  Controller extends View {
         if(menuHigthC.isSelected()){
             hc.setVisible(true);
             hC.setVisible(true);
+            lc.setVisible(true);
             poindL.setVisible(true);
-            model.HightTreangle(C,A,B,hC,hc);
+            model.HightTreangle(C,A,B,hC,hc,lc);
             model.mestopolojenie(hC,B,C,poindL);//Точка L
+            model.webViewLeftString(webViewLeft,4);
         }else {
             hc.setVisible(false);
             hC.setVisible(false);
+            lc.setVisible(false);
             poindL.setVisible(false);
         }
     }
@@ -327,16 +343,14 @@ public class  Controller extends View {
                 poindS.setVisible(false);
             }
             vC.setVisible(false);
-
         }
     }
 
     public void mouseDragExited() {
 
     }
-
+    //Внести изменения в таблицу
     public void angleAccess(){
-     System.out.println(C.getCenterX()+"   "+arcC.getLength());
         super.propView.set(0, new PropTreangle("A",A.getCenterX(),A.getCenterY(),arcA.getLength()));
         super.propView.set(1, new PropTreangle("B",B.getCenterX(),B.getCenterY(),arcB.getLength()));
         super.propView.set(2, new PropTreangle("C",C.getCenterX(),C.getCenterY(),arcC.getLength()));
@@ -348,18 +362,17 @@ public class  Controller extends View {
 
         //Стороны
         if (mouseEvent.getSource() == A) {
-            model.sideAll(A,B,C,c,b);
-            model.TextGo(poindA);
-            model.arcVertex(A,B,C,arcA);
-            model.arcVertex(B,C, A, arcB);
-            model.arcVertex(C, A, B, arcC);
-            model.mestopolojenie(A,B,C,poindA); //Угол А
-            angleAccess();
-            model.tableGo(TableTreangle);
+            model.sideAll(A,B,C,c,b);//две смежных стороны с и b
+            model.TextGo(poindA);//вершина угла
+            model.arcVertex(A,B,C,arcA);//дуга угла А
+            model.arcVertex(B,C, A, arcB);//дуга угла В
+            model.arcVertex(C, A, B, arcC); //Дуга угла С
+            model.mestopolojenie(A,B,C,poindA); //Обозначение угла А
+            angleAccess(); //занесение координат и углов в таблицу
+            model.tableGo(TableTreangle);//вывод в таблицу
         }
         if (mouseEvent.getSource() == B) {
             model.sideAll(B,A,C,c,a);
-           //дуги
             model.arcVertex(B,C, A, arcB);
             model.arcVertex(C, A, B, arcC);
             model.arcVertex(A,B,C,arcA);
@@ -369,7 +382,6 @@ public class  Controller extends View {
         }
         if (mouseEvent.getSource() == C) {
             model.sideAll(C,A,B,b,a);
-            //дуги
             model.arcVertex(C, A, B, arcC);
             model.arcVertex(A,B,C,arcA);
             model.arcVertex(B,C, A, arcB);
@@ -377,66 +389,7 @@ public class  Controller extends View {
             angleAccess();
             model.tableGo(TableTreangle);
         }
-        //Медианы
-        if(menuMedianaA.isSelected()) {
-            model.median(B,C,A,mA,ma);
-            model.mestopolojenie(mA,A,B,poindD);//Точка D
-        }
-        if(menuMedianaB.isSelected()) {
-            model.median(A,C,B,mB,mb);
-            model.mestopolojenie(mB,A,B,poindE);//Точка Е
-        }
-        if(menuMedianaC.isSelected()){
-            model.median(A,B,C,mC,mc);
-            model.mestopolojenie(mC,B,C,poindF);//Точка F
-        }
-        //Биссектрисы
-        if(menuBisectorA.isSelected()){
-            model.bisectorAll(B,A,C,bA,ba);
-            model.mestopolojenie(bA,A,B,poindG);//Точка G
-        }
-        if(menuBisectorB.isSelected()){
-            model.bisectorAll(A,B,C,bB,bb);
-            model.mestopolojenie(bB,A,B,poindH);//Точка H
-        }
-        if(menuBisectorC.isSelected()){
-            model.bisectorAll(A,C,B,bC,bic);
-            model.mestopolojenie(bC,B,C,poindI);//Точка I
-        }
-        //Высоты
-        if(menuHigthA.isSelected()) {
-            model.HightTreangle(A,C,B,hA,ha);
-            model.mestopolojenie(hA,A,B,poindJ);//Точка J
-        }
-        if(menuHigthB.isSelected()){
-            model.HightTreangle(B,A,C,hB,hb);
-            model.mestopolojenie(hB,A,B,poindK);//Точка K
-        }
-        if(menuHigthC.isSelected()){
-            model.HightTreangle(C,A,B,hC,hc);
-            model.mestopolojenie(hC,B,C,poindL);//Точка L
-        }
-        //Серединные перпендикуляры
-        if(menuMiddlePerpendicularAB.isSelected()){
-            model.middlePerpendicularAll(A,B,mC,C,vc,spc,poindS);
-            model.mestopolojenie(mC,B,C,poindF);//Точка F
-        }
-        if(menuMiddlePerpendicularBC.isSelected()){
-            model.middlePerpendicularAll(B,C,mA,A,vc,spa,poindS);
-            model.mestopolojenie(mA,A,B,poindD);//Точка D
-        }
-        if(menuMiddlePerpendicularAC.isSelected()){
-            model.middlePerpendicularAll(A,C,mB,B,vc,spb,poindS);
-            model.mestopolojenie(mB,A,B,poindE);//Точка E
-        }
-        //Вписанная окружность
-        if(menuCircleIn.isSelected()){
-            model.inCircle(iC,A,B,C,ic,poindO);
-        }
-        //Описанная окружность
-        if(menuCircleOut.isSelected()){
-            model.outCircle(vC,A,B,C,vc,poindS);
-        }
+        visibleLine();
     }
 
     public void mouseEntered() {
@@ -475,30 +428,36 @@ public class  Controller extends View {
     //Виды треугольников
     //Остроугольный
     public void onClickOxygon() {
+        //Координаты треугольника по умолчанию
         A.setCenterX(80);
         A.setCenterY(320);
         B.setCenterX(260);
         B.setCenterY(70);
         C.setCenterX(360);
         C.setCenterY(290);
-        side();
-        model.webViewBotton(webViewBotton,0);
-        model.webViewLeftString(webViewLeft,0);
+        side();//вывод на экран
+        arcB.setVisible(true);//разрешение на отображение дуги угла В
+        arcC.setVisible(true);
+        model.webViewBotton(webViewBotton,0);//Определения остроугольного треугольника
+        model.webViewLeftString(webViewLeft,0);//Определения
+        //Задаем цвет сторон
         model.setColorGo(Color.BLACK);
         model.ColorGo(a);
         model.setColorGo(Color.BLACK);
         model.ColorGo(b);
         model.setColorGo(Color.BLACK);
         model.ColorGo(c);
+        //Рисуем дуги углов
         model.arcVertex(A,B,C,arcA);
         model.arcVertex(B,C, A, arcB);
         model.arcVertex(C, A, B, arcC);
+        //формуруем и выводим таблицу
         angleAccess();
         model.tableGo(TableTreangle);
+        visibleLine();
     }
 //Тупоугольный
-    public void onClickObtuse(ActionEvent actionEvent) {
-        arcB.setVisible(true);
+    public void onClickObtuse() {
         A.setCenterX(240);
         A.setCenterY(250);
         B.setCenterX(60);
@@ -506,6 +465,8 @@ public class  Controller extends View {
         C.setCenterX(530);
         C.setCenterY(230);
         side();
+        arcB.setVisible(true);//разрешение на отображение дуги угла В
+        model.webViewLeftString(webViewLeft,0);
         model.webViewBotton(webViewBotton,1);
         model.setColorGo(Color.BLACK);
         model.ColorGo(a);
@@ -516,21 +477,26 @@ public class  Controller extends View {
         model.arcVertex(A,B,C,arcA);
         model.arcVertex(B,C, A, arcB);
         model.arcVertex(C, A, B, arcC);
+        arcB.setVisible(false);
+        arcC.setVisible(false);
         angleAccess();
         model.tableGo(TableTreangle);
-
+        visibleLine();
     }
 //Прямоугольный
-    public void onClickRegular(ActionEvent actionEvent) {
-        arcB.setVisible(true);
+    public void onClickRegular() {
         A.setCenterX(110);
-        A.setCenterY(370);
-        B.setCenterX(110);
-        B.setCenterY(80);
-        C.setCenterX(500);
+        A.setCenterY(80);
+        B.setCenterX(490);
+        B.setCenterY(370);
+        C.setCenterX(110);
         C.setCenterY(370);
         side();
+        arcB.setVisible(true);//разрешение на отображение дуги угла В
+        arcC.setVisible(true);
+        model.webViewLeftString(webViewLeft,0);
         model.webViewBotton(webViewBotton,2);
+        model.setColorGo(Color.BLACK);
         model.ColorGo(a);
         model.setColorGo(Color.BLACK);
         model.ColorGo(b);
@@ -541,9 +507,10 @@ public class  Controller extends View {
         model.arcVertex(C, A, B, arcC);
         angleAccess();
         model.tableGo(TableTreangle);
+        visibleLine();
     }
 //равнобедренный
-    public void onClickIsosceles(ActionEvent actionEvent) {
+    public void onClickIsosceles() {
         A.setCenterX(40);
         A.setCenterY(430);
         B.setCenterX(280);
@@ -551,6 +518,8 @@ public class  Controller extends View {
         C.setCenterX(520);
         C.setCenterY(430);
         side();
+        arcB.setVisible(true);//разрешение на отображение дуги угла В
+        arcC.setVisible(true);
         model.webViewBotton(webViewBotton,3);
         model.webViewLeftString(webViewLeft,1);
         model.setColorGo(Color.RED);
@@ -561,14 +530,14 @@ public class  Controller extends View {
         model.ColorGo(c);
         model.arcVertex(A,B,C,arcA);
         model.arcVertex(B,C, A, arcB);
-        arcB.setVisible(false);
+        arcB.setVisible(false);//запрет отображения дуги угла В
         model.arcVertex(C, A, B, arcC);
         angleAccess();
         model.tableGo(TableTreangle);
+        visibleLine();
     }
 //Равносторонний
-    public void onClickEquilateral(ActionEvent actionEvent) {
-        arcB.setVisible(true);
+    public void onClickEquilateral() {
         A.setCenterX(100);
         A.setCenterY(480);
         B.setCenterX(349);
@@ -576,6 +545,10 @@ public class  Controller extends View {
         C.setCenterX(598);
         C.setCenterY(480);
         side();
+        model.webViewLeftString(webViewLeft,0);
+        model.webViewBotton(webViewBotton,4);
+        arcB.setVisible(true);//разрешение на отображение дуги угла В
+        arcC.setVisible(true);
         model.setColorGo(Color.RED);
         model.ColorGo(a);
         model.setColorGo(Color.RED);
@@ -587,9 +560,9 @@ public class  Controller extends View {
         model.arcVertex(C, A, B, arcC);
         angleAccess();
         model.tableGo(TableTreangle);
+        visibleLine();
     }
-    //
-
+    //Вывод треугольников по умолчанию
     private void side(){
         a.setStartX(B.getCenterX());
         a.setStartY(B.getCenterY());
@@ -606,6 +579,68 @@ public class  Controller extends View {
         model.mestopolojenie(A,B,C,poindA);
         model.mestopolojenie(B,C,A,poindB);
         model.mestopolojenie(C,A,B,poindC);
-
+    }
+    //Метод для задания перерасчета все линий
+    public void visibleLine(){
+        //Медианы
+        if(menuMedianaA.isSelected()) {
+            model.median(B,C,A,mA,ma);//медиана из угла А
+            model.mestopolojenie(mA,A,B,poindD);//Точка D
+        }
+        if(menuMedianaB.isSelected()) {
+            model.median(A,C,B,mB,mb);
+            model.mestopolojenie(mB,A,B,poindE);//Точка Е
+        }
+        if(menuMedianaC.isSelected()){
+            model.median(A,B,C,mC,mc);
+            model.mestopolojenie(mC,B,C,poindF);//Точка F
+        }
+        //Биссектрисы
+        if(menuBisectorA.isSelected()){
+            model.bisectorAll(B,A,C,bA,ba);
+            model.mestopolojenie(bA,A,B,poindG);//Точка G
+        }
+        if(menuBisectorB.isSelected()){
+            model.bisectorAll(A,B,C,bB,bb);
+            model.mestopolojenie(bB,A,B,poindH);//Точка H
+        }
+        if(menuBisectorC.isSelected()){
+            model.bisectorAll(A,C,B,bC,bic);
+            model.mestopolojenie(bC,B,C,poindI);//Точка I
+        }
+        //Высоты
+        if(menuHigthA.isSelected()) {
+            model.HightTreangle(A,C,B,hA,ha, la);
+            model.mestopolojenie(hA,A,B,poindJ);//Точка J
+        }
+        if(menuHigthB.isSelected()){
+            model.HightTreangle(B,A,C,hB,hb, lb);
+            model.mestopolojenie(hB,A,B,poindK);//Точка K
+        }
+        if(menuHigthC.isSelected()){
+            model.HightTreangle(C,A,B,hC,hc,lc);
+            model.mestopolojenie(hC,B,C,poindL);//Точка L
+        }
+        //Серединные перпендикуляры
+        if(menuMiddlePerpendicularAB.isSelected()){
+            model.middlePerpendicularAll(A,B,mC,C,vc,spc,poindS);
+            model.mestopolojenie(mC,B,C,poindF);//Точка F
+        }
+        if(menuMiddlePerpendicularBC.isSelected()){
+            model.middlePerpendicularAll(B,C,mA,A,vc,spa,poindS);
+            model.mestopolojenie(mA,A,B,poindD);//Точка D
+        }
+        if(menuMiddlePerpendicularAC.isSelected()){
+            model.middlePerpendicularAll(A,C,mB,B,vc,spb,poindS);
+            model.mestopolojenie(mB,A,B,poindE);//Точка E
+        }
+        //Вписанная окружность
+        if(menuCircleIn.isSelected()){
+            model.inCircle(iC,A,B,C,ic,poindO);
+        }
+        //Описанная окружность
+        if(menuCircleOut.isSelected()){
+            model.outCircle(vC,A,B,C,vc,poindS);
+        }
     }
 }

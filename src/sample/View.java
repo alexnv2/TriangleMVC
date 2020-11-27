@@ -1,6 +1,5 @@
 package sample;
 
-import com.sun.prism.paint.Paint;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -13,12 +12,10 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 class View implements Observer{
-
+    //Список для баблицы
     public   ObservableList<PropTreangle> propView = FXCollections.observableArrayList();
 
-
     Model model=new Model();
-
     View(){
         model.registerObserver(this);
     }
@@ -32,11 +29,10 @@ class View implements Observer{
             case "TextGo" -> this.TextGo(model.getTextGo());//буквы
             case "ColorGo" -> this.SrokeColor(model.getColorLine());//цвет
             case "ArcGo" -> this.arcGo(model.getArcGo());//дуги
-            case "TableGo"->this.tableGo(model.getTableView(), propView);
-            case "WebView"->this.webLeftGo(model.getWebViewLeft());
+            case "TableGo"->this.tableGo(model.getTableView());//таблица
+            case "WebView"->this.webViewGo(model.getWebView());//Заполнение слева и внизу
         }
     }
-
     //Перемещение вершин
     private void vertexGo(Circle ver){
        ver.setCenterX(model.getVerX());
@@ -58,28 +54,25 @@ class View implements Observer{
     private void arcGo(Arc arc){
         arc.setCenterX(model.getVerX());
         arc.setCenterY(model.getVerY());
-     //   System.out.println(model.getVerX()+"  "+model.getVerY());
         arc.setRadiusX(model.getArcRadius());
         arc.setRadiusY(model.getArcRadius());
         arc.setStartAngle(model.getAngleStart());
         arc.setLength(model.getAngleLength());
     }
     //Заполнение таблицы
-    private void tableGo(TableView tableView, ObservableList propView){
+    private void tableGo(TableView tableView){
         tableView.setItems(propView);
-
     }
     //Изменение цвета линий
     private void SrokeColor(Line line){
-       Color c=model.getColorGoLine();
+       Color c=model.getColorGo();
         line.setStroke(c);
     }
-
-
-private void webLeftGo(WebView webView) {
-    webView.setContextMenuEnabled(false);
-    WebEngine w=webView.getEngine();
-    w.loadContent(model.getsWebViewLeft());
-}
-
+    //Заполнение web страниц слева и внизу
+    private void webViewGo(WebView webView) {
+         webView.setContextMenuEnabled(false);
+         WebEngine w=webView.getEngine();
+         w.loadContent(model.getStringWebView());
+       // w.load("https://yandex.ru");
+    }
 }

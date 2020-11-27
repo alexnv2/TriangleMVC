@@ -40,7 +40,6 @@
               <Menu mnemonicParsing="false" text="Окружности">
                   <CheckMenuItem fx:id="menuCircleIn" mnemonicParsing="false" onAction="#onClickCircleIn" selected="false" text="Вписанная окружность" />
                   <CheckMenuItem fx:id="menuCircleOut" mnemonicParsing="false" onAction="#onClickCircleOut" selected="false" text="Описанная окружность" />
-      
               </Menu>
           </MenuBar>
       </top>
@@ -49,9 +48,9 @@
               <Arc fx:id="arcA" fill="TRANSPARENT" stroke="BLUE" type="OPEN" />
               <Arc fx:id="arcB" fill="TRANSPARENT" stroke="RED" type="OPEN" />
               <Arc fx:id="arcC" fill="TRANSPARENT" stroke="GREEN" type="OPEN" />
-              <Circle fx:id="iC" fill="TRANSPARENT" stroke="Red" strokeWidth="2" visible="false" />
-              <Circle fx:id="ic" fill="darkred" radius="3" strokeWidth="2" visible="false" />
-              <Circle fx:id="vc" fill="RED" radius="3" strokeWidth="2" visible="false" />
+              <Circle fx:id="iC" fill="TRANSPARENT" stroke="GREEN" strokeWidth="2" visible="false" />
+              <Circle fx:id="ic" fill="GREEN" radius="3" strokeWidth="2" visible="false" />
+              <Circle fx:id="vc" fill="BLUE" radius="3" strokeWidth="2" visible="false" />
               <Circle fx:id="vC" fill="TRANSPARENT" stroke="Blue" strokeWidth="2" visible="false" />
       
               <Circle fx:id="A" centerX="50" centerY="200" fill="blue" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
@@ -75,17 +74,21 @@
               <Circle fx:id="hC" fill="silver" radius="3" visible="false" />
               <Line fx:id="hc" stroke="darkred" />
       
-              <Circle fx:id="bA" fill="purple" radius="3" visible="false" />
-              <Line fx:id="ba" stroke="darkgreen" />
-              <Circle fx:id="bB" fill="purple" radius="3" visible="false" />
-              <Line fx:id="bb" stroke="darkgreen" />
-              <Circle fx:id="bC" fill="purple" radius="3" visible="false" />
-              <Line fx:id="bic" stroke="darkgreen" />
+              <Circle fx:id="bA" fill="GREEN" radius="3" visible="false" />
+              <Line fx:id="ba" stroke="seagreen" />
+              <Circle fx:id="bB" fill="GREEN" radius="3" visible="false" />
+              <Line fx:id="bb" stroke="seagreen" />
+              <Circle fx:id="bC" fill="GREEN" radius="3" visible="false" />
+              <Line fx:id="bic" stroke="seagreen" />
       
-              <Line fx:id="spa" stroke="gold" />
-              <Line fx:id="spb" stroke="gold" />
-              <Line fx:id="spc" stroke="gold" />
-      
+              <Line fx:id="spa" stroke="royalblue" />
+              <Line fx:id="spb" stroke="royalblue" />
+              <Line fx:id="spc" stroke="royalblue" />
+
+               <Line fx:id="la" stroke="grey" />
+               <Line fx:id="lb" stroke="gray" />
+               <Line fx:id="lc" stroke="grey" />
+
               <Text fx:id="poindA" strokeType="OUTSIDE" strokeWidth="0.0" text="A" x="30" y="200">
                   <font>
                       <Font size="18.0" />
@@ -156,8 +159,6 @@
                       <Font name="Times New Roman" size="18.0" />
                   </font>
               </Text>
-
-      
           </Pane>
       </center>
       <right>
@@ -181,7 +182,6 @@
          <WebView fx:id="webViewBotton" prefHeight="100.0" prefWidth="1222.0" BorderPane.alignment="BOTTOM_LEFT" />
       </bottom>
       <left>
-         <WebView fx:id="webViewLeft" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" BorderPane.alignment="TOP_LEFT" />
-
+         <WebView fx:id="webViewLeft" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" BorderPane.alignment="TOP_LEFT"  />
       </left>
    </BorderPane>

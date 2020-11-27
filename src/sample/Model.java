@@ -7,9 +7,9 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-
 import static java.lang.StrictMath.*;
 import static my.sample.StringConstant.*;
 
@@ -21,13 +21,11 @@ class Model implements  Observable {
     private Line sideAll;
     private Text textGo;
     private Line colorLine;
-    private Color ColorGoLine;
+    private Color ColorGo;
     private Arc arcGo;
     private TableView mTableView;
-    private WebView webViewLeft;
-    private WebView weViewBotton;
-
-
+    private WebView webView;
+ 
     private double verX;
     private double verY;
     private double verX1;
@@ -36,28 +34,27 @@ class Model implements  Observable {
     private double arcRadius;//радиус дуги
     private double angleStart;//начало дуги гр.
     private double angleLength;//длина дуги гр.
-    private String sWebViewLeft;//text left
-    private String sWebViewBotton;//text botton
+    private String stringWebView;//text left
+ 
 
     //Конструктор
-Model(){
+    Model(){
     observers=new LinkedList<>();
 }
 
     //Список переменных для представления View
     //Заносятся переменные для переменные для View
-    void setVerX(double s){verX=s;}//координаты вершины от мышки
-    void setVerY(double s){verY=s;}
-    void setVerX1(double s){verX1=s;}//2 координата для сотороны
-    void setVerY1(double s){verY1=s;}
-    void setColorGo(Color c) {ColorGoLine = c; }//цвет
-    void setDx(double s){dx=s;}//смещение букв
-    void setDy(double s){dy=s;}
-    void setArcRadius(double s) {arcRadius = s;}//радиус дуги
-    void setAngleStart(double s) {angleStart = s;}//начало дуги
-    void setAngleLength(double s) {angleLength = s;}//конец дуги
-    void setsWebViewLeft(String s){sWebViewLeft =s;}//text right
-    void setsWebViewBotton(String s){sWebViewBotton=s;}//text botton
+    void setVerX(double d){verX=d;}//координаты вершины от мышки
+    void setVerY(double d){verY=d;}
+    void setVerX1(double d){verX1=d;}//2 координата для сотороны
+    void setVerY1(double d){verY1=d;}
+    void setColorGo(Color c) {ColorGo = c; }//цвет
+    void setDx(double d){dx=d;}//смещение букв
+    void setDy(double d){dy=d;}
+    void setArcRadius(double d) {arcRadius = d;}//радиус дуги
+    void setAngleStart(double d) {angleStart = d;}//начало дуги
+    void setAngleLength(double d) {angleLength = d;}//конец дуги
+    void setStringWebView(String s){stringWebView =s;}//текс для определений
 
     //Отдаются переменные для View
     Line getSideAll(){return sideAll;} //Объекты линия
@@ -66,8 +63,8 @@ Model(){
     Line getColorLine(){return  colorLine;} //Цвет для линий
     Arc getArcGo(){return arcGo;}// Дуги
     TableView getTableView(){return mTableView;}
-    WebView getWebViewLeft(){return webViewLeft;}//техт
-    Color getColorGoLine(){return ColorGoLine;}
+    WebView getWebView(){return webView;}//Текст определений
+    Color getColorGo(){return ColorGo;}
 
     double getVerX(){return verX;}
     double getVerY(){return verY;}
@@ -78,9 +75,9 @@ Model(){
     public double getArcRadius() {return arcRadius;}//радиус дуги
     public double getAngleStart() {return angleStart;}//начало дуги Х
     public double getAngleLength() {return angleLength;}//длина дуги Y
-    public String getsWebViewLeft(){return sWebViewLeft;}//text right
-    public String getsWebViewBotton(){return sWebViewBotton;}//text botton
-    public Color getColorGo(){return  ColorGoLine;}
+    public String getStringWebView(){return stringWebView;}//текст определений
+
+
     //регистрация слушателя
     @Override
     public void registerObserver(Observer o) {
@@ -95,19 +92,33 @@ Model(){
     }
     //Текст для левой части
     public void webViewLeftString(WebView o, int c){
+       String puthImages= new File(".").getAbsolutePath()+"\\src\\Images\\formula_bis.jpg";
+       String puthImg1="<img src=file:\\"+puthImages+" width=360 height=105>";
+
     switch (c) {
-        case 0: setsWebViewLeft(TREANLE_OPR + TREANLE_ANGL + TRANLE_NER);break;
-        case 1: setsWebViewLeft(TR_TEOREMA33+TR_TEOREMA34);break;
+        case 0: setStringWebView(WEB_HTML+TR_OPR + TR_ANGLE + TR_NERAVENSVO+ TR_SUNANGLE+WEB_END);break;
+        case 1: setStringWebView(WEB_HTML+TR_TEOREMA33+TR_TEOREMA34+WEB_END);break;
+        case 2: setStringWebView(WEB_HTML+TR_BISSECTOR+TR_BISSEC_FOR+puthImg1+WEB_END);break;
+        case 3: setStringWebView((WEB_HTML+TR_MEDIANA+WEB_END));break;
+        case 4: setStringWebView(WEB_HTML+TR_HIGTH+WEB_END);break;
+     //   default:
+     //       throw new IllegalStateException("Неожиданное значение: " + c);
     }
-    webViewGo(o);
+    webViewGo(o);//на вывод
     }
     //Текст для нижней части
     public void webViewBotton(WebView o, int c){
     switch (c) {
-        case 0: setsWebViewLeft(TR_OXYGEN);break;
-        case 1: setsWebViewLeft(TR_OBTUSE);break;
-        case 2: setsWebViewLeft(TR_REGULAR);break;
-        case 3: setsWebViewLeft(TR_ISOSCELETES);break;
+        case 0: setStringWebView(WEB_HTML+TR_OXYGEN+WEB_END);break;
+        case 1: setStringWebView(WEB_HTML+TR_OBTUSE+WEB_END);break;
+        case 2: setStringWebView(WEB_HTML+TR_REGULAR+WEB_END);break;
+        case 3: setStringWebView(WEB_HTML+TR_ISOSCELETES+WEB_END);break;
+        case 4: setStringWebView(WEB_HTML+TR_Equilateral+WEB_END);break;
+        case 5: setStringWebView(WEB_HTML+TR_BISSECTOR_AG+WEB_END);break;
+        case 6: setStringWebView((WEB_HTML+TR_MEDIANA_AD+WEB_END));break;
+        case 7: setStringWebView(WEB_HTML+TR_HIGTH_AJ+WEB_END);break;
+     //   default:
+     //       throw new IllegalStateException("Неожиданное значение: " + c);
     }
     webViewGo(o);
     }
@@ -128,11 +139,11 @@ Model(){
         setVerY((y1 + ra * y3) / (1 + ra));
     }
     //Точка пересечения двух прямых под 90 градусов
-    private void intersection(double x10, double y10, double x11, double y11, double x12, double y12) {
-        double a1 = y12 - y11;
-        double b1 = x11 - x12;
-        double c1 = x11 * y12 - x12 * y11;
-        double c2 = -x10 * (x12 - x11) + y10 * (y11 - y12);
+    private void intersection(double x1, double y1, double x2, double y2, double x3, double y3) {
+        double a1 = y3 - y2;
+        double b1 = x2 - x3;
+        double c1 = x2 * y3 - x3 * y2;
+        double c2 = -x1 * (x3 - x2) + y1 * (y2 - y3);
         //Вычисление главного определителя
         double o = -pow(a1, 2) - pow(b1, 2);
             setVerX((-c1 * a1 - c2 * b1)/o);
@@ -190,7 +201,7 @@ Model(){
         double s= areaTriangle(x1, y1, x2, y2, x3, y3);
         return abs((ab*bc*ac)/(s*4));
     }
-    //Стороны треугольника
+    //Выводит две смежных стороны треугольника
     public void sideAll(Circle o1, Circle o2, Circle o3, Line l1, Line l2){
         VertexGo(o1);
         setVerX1(o2.getCenterX());
@@ -209,17 +220,7 @@ Model(){
 
         if(o1.getCenterY()<o3.getCenterY()){
             arcLight=360-arcLight;
-        }else{
-           // arcLight=-arcLight;
-
         }
-
-       /* if(o1.getCenterX()>o3.getCenterX()){
-            arcLight=180-arcLight;
-        }
-
-        */
-
         setAngleStart(arcLight);
         setVerX(o1.getCenterX());
         setVerY(o1.getCenterY());
@@ -248,6 +249,7 @@ Model(){
         xP = getVerX() + (rOut * cos(toRadians(-anglePol)));
         yP = getVerY() + (rOut * sin(toRadians(-anglePol)));
     }
+    //System.out.println(xP);
     setDx(xP);
     setDy(yP);
     TextGo(t);
@@ -271,12 +273,15 @@ Model(){
         SideGo(l);
     }
     //Высоты
-    public void HightTreangle(Circle o1, Circle o2, Circle o3, Circle o4, Line l){
+    public void HightTreangle(Circle o1, Circle o2, Circle o3, Circle o4, Line l1, Line l2){
         intersection(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
         VertexGo(o4);
         setVerX1(o1.getCenterX());
         setVerY1(o1.getCenterY());
-        SideGo(l);
+        SideGo(l1);
+        setVerX1(o3.getCenterX());
+        setVerY1(o3.getCenterY());
+        SideGo(l2);
     }
     //Серединные перпендикуляры
     public void middlePerpendicularAll(Circle o1, Circle o2,Circle o3, Circle o4,Circle o5,Line l, Text t){
@@ -347,7 +352,7 @@ Model(){
         notifyObservers("tableGo");
     }
     void webViewGo(WebView o){
-        webViewLeft =o;
+        webView =o;
         notifyObservers("WebView");
     }
 
