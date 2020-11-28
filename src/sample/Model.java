@@ -5,11 +5,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import java.io.File;
+import java.text.Normalizer;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
 import static java.lang.StrictMath.*;
 import static my.sample.StringConstant.*;
 
@@ -25,6 +29,7 @@ class Model implements  Observable {
     private Arc arcGo;
     private TableView mTableView;
     private WebView webView;
+    private Rectangle ang90;
  
     private double verX;
     private double verY;
@@ -56,6 +61,7 @@ class Model implements  Observable {
     void setAngleLength(double d) {angleLength = d;}//конец дуги
     void setStringWebView(String s){stringWebView =s;}//текс для определений
 
+
     //Отдаются переменные для View
     Line getSideAll(){return sideAll;} //Объекты линия
     Circle getVerTex() {return  vertex;} //Точка
@@ -65,6 +71,7 @@ class Model implements  Observable {
     TableView getTableView(){return mTableView;}
     WebView getWebView(){return webView;}//Текст определений
     Color getColorGo(){return ColorGo;}
+    Rectangle getAng90(){return ang90;}
 
     double getVerX(){return verX;}
     double getVerY(){return verY;}
@@ -100,7 +107,7 @@ class Model implements  Observable {
         case 1: setStringWebView(WEB_HTML+TR_TEOREMA33+TR_TEOREMA34+WEB_END);break;
         case 2: setStringWebView(WEB_HTML+TR_BISSECTOR+TR_BISSEC_FOR+puthImg1+WEB_END);break;
         case 3: setStringWebView((WEB_HTML+TR_MEDIANA+WEB_END));break;
-        case 4: setStringWebView(WEB_HTML+TR_HIGTH+WEB_END);break;
+        case 4: setStringWebView(WEB_HTML+TR_HIGTH+TR_ORTOSENTR+WEB_END);break;
      //   default:
      //       throw new IllegalStateException("Неожиданное значение: " + c);
     }
@@ -138,8 +145,28 @@ class Model implements  Observable {
         setVerX((x1 + ra * x3) / (1 + ra));
         setVerY((y1 + ra * y3) / (1 + ra));
     }
+    //Точка пересечения двух прямых
+    private void crossing(double x1, double y1, double x2, double y2, double x3, double y3,double x4, double y4){
+        double a1=y2-y1;
+        double a2=y4-y3;
+        double b1=x1-x2;
+        double b2=x3-x4;
+        double c1=x1*y2-x2*y1;
+        double c2=x3*y4-x4*y3;
+//вычисление главного определителя
+        double o=a1*b2-a2*b1;
+        double oy=0, ox=0;
+        if (o!=0) { //прямые пересекаются
+            //вычисление определетелей
+            oy = a1 * c2 - a2 * c1;
+            ox = c1 * b2 - c2 * b1;
+        }
+//вычисление координат точек пересечения
+            setVerX1(ox/o);
+            setVerY1(oy/o);
+    }
     //Точка пересечения двух прямых под 90 градусов
-    private void intersection(double x1, double y1, double x2, double y2, double x3, double y3) {
+   private void intersection(double x1, double y1, double x2, double y2, double x3, double y3) {
         double a1 = y3 - y2;
         double b1 = x2 - x3;
         double c1 = x2 * y3 - x3 * y2;
@@ -149,6 +176,8 @@ class Model implements  Observable {
             setVerX((-c1 * a1 - c2 * b1)/o);
             setVerY((a1 * c2 - b1 * c1)/o);
     }
+
+
     //Точка пересечения серединных перпендикуляров
     private void middlePerpendicular(double x1,double y1,double x2,double y2,double x3,double y3) {
         double smAx = midpoint(x2, x3);
@@ -167,6 +196,10 @@ class Model implements  Observable {
         setVerX((dx / d));
         setVerY((dy / d));
     }
+
+
+
+
     //Площадь треугольника
     private double areaTriangle(double x1, double y1, double x2, double y2, double x3, double y3){
     return ((x2-x1)*(y3-y1)-(x3-x1)*(y2-y1))/2;
@@ -227,32 +260,38 @@ class Model implements  Observable {
      //   System.out.println(angleABC+" "+arcLight);
         ArcGo(a1);
     }
+    //Прямой угол
+    public void rectangle90(Circle o1,Circle o2, Circle o3, Circle o4, Line l1, Line l2){
+        double tx=o2.getCenterX()-o1.getCenterX();
+        double ty=o2.getCenterY()-o1.getCenterY();
+        double t= 0.15;
+        double ax=o1.getCenterX()+tx*t;
+        double ay=o1.getCenterY()+ty*t;
+        intersection(ax,ay,o1.getCenterX(),o1.getCenterY(),o3.getCenterX(),o3.getCenterY());
+        setVerX1(ax);
+        setVerY1(ay);
+        SideGo(l1);
+        intersection(ax,ay,o1.getCenterX(),o1.getCenterY(),o4.getCenterX(),o4.getCenterY());
+        setVerX1(ax);
+        setVerY1(ay);
+        SideGo(l2);
+       //System.out.println(ax+" "+ay+"  "+getVerX()+"  "+getVerY() );
+    }
 
     //Нахождение углов в треугольнике АВС координаты А, В, С
     private double angleTriangle(double x1, double y1, double x2, double y2, double x3, double y3){
     double ab=distance(x1,y1,x2,y2);
     double ac=distance(x1,y1,x3,y3);
     double bc=distance(x2,y2,x3,y3);
-    return toDegrees(acos((pow(ab,2)+pow(ac,2)-pow(bc,2))/(2*ab*ac)));
+    return round(toDegrees(acos((pow(ab,2)+pow(ac,2)-pow(bc,2))/(2*ab*ac))));
     }
-    //Положение букв, о1, o2,o3-Уголы треугоьника, о2-надпись
-    public void mestopolojenie(Circle o1, Circle o2, Circle o3, Text t){
-    middlePerpendicular(o1.getCenterX(),o1.getCenterY(),o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY());
-    double rOut=radiusOutCircle(o1.getCenterX(),o1.getCenterY(),o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY());
-    double anglePol=angleTriangle(getVerX(),getVerY(),o1.getCenterX(),o1.getCenterY(),getVerX()+100,getVerY());
-    rOut=rOut+20;//20 px смещение
-    double xP, yP;
-    if(getVerY()<o1.getCenterY()) {
-        xP = getVerX() + (rOut * cos(toRadians(anglePol)));
-        yP = getVerY() + (rOut * sin(toRadians(anglePol)));
-    }else {
-        xP = getVerX() + (rOut * cos(toRadians(-anglePol)));
-        yP = getVerY() + (rOut * sin(toRadians(-anglePol)));
-    }
-    //System.out.println(xP);
-    setDx(xP);
-    setDy(yP);
-    TextGo(t);
+    //Положение букв
+    public void mestopolojenie(Circle o1, Circle o2, Text t){
+        double xP=o1.getCenterX()+((o1.getCenterX()-o2.getCenterX()))*0.1;
+        double yP=o1.getCenterY()+((o1.getCenterY()-o2.getCenterY()))*0.1;
+        setDx(xP);
+        setDy(yP);
+        TextGo(t);
 }
 
     //Медианы
@@ -273,15 +312,20 @@ class Model implements  Observable {
         SideGo(l);
     }
     //Высоты
-    public void HightTreangle(Circle o1, Circle o2, Circle o3, Circle o4, Line l1, Line l2){
+    public void HightTreangle(Circle o1, Circle o2, Circle o3, Circle o4, Line l1, Line l2, Line l3){
         intersection(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
         VertexGo(o4);
         setVerX1(o1.getCenterX());
         setVerY1(o1.getCenterY());
         SideGo(l1);
-        setVerX1(o3.getCenterX());
-        setVerY1(o3.getCenterY());
+        setVerX1(o2.getCenterX());
+        setVerY1(o2.getCenterY());
         SideGo(l2);
+        intersection(o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY(), o1.getCenterX(), o1.getCenterY());
+        crossing(o1.getCenterX(),o1.getCenterY(), o4.getCenterX(), o4.getCenterY(),o2.getCenterX(),o2.getCenterY(),getVerX(),getVerY());
+        setVerX(o4.getCenterX());
+        setVerY(o4.getCenterY());
+        SideGo(l3);
     }
     //Серединные перпендикуляры
     public void middlePerpendicularAll(Circle o1, Circle o2,Circle o3, Circle o4,Circle o5,Line l, Text t){
@@ -291,6 +335,8 @@ class Model implements  Observable {
         setVerX1(getVerX());
         setVerY1(getVerY());
         middlePerpendicular(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o4.getCenterX(),o4.getCenterY());
+        //intersection(o4.getCenterX(),o4.getCenterY(),o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY());
+        //intersection(o2.getCenterX(), o2.getCenterY(), o4.getCenterX(), o4.getCenterY(), o1.getCenterX(),o1.getCenterY());
         VertexGo(o5);
         SideGo(l);
         setDx(o5.getCenterX()+10);
@@ -314,7 +360,9 @@ class Model implements  Observable {
     public void outCircle(Circle o1, Circle o2, Circle o3, Circle o4, Circle o5, Text t){
         o1.setRadius(radiusOutCircle(o2.getCenterX(),o2.getCenterY(), o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY()));
         middlePerpendicular(o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY(), o4.getCenterX(),o4.getCenterY());
+        //intersection(o4.getCenterX(),o4.getCenterY(),o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
         VertexGo(o1);
+        //intersection(o4.getCenterX(),o4.getCenterY(),o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
         middlePerpendicular(o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY(), o4.getCenterX(),o4.getCenterY());
         VertexGo(o5);
         setDx(o5.getCenterX()+10);
@@ -355,6 +403,10 @@ class Model implements  Observable {
         webView =o;
         notifyObservers("WebView");
     }
+    void ang90Go(Rectangle o){
+        ang90=o;
+        notifyObservers("Angle90");
 
+    }
 }
 

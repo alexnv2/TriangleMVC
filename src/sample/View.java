@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -31,6 +32,7 @@ class View implements Observer{
             case "ArcGo" -> this.arcGo(model.getArcGo());//дуги
             case "TableGo"->this.tableGo(model.getTableView());//таблица
             case "WebView"->this.webViewGo(model.getWebView());//Заполнение слева и внизу
+            case "Angle90"->this.angle90Go(model.getAng90());//Прямой угол
         }
     }
     //Перемещение вершин
@@ -74,5 +76,12 @@ class View implements Observer{
          WebEngine w=webView.getEngine();
          w.loadContent(model.getStringWebView());
        // w.load("https://yandex.ru");
+    }
+    //Прямой угол
+    private void angle90Go(Rectangle r){
+    r.setX(model.getVerX());
+    r.setY(model.getVerY());
+    r.setWidth(20);
+    r.setHeight(20);
     }
 }
