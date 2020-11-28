@@ -5,15 +5,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import java.io.File;
-import java.text.Normalizer;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-
 import static java.lang.StrictMath.*;
 import static my.sample.StringConstant.*;
 
@@ -29,7 +25,7 @@ class Model implements  Observable {
     private Arc arcGo;
     private TableView mTableView;
     private WebView webView;
-    private Rectangle ang90;
+
  
     private double verX;
     private double verY;
@@ -71,7 +67,7 @@ class Model implements  Observable {
     TableView getTableView(){return mTableView;}
     WebView getWebView(){return webView;}//Текст определений
     Color getColorGo(){return ColorGo;}
-    Rectangle getAng90(){return ang90;}
+
 
     double getVerX(){return verX;}
     double getVerY(){return verY;}
@@ -153,7 +149,7 @@ class Model implements  Observable {
         double b2=x3-x4;
         double c1=x1*y2-x2*y1;
         double c2=x3*y4-x4*y3;
-//вычисление главного определителя
+    //вычисление главного определителя
         double o=a1*b2-a2*b1;
         double oy=0, ox=0;
         if (o!=0) { //прямые пересекаются
@@ -161,12 +157,12 @@ class Model implements  Observable {
             oy = a1 * c2 - a2 * c1;
             ox = c1 * b2 - c2 * b1;
         }
-//вычисление координат точек пересечения
+    //вычисление координат точек пересечения
             setVerX1(ox/o);
             setVerY1(oy/o);
     }
-    //Точка пересечения двух прямых под 90 градусов
-   private void intersection(double x1, double y1, double x2, double y2, double x3, double y3) {
+    //Точка пересечения двух прямых под 90 градусов, для высот
+    private void intersection(double x1, double y1, double x2, double y2, double x3, double y3) {
         double a1 = y3 - y2;
         double b1 = x2 - x3;
         double c1 = x2 * y3 - x3 * y2;
@@ -176,8 +172,6 @@ class Model implements  Observable {
             setVerX((-c1 * a1 - c2 * b1)/o);
             setVerY((a1 * c2 - b1 * c1)/o);
     }
-
-
     //Точка пересечения серединных перпендикуляров
     private void middlePerpendicular(double x1,double y1,double x2,double y2,double x3,double y3) {
         double smAx = midpoint(x2, x3);
@@ -196,10 +190,6 @@ class Model implements  Observable {
         setVerX((dx / d));
         setVerY((dy / d));
     }
-
-
-
-
     //Площадь треугольника
     private double areaTriangle(double x1, double y1, double x2, double y2, double x3, double y3){
     return ((x2-x1)*(y3-y1)-(x3-x1)*(y2-y1))/2;
@@ -213,13 +203,14 @@ class Model implements  Observable {
     double p=abs((ab+ac+bc)/2);
     return abs(s/p);
     }
-    //Координаты центра вписанной окружности
+    //Координаты центра вписанной окружности X
     private void  inCircleX(double x1, double y1, double x2, double y2, double x3, double y3){
         double ab=distance(x1,y1,x2,y2);
         double ac=distance(x1,y1,x3,y3);
         double bc=distance(x2,y2,x3,y3);
         setVerX((bc*x1+ac*x2+ab*x3)/(ab+bc+ac));
     }
+    //Координаты центра вписанной окружности Y
     private void  inCircleY(double x1, double y1, double x2, double y2, double x3, double y3){
         double ab=distance(x1,y1,x2,y2);
         double ac=distance(x1,y1,x3,y3);
@@ -234,7 +225,7 @@ class Model implements  Observable {
         double s= areaTriangle(x1, y1, x2, y2, x3, y3);
         return abs((ab*bc*ac)/(s*4));
     }
-    //Выводит две смежных стороны треугольника
+    //Выводит две прилегающих к одному углу стороны треугольника
     public void sideAll(Circle o1, Circle o2, Circle o3, Line l1, Line l2){
         VertexGo(o1);
         setVerX1(o2.getCenterX());
@@ -260,7 +251,7 @@ class Model implements  Observable {
      //   System.out.println(angleABC+" "+arcLight);
         ArcGo(a1);
     }
-    //Прямой угол
+    //Прямой угол вместо дуги
     public void rectangle90(Circle o1,Circle o2, Circle o3, Circle o4, Line l1, Line l2){
         double tx=o2.getCenterX()-o1.getCenterX();
         double ty=o2.getCenterY()-o1.getCenterY();
@@ -293,7 +284,6 @@ class Model implements  Observable {
         setDy(yP);
         TextGo(t);
 }
-
     //Медианы
     public void median(Circle o1,Circle o2, Circle o3, Circle o4, Line l){
         setVerX(midpoint(o1.getCenterX(),o2.getCenterX()));
@@ -403,10 +393,6 @@ class Model implements  Observable {
         webView =o;
         notifyObservers("WebView");
     }
-    void ang90Go(Rectangle o){
-        ang90=o;
-        notifyObservers("Angle90");
 
-    }
 }
 

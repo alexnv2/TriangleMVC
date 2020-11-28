@@ -32,7 +32,7 @@ class View implements Observer{
             case "ArcGo" -> this.arcGo(model.getArcGo());//дуги
             case "TableGo"->this.tableGo(model.getTableView());//таблица
             case "WebView"->this.webViewGo(model.getWebView());//Заполнение слева и внизу
-            case "Angle90"->this.angle90Go(model.getAng90());//Прямой угол
+
         }
     }
     //Перемещение вершин
@@ -77,11 +77,5 @@ class View implements Observer{
          w.loadContent(model.getStringWebView());
        // w.load("https://yandex.ru");
     }
-    //Прямой угол
-    private void angle90Go(Rectangle r){
-    r.setX(model.getVerX());
-    r.setY(model.getVerY());
-    r.setWidth(20);
-    r.setHeight(20);
-    }
+
 }

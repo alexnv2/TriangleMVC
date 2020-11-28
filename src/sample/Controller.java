@@ -51,7 +51,6 @@ public class  Controller extends View {
     @FXML
     public TableColumn<PropTreangle, Double> angle;
 
-
     @FXML
     private void initialize(){
         model.webViewLeftString(webViewLeft,0);
@@ -256,7 +255,6 @@ public class  Controller extends View {
                 vc.setVisible(false);
                 poindS.setVisible(false);
             }
-
         }
     }
 
@@ -282,7 +280,6 @@ public class  Controller extends View {
                 vc.setVisible(false);
                 poindS.setVisible(false);
             }
-
         }
     }
     public void onClickMiddlePerpendicularAC() {
@@ -348,7 +345,6 @@ public class  Controller extends View {
     public void mouseDraggen(MouseEvent mouseEvent) {
         model.setVerX(mouseEvent.getX());
         model.setVerY(mouseEvent.getY());
-
 
         //Стороны
         if (mouseEvent.getSource() == A) {
@@ -417,7 +413,6 @@ public class  Controller extends View {
         }
     }
 
-
     public void mouseEntered() {
         A.setCursor(Cursor.OPEN_HAND);
         B.setCursor(Cursor.OPEN_HAND);
@@ -428,7 +423,6 @@ public class  Controller extends View {
         if (mouseEvent.getSource() == A) {
             A.setMouseTransparent(true);
             A.setCursor(Cursor.CLOSED_HAND);
-
         }
         if (mouseEvent.getSource() == B) {
             B.setMouseTransparent(true);
