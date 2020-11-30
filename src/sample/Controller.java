@@ -1,10 +1,16 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -12,6 +18,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.io.IOException;
 
 public class  Controller extends View {
 
@@ -34,8 +45,10 @@ public class  Controller extends View {
     public CheckMenuItem menuMiddlePerpendicularAB, menuMiddlePerpendicularBC, menuMiddlePerpendicularAC;
     public CheckMenuItem menuCircleIn, menuCircleOut;
     public RadioMenuItem menuOxygon, menuObtuse, menuRegular, menuIsosceles, menuEquilateral;
+    public MenuItem menuEqualTr;
     @FXML
     public WebView webViewLeft,webViewBotton;
+    public Group grTr1;
 
 
     public Pane BP;
@@ -50,6 +63,7 @@ public class  Controller extends View {
     public TableColumn<PropTreangle, Double> coordinatesY;
     @FXML
     public TableColumn<PropTreangle, Double> angle;
+
 
     @FXML
     private void initialize(){
@@ -654,4 +668,19 @@ public class  Controller extends View {
         //CircleOut
         model.outCircle(vC,A,B,C,vc,poindS);
     }
+
+
+    //Меню первый признак равенства треугольников
+    public void onClickEquil() {
+        try {
+            Parent root1 = FXMLLoader.load(getClass().getResource("equality.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.setTitle("Первый признак равенства треугольников");
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="800" prefHeight="600.0"
+      prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="sample.Equality" >
+    <Button fx:id="bntCombine" layoutX="30.0" layoutY="340.0" mnemonicParsing="false" onAction="#onClicCombine" text="Совместить треугольники" />
+
+    <Group fx:id="grTr1">
+        <Polygon fill="#e02d2d00" points="40.0, 285.0, 190.0, 70.0, 340.0, 190.0" stroke="#1605f7" strokeType="INSIDE" strokeWidth="2.0" />
+        <Arc centerX="40.0" centerY="285.0" fill="#cbff1f00" length="35.0" radiusX="30.0" radiusY="30.0" startAngle="20.0" stroke="#081bee" strokeType="INSIDE" type="ROUND">
+            <rotationAxis>
+                <Point3D />
+            </rotationAxis>
+        </Arc>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="A" textAlignment="CENTER" x="24.0" y="290.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="B" textAlignment="CENTER" x="185.0" y="65.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="C" textAlignment="CENTER" x="345.0" y="195.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Line endX="122.0" endY="179.0" startX="112.0" startY="172.0" />
+        <Line endX="193.0" endY="229.0" startX="197.0" startY="241.0" />
+        <Line endX="188.0" endY="230.0" startX="192.0" startY="242.0" />
+    </Group>
+    <Group layoutX="300.0" rotate="-30.0">
+        <Polygon fill="#e02d2d00" points="40.0, 285.0, 190.0, 70.0, 340.0, 190.0" stroke="#f50707" strokeType="INSIDE" strokeWidth="2.0" />
+        <Arc centerX="40.0" centerY="285.0" fill="#cbff1f00" length="35.0" radiusX="30.0" radiusY="30.0" startAngle="20.0" stroke="#ed0909" strokeType="INSIDE" type="ROUND">
+            <rotationAxis>
+                <Point3D />
+            </rotationAxis>
+        </Arc>
+        <Text rotate="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A₁" textAlignment="CENTER" x="5.0" y="290.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text rotate="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B₁" textAlignment="CENTER" x="170.0" y="65.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text rotate="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C₁" textAlignment="CENTER" x="365.0" y="195.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Line endX="122.0" endY="179.0" startX="112.0" startY="172.0" />
+        <Line endX="193.0" endY="229.0" startX="197.0" startY="241.0" />
+        <Line endX="188.0" endY="230.0" startX="192.0" startY="242.0" />
+
+    </Group>
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Первый признак равенства треугольников." textAlignment="CENTER" x="220.0" y="30.0">
+        <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+        </font>
+    </Text>
+    <VBox layoutX="30" layoutY="380.0" prefHeight="190.0" prefWidth="752.0">
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Теорема (признак равенства треугольников по двум сторонам и углу между ними.)" x="30.0" y="410.0">
+            <font>
+                <Font name="Times New Roman" size="14.0" />
+            </font>
+        </Text>
+        <TextFlow layoutX="-Infinity" layoutY="-Infinity" prefHeight="35.0" prefWidth="770">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Если две стороны и угол между ними одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники равны. ">
+                <font>
+                    <Font name="Times New Roman Bold" size="14.0" />
+                </font>
+            </Text>
+            <padding>
+                <Insets top="10.0" />
+            </padding>
+        </TextFlow>
+
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Доказательство:">>
+            <font>
+                <Font name="Times New Roman Bold" size="14.0" />
+            </font>
+        </Text>
+
+        <TextFlow layoutX="-Infinity" layoutY="-Infinity" prefHeight="-Infinity" prefWidth="770.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Рассмотрим треугольники АВС и А₁В₁С₁, у которых АВ=А₁В₁, АС=А₁С₁, углы А и А₁ равны. Докажем что  △АВС=△А₁В₁С₁ ">
+                <font>
+                    <Font name="Times New Roman" size="14.0" />
+                </font>
+
+            </Text>
+            <padding>
+                <Insets top="10.0" />
+            </padding>
+        </TextFlow>
+        <TextFlow layoutX="-Infinity" layoutY="-Infinity" prefHeight="-Infinity" prefWidth="770.0">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Так как ∠А=∠А ₁, то треугольник АВС можно наложить на треугольник А₁В₁С₁ так, что вершина А совместится с вершиной А₁, а стороны АВ и АС наложатся соответственно на лучи А₁В₁ и А₁С₁. Поскольку АВ=А₁В₁, АС=А₁С₁, то сторона АВ совместится со стороной А₁В₁, а сторона АС - со стороной А₁С₁ в частности совместятся точки В и В₁, С и С₁. Следовательно совместятся стороны ВС и В₁С₁. Итак треугольники АВС и А₁В₁С₁ полностью совместятся, значит, они равны. Теорема Доказана.">
+                <font>
+                    <Font name="Times New Roman" size="14.0" />
+                </font>
+            </Text>
+            <padding>
+                <Insets top="10.0" />
+            </padding>
+        </TextFlow>
+    </VBox>
+</Pane>
