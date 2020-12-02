@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -25,12 +24,12 @@ class View implements Observer{
     //Какую информацию надо вывести
     public  void  notification(String message){
         switch (message) {
-            case "VertexGo" -> this.vertexGo(model.getVerTex());//перемещение вершин
+            case "VertexGo" -> this.vertexGo(model.getVertex());//перемещение вершин
             case "SideGo" -> this.sideGo(model.getSideAll());//отрисовка сторон
             case "TextGo" -> this.TextGo(model.getTextGo());//буквы
             case "ColorGo" -> this.SrokeColor(model.getColorLine());//цвет
             case "ArcGo" -> this.arcGo(model.getArcGo());//дуги
-            case "TableGo"->this.tableGo(model.getTableView());//таблица
+            case "TableGo"->this.tableGo(model.getMTableView());//таблица
             case "WebView"->this.webViewGo(model.getWebView());//Заполнение слева и внизу
 
         }

@@ -7,13 +7,15 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
+import lombok.Data;
+
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import static java.lang.StrictMath.*;
 import static my.sample.StringConstant.*;
 
-
+@Data
 class Model implements  Observable {
 
     public List<Observer>  observers;
@@ -26,7 +28,6 @@ class Model implements  Observable {
     private TableView mTableView;
     private WebView webView;
 
- 
     private double verX;
     private double verY;
     private double verX1;
@@ -42,43 +43,6 @@ class Model implements  Observable {
     Model(){
     observers=new LinkedList<>();
 }
-
-    //Список переменных для представления View
-    //Заносятся переменные для переменные для View
-    void setVerX(double d){verX=d;}//координаты вершины от мышки
-    void setVerY(double d){verY=d;}
-    void setVerX1(double d){verX1=d;}//2 координата для сотороны
-    void setVerY1(double d){verY1=d;}
-    void setColorGo(Color c) {ColorGo = c; }//цвет
-    void setDx(double d){dx=d;}//смещение букв
-    void setDy(double d){dy=d;}
-    void setArcRadius(double d) {arcRadius = d;}//радиус дуги
-    void setAngleStart(double d) {angleStart = d;}//начало дуги
-    void setAngleLength(double d) {angleLength = d;}//конец дуги
-    void setStringWebView(String s){stringWebView =s;}//текс для определений
-
-
-    //Отдаются переменные для View
-    Line getSideAll(){return sideAll;} //Объекты линия
-    Circle getVerTex() {return  vertex;} //Точка
-    Text getTextGo(){return textGo;} //Буквы
-    Line getColorLine(){return  colorLine;} //Цвет для линий
-    Arc getArcGo(){return arcGo;}// Дуги
-    TableView getTableView(){return mTableView;}
-    WebView getWebView(){return webView;}//Текст определений
-    Color getColorGo(){return ColorGo;}
-
-
-    double getVerX(){return verX;}
-    double getVerY(){return verY;}
-    double getVerX1(){return  verX1;}
-    double getVerY1(){return  verY1;}
-    double getDx(){return  dx;}
-    double getDy() {return dy;}
-    public double getArcRadius() {return arcRadius;}//радиус дуги
-    public double getAngleStart() {return angleStart;}//начало дуги Х
-    public double getAngleLength() {return angleLength;}//длина дуги Y
-    public String getStringWebView(){return stringWebView;}//текст определений
 
 
     //регистрация слушателя
