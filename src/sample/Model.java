@@ -1,4 +1,6 @@
 package sample;
+//Класс Модель для расчета и отправки данных в Представление
+//@Getter и @Setter создаются библиотекой Lombok
 
 import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
@@ -17,7 +19,7 @@ import static my.sample.StringConstant.*;
 
 @Data
 class Model implements  Observable {
-
+    //Переменные класса
     public List<Observer>  observers;
     private Circle vertex;
     private Line sideAll;
@@ -37,13 +39,11 @@ class Model implements  Observable {
     private double angleStart;//начало дуги гр.
     private double angleLength;//длина дуги гр.
     private String stringWebView;//text left
- 
 
     //Конструктор
     Model(){
     observers=new LinkedList<>();
 }
-
 
     //регистрация слушателя
     @Override
@@ -70,7 +70,7 @@ class Model implements  Observable {
         case 4: setStringWebView(WEB_HTML+TR_HIGTH+TR_ORTOSENTR+WEB_END);break;
      //   default:
      //       throw new IllegalStateException("Неожиданное значение: " + c);
-    }
+        }
     webViewGo(o);//на вывод
     }
     //Текст для нижней части
@@ -86,7 +86,7 @@ class Model implements  Observable {
         case 7: setStringWebView(WEB_HTML+TR_HIGTH_AJ+WEB_END);break;
      //   default:
      //       throw new IllegalStateException("Неожиданное значение: " + c);
-    }
+        }
     webViewGo(o);
     }
     //Нахождение середины отрезка
@@ -357,6 +357,5 @@ class Model implements  Observable {
         webView =o;
         notifyObservers("WebView");
     }
-
 }
 

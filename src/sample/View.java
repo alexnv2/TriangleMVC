@@ -1,5 +1,5 @@
 package sample;
-
+//Класс Представление для вывода на экран
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -12,7 +12,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 class View implements Observer{
-    //Список для баблицы
+    //Список для таблицы
     public   ObservableList<PropTreangle> propView = FXCollections.observableArrayList();
 
     Model model=new Model();
@@ -31,7 +31,6 @@ class View implements Observer{
             case "ArcGo" -> this.arcGo(model.getArcGo());//дуги
             case "TableGo"->this.tableGo(model.getMTableView());//таблица
             case "WebView"->this.webViewGo(model.getWebView());//Заполнение слева и внизу
-
         }
     }
     //Перемещение вершин

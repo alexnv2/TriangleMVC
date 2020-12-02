@@ -1,5 +1,6 @@
 package sample;
 
+//Класс контролер для equality.fxml
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.RotateTransition;

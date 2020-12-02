@@ -1,5 +1,9 @@
 package sample;
 
+//Класс для заполнения таблицы
+//@Setter и @Getter создаются расширением Lombok
+//используя @Data из данной библиотеки
+
 import lombok.Data;
 
 @Data
