@@ -10,7 +10,6 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import lombok.Data;
-
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,11 +33,12 @@ class Model implements  Observable {
     private double verY;
     private double verX1;
     private double verY1;
-    private double dx,dy;//координаты букв
+    private double textX, textY;//координаты букв
     private double arcRadius;//радиус дуги
     private double angleStart;//начало дуги гр.
     private double angleLength;//длина дуги гр.
     private String stringWebView;//text left
+    private String equalesTriangle;//Номер окна признаков треугольника
 
     //Конструктор
     Model(){
@@ -57,6 +57,14 @@ class Model implements  Observable {
             observer.notification(message);
         }
     }
+
+    public void setWindShow(int w){
+        WIND_SHOW=w;
+    }
+    public int getWindShow(){
+        return WIND_SHOW;
+    }
+
     //Текст для левой части
     public void webViewLeftString(WebView o, int c){
        String puthImages= new File(".").getAbsolutePath()+"\\src\\Images\\formula_bis.jpg";
@@ -244,8 +252,8 @@ class Model implements  Observable {
     public void mestopolojenie(Circle o1, Circle o2, Text t){
         double xP=o1.getCenterX()+((o1.getCenterX()-o2.getCenterX()))*0.1;
         double yP=o1.getCenterY()+((o1.getCenterY()-o2.getCenterY()))*0.1;
-        setDx(xP);
-        setDy(yP);
+        setTextX(xP);
+        setTextY(yP);
         TextGo(t);
 }
     //Медианы
@@ -293,8 +301,8 @@ class Model implements  Observable {
         //intersection(o2.getCenterX(), o2.getCenterY(), o4.getCenterX(), o4.getCenterY(), o1.getCenterX(),o1.getCenterY());
         VertexGo(o5);
         SideGo(l);
-        setDx(o5.getCenterX()+10);
-        setDy(o5.getCenterY()+5);
+        setTextX(o5.getCenterX()+10);
+        setTextY(o5.getCenterY()+5);
         TextGo(t);
     }
     //Вписанная окружность
@@ -306,8 +314,8 @@ class Model implements  Observable {
         inCircleX(o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY());
         inCircleY(o2.getCenterX(),o2.getCenterY(),o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY());
         VertexGo(o5);
-        setDx(o5.getCenterX()-20);
-        setDy(o5.getCenterY()+5);
+        setTextX(o5.getCenterX()-20);
+        setTextY(o5.getCenterY()+5);
         TextGo(t);
     }
     //Описанная окружность
@@ -319,8 +327,8 @@ class Model implements  Observable {
         //intersection(o4.getCenterX(),o4.getCenterY(),o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
         middlePerpendicular(o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY(), o4.getCenterX(),o4.getCenterY());
         VertexGo(o5);
-        setDx(o5.getCenterX()+10);
-        setDy(o5.getCenterY()+5);
+        setTextX(o5.getCenterX()+10);
+        setTextY(o5.getCenterY()+5);
         TextGo(t);
     }
     //Задаем операцию для View

@@ -11,7 +11,7 @@
       fx:controller="sample.Equality" >
     <Button fx:id="bntCombine" layoutX="30.0" layoutY="340.0" mnemonicParsing="false" onAction="#onClicCombine" text="Совместить треугольники" />
 
-    <Group fx:id="grTr1" layoutX="0" layoutY="1">
+    <Group fx:id="groupTriangles" layoutX="0" layoutY="1">
         <Polygon fill="#e02d2d00" points="40.0, 285.0, 190.0, 70.0, 340.0, 190.0" stroke="#1605f7" strokeType="INSIDE" strokeWidth="2.0" />
         <Arc centerX="40.0" centerY="285.0" fill="#cbff1f00" length="35.0" radiusX="30.0" radiusY="30.0" startAngle="20.0" stroke="#081bee" strokeType="INSIDE" type="ROUND">
             <rotationAxis>
@@ -63,7 +63,7 @@
         <Line endX="193.0" endY="229.0" startX="197.0" startY="241.0" />
         <Line endX="188.0" endY="230.0" startX="192.0" startY="242.0" />
     </Group>
-    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Первый признак равенства треугольников." textAlignment="CENTER" x="220.0" y="30.0">
+    <Text fx:id="namePr" strokeType="OUTSIDE" strokeWidth="0.0"  textAlignment="CENTER" x="220.0" y="30.0">
         <font>
             <Font name="Times New Roman Bold" size="18.0" />
         </font>

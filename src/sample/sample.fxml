@@ -32,8 +32,8 @@
             <Menu mnemonicParsing="false" text="Признаки равенства">
               <items>
                 <MenuItem fx:id="menuEqualTr" mnemonicParsing="false" text="Первый признак равенства треугольников" onAction="#onClickEquil"/>
-                <MenuItem mnemonicParsing="false" text="Второй признак равенства треугольников " />
-                <MenuItem mnemonicParsing="false" text="Третий признак равенства треугольников" />
+                <MenuItem fx:id="menuSecondTr" mnemonicParsing="false" text="Второй признак равенства треугольников " onAction="#onClickSecond"/>
+                <MenuItem fx:id="menuTread" mnemonicParsing="false" text="Третий признак равенства треугольников" onAction="#onClickTread"/>
               </items>
             </Menu>
               </Menu>

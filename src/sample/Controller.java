@@ -1,5 +1,6 @@
 package sample;
 //Класс Контролер (управление) sample.fxml
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -16,6 +17,8 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
+
 //Конструктор класса
 public class  Controller extends View {
 //Переменные
@@ -55,11 +58,11 @@ public class  Controller extends View {
     public Pane BP;
     //Таблица свойств
     @FXML
-    public TableView<PropTreangle> TableTreangle;
-    public TableColumn<PropTreangle, String> vertex;
-    public TableColumn<PropTreangle, Double> coordinatesX;
-    public TableColumn<PropTreangle, Double> coordinatesY;
-    public TableColumn<PropTreangle, Double> angle;
+    public TableView<PropTreangles> TableTreangle;
+    public TableColumn<PropTreangles, String> vertex;
+    public TableColumn<PropTreangles, Double> coordinatesX;
+    public TableColumn<PropTreangles, Double> coordinatesY;
+    public TableColumn<PropTreangles, Double> angle;
 
     @FXML
     private void initialize(){
@@ -74,9 +77,9 @@ public class  Controller extends View {
 
     //Реализация интерфейса обратного вызова для заполнения колонок таблицы
     initData();
-    vertex.setCellValueFactory(new PropertyValueFactory<>("propVert"));
-    coordinatesX.setCellValueFactory(new PropertyValueFactory<>("propCoordX"));
-    coordinatesY.setCellValueFactory(new PropertyValueFactory<>("propCoordY"));
+    vertex.setCellValueFactory(new PropertyValueFactory<>("propVertex"));
+    coordinatesX.setCellValueFactory(new PropertyValueFactory<>("propCoordinatesX"));
+    coordinatesY.setCellValueFactory(new PropertyValueFactory<>("propCoordinatesY"));
     angle.setCellValueFactory(new PropertyValueFactory<>("propAngle"));
         //Добавление списка и выделение первой стоки
         TableTreangle.setItems(super.propView);
@@ -85,9 +88,9 @@ public class  Controller extends View {
     }
 
     private void initData() {
-        super.propView.add(new PropTreangle("A",A.getCenterX(),A.getCenterY(),60));
-        super.propView.add(new PropTreangle("B",B.getCenterX(),B.getCenterY(),60));
-        super.propView.add(new PropTreangle("C",C.getCenterX(),C.getCenterY(),60));
+        super.propView.add(new PropTreangles("A",A.getCenterX(),A.getCenterY(),60));
+        super.propView.add(new PropTreangles("B",B.getCenterX(),B.getCenterY(),60));
+        super.propView.add(new PropTreangles("C",C.getCenterX(),C.getCenterY(),60));
     }
     //Меню Медианы->Из угла А
     public void onClickMedianaA() {
@@ -96,7 +99,6 @@ public class  Controller extends View {
             ma.setVisible(true);
             mA.setVisible(true);
             poindD.setVisible(true);
-           // model.mestopolojenie(mA,A,poindD);//Точка D
             model.webViewLeftString(webViewLeft,3);
             model.webViewBotton(webViewBotton,6);
         }else {
@@ -199,7 +201,6 @@ public class  Controller extends View {
             la1.setVisible(false);
             poindJ.setVisible(false);
         }
-
     }
     //Меню Высоты ->Из угла В
     public void onClcckHigthB() {
@@ -477,24 +478,45 @@ public class  Controller extends View {
     }
     //Меню Треугольники->Признаки равенства->Первый признак равенства треугольников
     public void onClickEquil() {
+        System.out.println("One");
+        model.setWindShow(0);
+        TwofxmlLoader();
+    }
+    //Меню Треугольники->Признаки равенства->Второй признак равенства треугольников
+    public void onClickSecond() {
+        System.out.println("Second");
+        model.setWindShow(1);
+        TwofxmlLoader();
+    }
+    //Меню Треугольники->Признаки равенства->Третий признак равенства треугольников
+
+    public void onClickTread() {
+        System.out.println("Three");
+        model.setWindShow(2);
+        TwofxmlLoader();
+    }
+    public void TwofxmlLoader(){
         try {
             Parent root1 = FXMLLoader.load(getClass().getResource("equality.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
             stage.setTitle("Первый признак равенства треугольников");
             stage.setResizable(false);
+
             stage.show();
         } catch(Exception e) {
             e.printStackTrace();
         }
+
     }
+
     public void mouseDragExited() {
     }
     //Внести изменения в таблицу
     public void angleAccess(){
-        super.propView.set(0, new PropTreangle("A",A.getCenterX(),A.getCenterY(),arcA.getLength()));
-        super.propView.set(1, new PropTreangle("B",B.getCenterX(),B.getCenterY(),arcB.getLength()));
-        super.propView.set(2, new PropTreangle("C",C.getCenterX(),C.getCenterY(),arcC.getLength()));
+        super.propView.set(0, new PropTreangles("A",A.getCenterX(),A.getCenterY(),arcA.getLength()));
+        super.propView.set(1, new PropTreangles("B",B.getCenterX(),B.getCenterY(),arcB.getLength()));
+        super.propView.set(2, new PropTreangles("C",C.getCenterX(),C.getCenterY(),arcC.getLength()));
     }
     //Перемещение вершин
     public void mouseDraggen(MouseEvent mouseEvent) {
@@ -573,7 +595,7 @@ public class  Controller extends View {
     }
     //При нжатии левой кнопки меняется курсор
     //Начало операции перемещения
-    public void mousePressed(MouseEvent mouseEvent) {
+    public void mousePressed(@NotNull MouseEvent mouseEvent) {
         if (mouseEvent.getSource() == A) {
             A.setMouseTransparent(true);
             A.setCursor(Cursor.CLOSED_HAND);
@@ -665,4 +687,6 @@ public class  Controller extends View {
         //CircleOut
         model.outCircle(vC,A,B,C,vc,poindS);
     }
+
+
 }

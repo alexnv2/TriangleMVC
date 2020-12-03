@@ -13,7 +13,10 @@ import javafx.scene.web.WebView;
 
 class View implements Observer{
     //Список для таблицы
-    public   ObservableList<PropTreangle> propView = FXCollections.observableArrayList();
+    public   ObservableList<PropTreangles> propView = FXCollections.observableArrayList();
+   // public String equalesTriangle;//Номер окна признаков треугольника
+    protected int EqualesTriangle;
+
 
     Model model=new Model();
     View(){
@@ -47,8 +50,8 @@ class View implements Observer{
     }
     //Перемещение Текста
     private void TextGo(Text text){
-        text.setX(model.getDx());
-        text.setY(model.getDy());
+        text.setX(model.getTextX());
+        text.setY(model.getTextY());
     }
     //Дуги углов треугольника
     private void arcGo(Arc arc){

@@ -1,6 +1,7 @@
 package my.sample;
 
 public final class StringConstant {
+ public static int WIND_SHOW=0;
  public static final String WEB_HTML="<html><body contenteditable=\"true\" <head>";
  public static final String WEB_END="</body></html>";
  public static final String TR_OPR = "<p><span style=\"font-size: 12pt; font-family: \"Times New Roman\";><span style=\"font-style: italic; font-weight: bold;\">Треугольником</span> называется фигура, которая состоит из трех точек, не лежащих на одной прямой, и трех отрезков соединяющих эти точки. Точки называются <span style=\"font-style: italic; font-weight: bold;\">вершинами треугольника</span>, а отрезки - <span style=\"font-weight: bold; font-style: italic;\">сторонами</span>.</span></p>";
