@@ -19,7 +19,7 @@ public class Equality extends View {
 
     @FXML
     private void initialize(){
-     System.out.println(super.EqualesTriangle);
+
 
         if(model.getWindShow()==0) {
            namePr.setText("Первый признак равенства треугольников.");

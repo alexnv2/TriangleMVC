@@ -4,16 +4,19 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -55,7 +58,10 @@ public class  Controller extends View {
    //Web браузер для вывода данных
     public WebView webViewLeft,webViewBotton;
     //Контейнер Pane
-    public Pane BP;
+    public Pane BP, setka;
+    public VBox vBox;
+    public SplitPane splitPane;
+
     //Таблица свойств
     @FXML
     public TableView<PropTreangles> TableTreangle;
@@ -63,6 +69,10 @@ public class  Controller extends View {
     public TableColumn<PropTreangles, Double> coordinatesX;
     public TableColumn<PropTreangles, Double> coordinatesY;
     public TableColumn<PropTreangles, Double> angle;
+    //Taблица 2 длины
+    public TableView<PropLineTreangle>LineTreangle;
+    public TableColumn<PropLineTreangle,String>LineS;
+    public TableColumn<PropTreangles,Double>LineD;
 
     @FXML
     private void initialize(){
@@ -85,13 +95,31 @@ public class  Controller extends View {
         TableTreangle.setItems(super.propView);
         //Заполнение списка полей
         onClickOxygon();
+
+        //Pane для сетки белого цвета
+        setka.setStyle("-fx-background-color: white;");
+        reshetka();
+
+        //Реализация интерфейса обратного вызова для заполнения колонок 2 таблицы
+        initDataLine();
+        LineS.setCellValueFactory(new PropertyValueFactory<>("propLine"));
+        LineD.setCellValueFactory(new PropertyValueFactory<>("propRazmer"));
+        LineTreangle.setItems(super.propLine);
     }
 
     private void initData() {
         super.propView.add(new PropTreangles("A",A.getCenterX(),A.getCenterY(),60));
         super.propView.add(new PropTreangles("B",B.getCenterX(),B.getCenterY(),60));
         super.propView.add(new PropTreangles("C",C.getCenterX(),C.getCenterY(),60));
+
+    }//Длина в см (делитель 40)
+    private void initDataLine() {
+        super.propLine.add(new PropLineTreangle("AB",model.distance(A.getCenterX(),A.getCenterY(),B.getCenterX(),B.getCenterY())/40));
+        super.propLine.add(new PropLineTreangle("AC",model.distance(A.getCenterX(),A.getCenterY(),C.getCenterX(),C.getCenterY())/40));
+        super.propLine.add(new PropLineTreangle("BC",model.distance(B.getCenterX(),B.getCenterY(),C.getCenterX(),C.getCenterY())/40));
+
     }
+
     //Меню Медианы->Из угла А
     public void onClickMedianaA() {
         if(menuMedianaA.isSelected()){
@@ -478,20 +506,17 @@ public class  Controller extends View {
     }
     //Меню Треугольники->Признаки равенства->Первый признак равенства треугольников
     public void onClickEquil() {
-        System.out.println("One");
         model.setWindShow(0);
         TwofxmlLoader();
     }
     //Меню Треугольники->Признаки равенства->Второй признак равенства треугольников
     public void onClickSecond() {
-        System.out.println("Second");
         model.setWindShow(1);
         TwofxmlLoader();
     }
     //Меню Треугольники->Признаки равенства->Третий признак равенства треугольников
 
     public void onClickTread() {
-        System.out.println("Three");
         model.setWindShow(2);
         TwofxmlLoader();
     }
@@ -500,7 +525,7 @@ public class  Controller extends View {
             Parent root1 = FXMLLoader.load(getClass().getResource("equality.fxml"));
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
-            stage.setTitle("Первый признак равенства треугольников");
+            stage.setTitle("Признаки равенства треугольников");
             stage.setResizable(false);
 
             stage.show();
@@ -514,11 +539,19 @@ public class  Controller extends View {
     }
     //Внести изменения в таблицу
     public void angleAccess(){
+        //угол
         super.propView.set(0, new PropTreangles("A",A.getCenterX(),A.getCenterY(),arcA.getLength()));
         super.propView.set(1, new PropTreangles("B",B.getCenterX(),B.getCenterY(),arcB.getLength()));
         super.propView.set(2, new PropTreangles("C",C.getCenterX(),C.getCenterY(),arcC.getLength()));
+        }
+    public void lineAccess(){
+        //длина
+        super.propLine.set(0, new PropLineTreangle("AB",model.distance(A.getCenterX(),A.getCenterY(),B.getCenterX(),B.getCenterY())/40));
+        super.propLine.set(1, new PropLineTreangle("AC",model.distance(A.getCenterX(),A.getCenterY(),C.getCenterX(),C.getCenterY())/40));
+        super.propLine.set(2, new PropLineTreangle("BC",model.distance(B.getCenterX(),B.getCenterY(),C.getCenterX(),C.getCenterY())/40));
     }
-    //Перемещение вершин
+
+        //Перемещение вершин
     public void mouseDraggen(MouseEvent mouseEvent) {
         model.setVerX(mouseEvent.getX());
         model.setVerY(mouseEvent.getY());
@@ -532,6 +565,8 @@ public class  Controller extends View {
             model.mestopolojenie(A, bA,poindA); //Обозначение угла А
             angleAccess(); //занесение координат и углов в таблицу
             model.tableGo(TableTreangle);//вывод в таблицу
+            lineAccess();
+            model.tableGo(LineTreangle);
         }
         if (mouseEvent.getSource() == B) {
             model.sideAll(B,A,C,c,a);
@@ -541,6 +576,8 @@ public class  Controller extends View {
             model.mestopolojenie(B,bB,poindB); //Угол В
             angleAccess();
             model.tableGo(TableTreangle);
+            lineAccess();
+            model.tableGo(LineTreangle);
         }
         if (mouseEvent.getSource() == C) {
             model.sideAll(C,A,B,b,a);
@@ -550,9 +587,14 @@ public class  Controller extends View {
             model.mestopolojenie(C,bC,poindC);//Угол С
             angleAccess();
             model.tableGo(TableTreangle);
+            lineAccess();
+            model.tableGo(LineTreangle);
         }
         visibleLine();
         visibleRectangle90();
+        splitPane.widthProperty().addListener((obj,oldValue,newValue)->{System.out.println(newValue);});
+
+
     }
     //Проверка на прямой угол
     public void visibleRectangle90(){
@@ -588,10 +630,37 @@ public class  Controller extends View {
         }
     }
     //При наведении на вершину меняется курсор
-    public void mouseEntered() {
-        A.setCursor(Cursor.OPEN_HAND);
-        B.setCursor(Cursor.OPEN_HAND);
-        C.setCursor(Cursor.OPEN_HAND);
+    public void mouseEntered(@NotNull MouseEvent mouseEvent) {
+        A.setCursor(Cursor.HAND);
+        B.setCursor(Cursor.HAND);
+        C.setCursor(Cursor.HAND);
+        //Подсказки
+        //System.out.println(mouseEvent.getSource());
+        if (mouseEvent.getSource()==arcA) {
+            arcA.setCursor(Cursor.HAND);
+            model.setSToolTip("Угол А=" + arcA.getLength() + " гр.");
+            model.oToolTip(arcA);
+        }
+        if (mouseEvent.getSource()==arcB) {
+            model.setSToolTip("Угол B=" + arcB.getLength() + " гр.");
+            model.oToolTip(arcB);
+        }
+        if (mouseEvent.getSource()==arcC) {
+            model.setSToolTip("Угол C=" + arcC.getLength() + " гр.");
+            model.oToolTip(arcC);
+        }
+        if (mouseEvent.getSource()==A) {
+            model.setSToolTip("Вершина A(" + A.getCenterX() +" , "+A.getCenterY()+ ")");
+            model.oToolTip(A);
+        }
+        if (mouseEvent.getSource()==a) {
+            model.setSToolTip("Сторона а или ВС, длина - " + model.distance(B.getCenterX() ,B.getCenterY(),C.getCenterX(),C.getCenterY()));
+            model.oToolTip(a);
+        }
+        if (mouseEvent.getSource()==ma) {
+            model.setSToolTip("Медиана АD, длина - " + model.distance(A.getCenterX() ,A.getCenterY(),mA.getCenterX(),mA.getCenterY()));
+            model.oToolTip(ma);
+        }
     }
     //При нжатии левой кнопки меняется курсор
     //Начало операции перемещения
@@ -687,6 +756,33 @@ public class  Controller extends View {
         //CircleOut
         model.outCircle(vC,A,B,C,vc,poindS);
     }
+    public void reshetka(){
+        Group group=new Group();
+        double w=vBox.getPrefWidth();
+        double h=vBox.getPrefHeight();
+        int z1,z2;
+        z1= (int) (w/20);
+        z2= (int) (h/20);
+        Shape[] shapes=new Shape[z1];
+        Shape[] shapes1=new Shape[z2];
+        for(int i=0; i<z1;i++){
+            shapes[i]=new Line(i*20,0,i*20,h);
+            shapes[i].setStroke(Color.LIGHTBLUE);
+            group.getChildren().add(shapes[i]);
+        }
+        for(int i=0; i<z2;i++){
+            shapes1[i]=new Line(0,i*20,w,i*20);
+            shapes1[i].setStroke(Color.LIGHTBLUE);
+            shapes1[i].setStrokeWidth(1);
+            group.getChildren().add(shapes1[i]);
+        }
+        setka.getChildren().add(group);
+        System.out.println("Setca "+w+"  "+h);
+    }
 
 
+    public void onClickSplit(MouseEvent mouseEvent) {
+        double[] spg=splitPane.getDividerPositions();
+        System.out.println(spg[0]);
+    }
 }

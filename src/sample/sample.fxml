@@ -1,22 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioMenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Arc?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.web.WebView?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
 
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
       <top>
@@ -31,9 +20,9 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <Menu mnemonicParsing="false" text="Признаки равенства">
               <items>
-                <MenuItem fx:id="menuEqualTr" mnemonicParsing="false" text="Первый признак равенства треугольников" onAction="#onClickEquil"/>
-                <MenuItem fx:id="menuSecondTr" mnemonicParsing="false" text="Второй признак равенства треугольников " onAction="#onClickSecond"/>
-                <MenuItem fx:id="menuTread" mnemonicParsing="false" text="Третий признак равенства треугольников" onAction="#onClickTread"/>
+                <MenuItem fx:id="menuEqualTr" mnemonicParsing="false" onAction="#onClickEquil" text="Первый признак равенства треугольников" />
+                <MenuItem fx:id="menuSecondTr" mnemonicParsing="false" onAction="#onClickSecond" text="Второй признак равенства треугольников " />
+                <MenuItem fx:id="menuTread" mnemonicParsing="false" onAction="#onClickTread" text="Третий признак равенства треугольников" />
               </items>
             </Menu>
               </Menu>
@@ -64,10 +53,12 @@
           </MenuBar>
       </top>
       <center>
-           <Pane fx:id="BP" maxHeight="-1" minWidth="300" prefHeight="600" prefWidth="600" BorderPane.alignment="CENTER">
-              <Arc fx:id="arcA" fill="TRANSPARENT" stroke="BLUE" type="OPEN" />
-              <Arc fx:id="arcB" fill="TRANSPARENT" stroke="RED" type="OPEN" />
-              <Arc fx:id="arcC" fill="TRANSPARENT" stroke="GREEN" type="OPEN" />
+          <StackPane fx:id="st_pane">
+            <Pane fx:id="setka" maxHeight="1200" maxWidth="1200" />
+           <Pane fx:id="BP" maxHeight="600" maxWidth="300" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600" prefWidth="600" BorderPane.alignment="CENTER">
+              <Arc fx:id="arcA" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="BLUE" type="OPEN" />
+              <Arc fx:id="arcB" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="RED" type="OPEN" />
+              <Arc fx:id="arcC" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="GREEN" type="OPEN" />
               <Circle fx:id="iC" fill="TRANSPARENT" stroke="GREEN" strokeWidth="2" visible="false" />
               <Circle fx:id="ic" fill="GREEN" radius="3" strokeWidth="2" visible="false" />
               <Circle fx:id="vc" fill="BLUE" radius="3" strokeWidth="2" visible="false" />
@@ -76,12 +67,12 @@
               <Circle fx:id="A" centerX="50" centerY="200" fill="blue" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
               <Circle fx:id="B" centerX="100" centerY="50" fill="RED" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
               <Circle fx:id="C" centerX="200" centerY="200" fill="green" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
-              <Line fx:id="a" endX="200" endY="200" startX="100.0" startY="50.0" stroke="Black" strokeWidth="2.0" />
-              <Line fx:id="b" endX="200" endY="200" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
-              <Line fx:id="c" endX="100.0" endY="51.0" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
+              <Line fx:id="a" endX="200" endY="200" onMouseEntered="#mouseEntered" startX="100.0" startY="50.0" stroke="Black" strokeWidth="2.0" />
+              <Line fx:id="b" endX="200" endY="200" onMouseEntered="#mouseEntered" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
+              <Line fx:id="c" endX="100.0" endY="51.0" onMouseEntered="#mouseEntered" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
       
               <Circle fx:id="mA" fill="cornflowerblue" radius="3" visible="false" />
-              <Line fx:id="ma" stroke="blue" visible="false" />
+              <Line fx:id="ma" onMouseEntered="#mouseEntered" stroke="blue" visible="false" />
               <Circle fx:id="mB" fill="cornflowerblue" radius="3" visible="false" />
               <Line fx:id="mb" stroke="blue" visible="false" />
               <Circle fx:id="mC" fill="cornflowerblue" radius="3" visible="false" />
@@ -190,8 +181,10 @@
                   </font>
               </Text>
           </Pane>
+          </StackPane>
       </center>
       <right>
+
          <TableView fx:id="TableTreangle" prefHeight="301" prefWidth="212.0" BorderPane.alignment="CENTER">
            <columns>
              <TableColumn fx:id="vertex" prefWidth="65.0" text="Углы треугольника" />
@@ -207,11 +200,14 @@
                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </BorderPane.margin>
          </TableView>
+
       </right>
       <bottom>
          <WebView fx:id="webViewBotton" prefHeight="100.0" prefWidth="1222.0" BorderPane.alignment="BOTTOM_LEFT" />
       </bottom>
       <left>
+      <ScrollPane hbarPolicy="NEVER" minHeight="-Infinity" minWidth="-Infinity" vbarPolicy="NEVER">
          <WebView fx:id="webViewLeft" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" BorderPane.alignment="TOP_LEFT" />
+      </ScrollPane>
       </left>
    </BorderPane>

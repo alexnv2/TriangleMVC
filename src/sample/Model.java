@@ -28,6 +28,7 @@ class Model implements  Observable {
     private Arc arcGo;
     private TableView mTableView;
     private WebView webView;
+    private Object oToolTip;
 
     private double verX;
     private double verY;
@@ -38,7 +39,7 @@ class Model implements  Observable {
     private double angleStart;//начало дуги гр.
     private double angleLength;//длина дуги гр.
     private String stringWebView;//text left
-    private String equalesTriangle;//Номер окна признаков треугольника
+    private String sToolTip;
 
     //Конструктор
     Model(){
@@ -102,7 +103,7 @@ class Model implements  Observable {
         return (x0 + x1) / 2;
     }
     //Растояние между точками (координаты x1,y1,x2,y2)
-    private double distance(double x1, double y1, double x2, double y2) {
+    public double distance(double x1, double y1, double x2, double y2) {
         return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
     }
     //Точка пересечения бессекрисы со стороной
@@ -357,13 +358,21 @@ class Model implements  Observable {
         arcGo=o;
         notifyObservers("ArcGo");
     }
+    //Таблица
     void tableGo(TableView o){
         mTableView=o;
         notifyObservers("tableGo");
     }
+    //Слева и внизу
     void webViewGo(WebView o){
         webView =o;
         notifyObservers("WebView");
+    }
+    //Подсказки
+    void oToolTip(Object o){
+        setOToolTip(o);
+        notifyObservers("ToolTip");
+
     }
 }
 

@@ -2,7 +2,9 @@ package sample;
 //Класс Представление для вывода на экран
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
@@ -10,13 +12,13 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.util.Duration;
 
 class View implements Observer{
     //Список для таблицы
     public   ObservableList<PropTreangles> propView = FXCollections.observableArrayList();
-   // public String equalesTriangle;//Номер окна признаков треугольника
-    protected int EqualesTriangle;
-
+    //Список для второй таблицы
+    public  ObservableList<PropLineTreangle> propLine=FXCollections.observableArrayList();
 
     Model model=new Model();
     View(){
@@ -34,6 +36,7 @@ class View implements Observer{
             case "ArcGo" -> this.arcGo(model.getArcGo());//дуги
             case "TableGo"->this.tableGo(model.getMTableView());//таблица
             case "WebView"->this.webViewGo(model.getWebView());//Заполнение слева и внизу
+            case "ToolTip"->this.toolTipGo(model.getOToolTip());//Подсказка
         }
     }
     //Перемещение вершин
@@ -78,5 +81,12 @@ class View implements Observer{
          w.loadContent(model.getStringWebView());
        // w.load("https://yandex.ru");
     }
+    //Подсказка
+    private void toolTipGo(Object o){
+        Tooltip t = new Tooltip();
+        t.setShowDelay(Duration.millis(100.0));
+        t.setText(model.getSToolTip());
+        Tooltip.install((Node) o,t);
 
+    }
 }

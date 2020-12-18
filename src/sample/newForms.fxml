@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
+
+<VBox fx:id="vBox" prefHeight="600.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+
+  <MenuBar>
+    <Menu mnemonicParsing="false" text="Треугольники">
+
+      <RadioMenuItem fx:id="menuOxygon" mnemonicParsing="false" onAction="#onClickOxygon" selected="true" text="Остроугольные" />
+      <RadioMenuItem fx:id="menuObtuse" mnemonicParsing="false" onAction="#onClickObtuse" text="Тупоугольные" />
+      <RadioMenuItem fx:id="menuRegular" mnemonicParsing="false" onAction="#onClickRegular" text="Прямоугольные" />
+      <RadioMenuItem fx:id="menuIsosceles" mnemonicParsing="false" onAction="#onClickIsosceles" text="Равнобедренные" />
+      <RadioMenuItem fx:id="menuEquilateral" mnemonicParsing="false" onAction="#onClickEquilateral" text="Равносторонние" />
+      <SeparatorMenuItem mnemonicParsing="false" />
+      <Menu mnemonicParsing="false" text="Признаки равенства">
+        <items>
+          <MenuItem fx:id="menuEqualTr" mnemonicParsing="false" onAction="#onClickEquil" text="Первый признак равенства треугольников" />
+          <MenuItem fx:id="menuSecondTr" mnemonicParsing="false" onAction="#onClickSecond" text="Второй признак равенства треугольников " />
+          <MenuItem fx:id="menuTread" mnemonicParsing="false" onAction="#onClickTread" text="Третий признак равенства треугольников" />
+        </items>
+      </Menu>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Медианы">
+      <CheckMenuItem fx:id="menuMedianaA" accelerator="Ctrl+N" mnemonicParsing="false" onAction="#onClickMedianaA" selected="false" text="Из угла А" />
+      <CheckMenuItem fx:id="menuMedianaB" accelerator="Ctrl+O" mnemonicParsing="false" onAction="#onClickMedianaB" selected="false" text="Из угла В" />
+      <CheckMenuItem fx:id="menuMedianaC" accelerator="Ctrl+R" mnemonicParsing="false" onAction="#onClickMedianaC" selected="false" text="Из угла С" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Биссектрисы">
+      <CheckMenuItem fx:id="menuBisectorA" mnemonicParsing="false" onAction="#onClickBisectorA" selected="false" text="Из угла А" />
+      <CheckMenuItem fx:id="menuBisectorB" mnemonicParsing="false" onAction="#onClickBisectorB" selected="false" text="Из угла B" />
+      <CheckMenuItem fx:id="menuBisectorC" mnemonicParsing="false" onAction="#onClickBisectorC" selected="false" text="Из угла C" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Высоты">
+      <CheckMenuItem fx:id="menuHigthA" mnemonicParsing="false" onAction="#onClickHigthA" selected="false" text="Из угла А" />
+      <CheckMenuItem fx:id="menuHigthB" mnemonicParsing="false" onAction="#onClcckHigthB" selected="false" text="Из угла B" />
+      <CheckMenuItem fx:id="menuHigthC" mnemonicParsing="false" onAction="#onClickHigthC" selected="false" text="Из угла C" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Серединные перпендикуляры">
+      <CheckMenuItem fx:id="menuMiddlePerpendicularAB" mnemonicParsing="false" onAction="#onClickMiddlePerpendicularAB" selected="false" text="К стороне АB" />
+      <CheckMenuItem fx:id="menuMiddlePerpendicularBC" mnemonicParsing="false" onAction="#onClickMiddlePerpendicularBC" selected="false" text="К стороне BC" />
+      <CheckMenuItem fx:id="menuMiddlePerpendicularAC" mnemonicParsing="false" onAction="#onClickMiddlePerpendicularAC" selected="false" text="К стороне AC" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Окружности">
+      <CheckMenuItem fx:id="menuCircleIn" mnemonicParsing="false" onAction="#onClickCircleIn" selected="false" text="Вписанная окружность" />
+      <CheckMenuItem fx:id="menuCircleOut" mnemonicParsing="false" onAction="#onClickCircleOut" selected="false" text="Описанная окружность" />
+    </Menu>
+  </MenuBar>
+  <SplitPane fx:id="splitPane" dividerPositions="0.7, 0.4" focusTraversable="true" onDragDetected="#onClickSplit" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+    <items>
+      <ScrollPane>
+        <WebView fx:id="webViewLeft" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="480.0" />
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+      </ScrollPane>
+      <StackPane fx:id="st_pane" SplitPane.resizableWithParent="false">
+        <Pane fx:id="setka" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" />
+        <Pane fx:id="BP" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+          <Arc fx:id="arcA" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="BLUE" type="OPEN" />
+          <Arc fx:id="arcB" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="RED" type="OPEN" />
+          <Arc fx:id="arcC" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="GREEN" type="OPEN" />
+          <Circle fx:id="iC" fill="TRANSPARENT" stroke="GREEN" strokeWidth="2" visible="false" />
+          <Circle fx:id="ic" fill="GREEN" radius="3" strokeWidth="2" visible="false" />
+          <Circle fx:id="vc" fill="BLUE" radius="3" strokeWidth="2" visible="false" />
+          <Circle fx:id="vC" fill="TRANSPARENT" stroke="Blue" strokeWidth="2" visible="false" />
+
+          <Circle fx:id="A" centerX="50" centerY="200" fill="blue" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
+          <Circle fx:id="B" centerX="100" centerY="50" fill="RED" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
+          <Circle fx:id="C" centerX="200" centerY="200" fill="green" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
+          <Line fx:id="a" endX="200" endY="200" onMouseEntered="#mouseEntered" startX="100.0" startY="50.0" stroke="Black" strokeWidth="2.0" />
+          <Line fx:id="b" endX="200" endY="200" onMouseEntered="#mouseEntered" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
+          <Line fx:id="c" endX="100.0" endY="51.0" onMouseEntered="#mouseEntered" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
+
+          <Circle fx:id="mA" fill="cornflowerblue" radius="3" visible="false" />
+          <Line fx:id="ma" onMouseEntered="#mouseEntered" stroke="blue" visible="false" />
+          <Circle fx:id="mB" fill="cornflowerblue" radius="3" visible="false" />
+          <Line fx:id="mb" stroke="blue" visible="false" />
+          <Circle fx:id="mC" fill="cornflowerblue" radius="3" visible="false" />
+          <Line fx:id="mc" stroke="blue" visible="false" />
+
+          <Circle fx:id="hA" fill="silver" radius="3" visible="false" />
+          <Line fx:id="ha" stroke="darkred" visible="false" />
+          <Circle fx:id="hB" fill="silver" radius="3" visible="false" />
+          <Line fx:id="hb" stroke="darkred" visible="false" />
+          <Circle fx:id="hC" fill="silver" radius="3" visible="false" />
+          <Line fx:id="hc" stroke="darkred" visible="false" />
+
+          <Circle fx:id="bA" fill="GREEN" radius="3" visible="false" />
+          <Line fx:id="ba" stroke="seagreen" visible="false" />
+          <Circle fx:id="bB" fill="GREEN" radius="3" visible="false" />
+          <Line fx:id="bb" stroke="seagreen" visible="false" />
+          <Circle fx:id="bC" fill="GREEN" radius="3" visible="false" />
+          <Line fx:id="bic" stroke="seagreen" visible="false" />
+
+          <Line fx:id="spa" stroke="royalblue" visible="false" />
+          <Line fx:id="spb" stroke="royalblue" visible="false" />
+          <Line fx:id="spc" stroke="royalblue" visible="false" />
+
+          <Line fx:id="la" stroke="grey" visible="false" />
+          <Line fx:id="lb" stroke="gray" visible="false" />
+          <Line fx:id="lc" stroke="grey" visible="false" />
+
+          <Line fx:id="la1" stroke="grey" visible="false" />
+          <Line fx:id="lb1" stroke="gray" visible="false" />
+          <Line fx:id="lc1" stroke="grey" visible="false" />
+
+          <Line fx:id="angle90Ax" stroke="gray" visible="false" />
+          <Line fx:id="angle90Ay" stroke="grey" visible="false" />
+          <Line fx:id="angle90Bx" stroke="gray" visible="false" />
+          <Line fx:id="angle90By" stroke="grey" visible="false" />
+          <Line fx:id="angle90Cx" stroke="gray" visible="false" />
+          <Line fx:id="angle90Cy" stroke="grey" visible="false" />
+          <Text fx:id="poindA" strokeType="OUTSIDE" strokeWidth="0.0" text="A" x="30" y="200">
+            <font>
+              <Font size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindB" strokeType="OUTSIDE" strokeWidth="0.0" text="B" x="100" y="40">
+            <font>
+              <Font size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindC" strokeType="OUTSIDE" strokeWidth="0.0" text="C" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindE" strokeType="OUTSIDE" strokeWidth="0.0" text="E" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindD" strokeType="OUTSIDE" strokeWidth="0.0" text="D" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindF" strokeType="OUTSIDE" strokeWidth="0.0" text="F" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindG" strokeType="OUTSIDE" strokeWidth="0.0" text="G" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindH" strokeType="OUTSIDE" strokeWidth="0.0" text="H" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindI" strokeType="OUTSIDE" strokeWidth="0.0" text="I" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindJ" strokeType="OUTSIDE" strokeWidth="0.0" text="J" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindK" strokeType="OUTSIDE" strokeWidth="0.0" text="K" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindL" strokeType="OUTSIDE" strokeWidth="0.0" text="L" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindO" strokeType="OUTSIDE" strokeWidth="0.0" text="O" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+          <Text fx:id="poindS" strokeType="OUTSIDE" strokeWidth="0.0" text="S" visible="false" x="210" y="200">
+            <font>
+              <Font name="Times New Roman" size="18.0" />
+            </font>
+          </Text>
+        </Pane>
+      </StackPane>
+      <VBox>
+        <Accordion>
+          <panes>
+            <TitledPane animated="false" text="Вершины треугольника">
+              <TableView fx:id="TableTreangle" prefHeight="200.0" prefWidth="161.0" BorderPane.alignment="CENTER">
+                <columns>
+                  <TableColumn fx:id="vertex" prefWidth="65.0" text="Углы треугольника" />
+                  <TableColumn fx:id="coordinates" prefWidth="102.0" text="Координаты">
+                    <columns>
+                      <TableColumn fx:id="coordinatesX" prefWidth="46.0" text="X" />
+                      <TableColumn fx:id="coordinatesY" prefWidth="46.0" text="Y" />
+                    </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="angle" prefWidth="56.0" text="Угол гр." />
+                </columns>
+              </TableView>
+            </TitledPane>
+          </panes>
+        </Accordion>
+        <Accordion>
+          <panes>
+            <TitledPane animated="false" text="Длины треугольника">
+
+                        <TableView fx:id="LineTreangle" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn fx:id="LineS" prefWidth="95.0" text="Сторона" />
+                            <TableColumn fx:id="LineD" prefWidth="55.0" text="Длина, см" />
+                          </columns>
+                        </TableView>
+          </TitledPane>
+        </panes>
+      </Accordion>
+        <Accordion>
+          <panes>
+            <TitledPane animated="false" text="Дополнительно">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </TitledPane>
+          </panes>
+        </Accordion>
+      </VBox>
+
+    </items>
+    <VBox.margin>
+      <Insets />
+    </VBox.margin>
+  </SplitPane>
+  <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="500.0" prefWidth="970.0" spacing="5.0" VBox.vgrow="NEVER">
+    <padding>
+      <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+    </padding>
+    <WebView fx:id="webViewBotton" prefHeight="197.0" prefWidth="600.0" BorderPane.alignment="BOTTOM_LEFT" />
+  </HBox>
+
+</VBox>
