@@ -38,7 +38,7 @@
               </Menu>
               <Menu mnemonicParsing="false" text="Высоты">
                   <CheckMenuItem fx:id="menuHigthA" mnemonicParsing="false" onAction="#onClickHigthA" selected="false" text="Из угла А" />
-                  <CheckMenuItem fx:id="menuHigthB" mnemonicParsing="false" onAction="#onClcckHigthB" selected="false" text="Из угла B" />
+                  <CheckMenuItem fx:id="menuHigthB" mnemonicParsing="false" onAction="#onClickHigthB" selected="false" text="Из угла B" />
                   <CheckMenuItem fx:id="menuHigthC" mnemonicParsing="false" onAction="#onClickHigthC" selected="false" text="Из угла C" />
               </Menu>
               <Menu mnemonicParsing="false" text="Серединные перпендикуляры">

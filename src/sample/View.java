@@ -18,7 +18,7 @@ class View implements Observer{
     //Список для таблицы
     public   ObservableList<PropTreangles> propView = FXCollections.observableArrayList();
     //Список для второй таблицы
-    public  ObservableList<PropLineTreangle> propLine=FXCollections.observableArrayList();
+    public  ObservableList<PropLineTreangle> propLineTr =FXCollections.observableArrayList();
 
     Model model=new Model();
     View(){

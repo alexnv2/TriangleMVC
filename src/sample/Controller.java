@@ -104,7 +104,7 @@ public class  Controller extends View {
         initDataLine();
         LineS.setCellValueFactory(new PropertyValueFactory<>("propLine"));
         LineD.setCellValueFactory(new PropertyValueFactory<>("propRazmer"));
-        LineTreangle.setItems(super.propLine);
+        LineTreangle.setItems(super.propLineTr);
     }
 
     private void initData() {
@@ -114,9 +114,9 @@ public class  Controller extends View {
 
     }//Длина в см (делитель 40)
     private void initDataLine() {
-        super.propLine.add(new PropLineTreangle("AB",model.distance(A.getCenterX(),A.getCenterY(),B.getCenterX(),B.getCenterY())/40));
-        super.propLine.add(new PropLineTreangle("AC",model.distance(A.getCenterX(),A.getCenterY(),C.getCenterX(),C.getCenterY())/40));
-        super.propLine.add(new PropLineTreangle("BC",model.distance(B.getCenterX(),B.getCenterY(),C.getCenterX(),C.getCenterY())/40));
+        super.propLineTr.add(new PropLineTreangle("AB",model.distance(A.getCenterX(),A.getCenterY(),B.getCenterX(),B.getCenterY())/40));
+        super.propLineTr.add(new PropLineTreangle("AC",model.distance(A.getCenterX(),A.getCenterY(),C.getCenterX(),C.getCenterY())/40));
+        super.propLineTr.add(new PropLineTreangle("BC",model.distance(B.getCenterX(),B.getCenterY(),C.getCenterX(),C.getCenterY())/40));
 
     }
 
@@ -129,12 +129,14 @@ public class  Controller extends View {
             poindD.setVisible(true);
             model.webViewLeftString(webViewLeft,3);
             model.webViewBotton(webViewBotton,6);
+            super.propLineTr.add(new PropLineTreangle("AD", model.distance(A.getCenterX(), A.getCenterY(), mA.getCenterX(), mA.getCenterY())/40));
         }else {
             ma.setVisible(false);
             accMedianaA--;
             if(accMedianaA==0) {
                 mA.setVisible(false);
                 poindD.setVisible(false);
+                super.propLineTr.remove(indexTr("AD"));
             }
         }
     }
@@ -146,12 +148,14 @@ public class  Controller extends View {
         mB.setVisible(true);
         poindE.setVisible(true);
         model.webViewLeftString(webViewLeft,3);
+        super.propLineTr.add(new PropLineTreangle("BE", model.distance(B.getCenterX(), B.getCenterY(), mB.getCenterX(), mB.getCenterY())/40));
         }else {
             mb.setVisible(false);
             accMedianaB--;
             if(accMedianaB==0) {
                 mB.setVisible(false);
                 poindE.setVisible(false);
+                super.propLineTr.remove(indexTr("BE"));
             }
         }
     }
@@ -163,14 +167,26 @@ public class  Controller extends View {
             mC.setVisible(true);
             poindF.setVisible(true);
             model.webViewLeftString(webViewLeft,3);
+            super.propLineTr.add(new PropLineTreangle("CF", model.distance(C.getCenterX(), C.getCenterY(), mC.getCenterX(), mC.getCenterY())/40));
         }else {
             mc.setVisible(false);
             accMedianaC--;
-            if(accMedianaC==0) {
+            if (accMedianaC == 0) {
                 mC.setVisible(false);
                 poindF.setVisible(false);
+                super.propLineTr.remove(indexTr("CF"));
             }
         }
+    }
+    //Возвращает индекс отрезка из класса PropLineTriangle
+    public int indexTr(String s) {
+        int i = 0;
+        for (PropLineTreangle e : propLineTr) {
+          //  System.out.println(e.getPropLine());
+            if (e.getPropLine().equals(s)) {break;}
+            i++;
+        }
+        return i;//индекс отрезка
     }
     //Меню Биссектрисы ->Из угла А
     public void onClickBisectorA() {
@@ -180,10 +196,12 @@ public class  Controller extends View {
             poindG.setVisible(true);
             model.webViewLeftString(webViewLeft,2);
             model.webViewBotton(webViewBotton,5);
+            super.propLineTr.add(new PropLineTreangle("AG", model.distance(A.getCenterX(), A.getCenterY(), bA.getCenterX(), bA.getCenterY())/40));
         }else {
             ba.setVisible(false);
             bA.setVisible(false);
             poindG.setVisible(false);
+            super.propLineTr.remove(indexTr("AG"));
         }
     }
     //Меню Биссектрисы ->Из угла В
@@ -193,10 +211,12 @@ public class  Controller extends View {
             bB.setVisible(true);
             poindH.setVisible(true);
             model.webViewLeftString(webViewLeft,2);
+            super.propLineTr.add(new PropLineTreangle("BH", model.distance(B.getCenterX(), B.getCenterY(), bB.getCenterX(), bB.getCenterY())/40));
         }else {
             bb.setVisible(false);
             bB.setVisible(false);
             poindH.setVisible(false);
+            super.propLineTr.remove(indexTr("BH"));
         }
     }
     //Меню Биссектрисы ->Из угла С
@@ -206,10 +226,12 @@ public class  Controller extends View {
             bC.setVisible(true);
             poindI.setVisible(true);
             model.webViewLeftString(webViewLeft,2);
+            super.propLineTr.add(new PropLineTreangle("CI", model.distance(C.getCenterX(), C.getCenterY(), bC.getCenterX(), bC.getCenterY())/40));
         }else {
             bic.setVisible(false);
             bC.setVisible(false);
             poindI.setVisible(false);
+            super.propLineTr.remove(indexTr("CI"));
         }
     }
     //Меню Высоты ->Из угла А
@@ -222,16 +244,18 @@ public class  Controller extends View {
             poindJ.setVisible(true);
             model.webViewLeftString(webViewLeft,4);
             model.webViewBotton(webViewBotton,7);
+            super.propLineTr.add(new PropLineTreangle("AJ", model.distance(A.getCenterX(), A.getCenterY(), hA.getCenterX(), hA.getCenterY())/40));
        }else {
             ha.setVisible(false);
             hA.setVisible(false);
             la.setVisible(false);
             la1.setVisible(false);
             poindJ.setVisible(false);
+            super.propLineTr.remove(indexTr("AJ"));
         }
     }
     //Меню Высоты ->Из угла В
-    public void onClcckHigthB() {
+    public void onClickHigthB() {
         if(menuHigthB.isSelected()){
             hb.setVisible(true);
             hB.setVisible(true);
@@ -239,12 +263,14 @@ public class  Controller extends View {
             lb1.setVisible(true);
             poindK.setVisible(true);
             model.webViewLeftString(webViewLeft,4);
+            super.propLineTr.add(new PropLineTreangle("BK", model.distance(B.getCenterX(), B.getCenterY(), hB.getCenterX(), hB.getCenterY())/40));
         }else {
             hb.setVisible(false);
             hB.setVisible(false);
             lb.setVisible(false);
             lb1.setVisible(false);
             poindK.setVisible(false);
+            super.propLineTr.remove(indexTr("BK"));
         }
     }
     //Меню Высоты ->Из угла С
@@ -256,12 +282,14 @@ public class  Controller extends View {
             lc1.setVisible(true);
             poindL.setVisible(true);
             model.webViewLeftString(webViewLeft,4);
+            super.propLineTr.add(new PropLineTreangle("CL", model.distance(C.getCenterX(), C.getCenterY(), hC.getCenterX(), hC.getCenterY())/40));
         }else {
             hc.setVisible(false);
             hC.setVisible(false);
             lc.setVisible(false);
             lc1.setVisible(false);
             poindL.setVisible(false);
+            super.propLineTr.remove(indexTr("CL"));
         }
     }
     //Меню Серединные перпендикуляры -> К стороне АВ
@@ -544,11 +572,22 @@ public class  Controller extends View {
         super.propView.set(1, new PropTreangles("B",B.getCenterX(),B.getCenterY(),arcB.getLength()));
         super.propView.set(2, new PropTreangles("C",C.getCenterX(),C.getCenterY(),arcC.getLength()));
         }
-    public void lineAccess(){
+    public void lineAccess(String s, int index){
         //длина
-        super.propLine.set(0, new PropLineTreangle("AB",model.distance(A.getCenterX(),A.getCenterY(),B.getCenterX(),B.getCenterY())/40));
-        super.propLine.set(1, new PropLineTreangle("AC",model.distance(A.getCenterX(),A.getCenterY(),C.getCenterX(),C.getCenterY())/40));
-        super.propLine.set(2, new PropLineTreangle("BC",model.distance(B.getCenterX(),B.getCenterY(),C.getCenterX(),C.getCenterY())/40));
+        switch (s) {
+            case "AB"-> super.propLineTr.set(index, new PropLineTreangle("AB", model.distance(A.getCenterX(), A.getCenterY(), B.getCenterX(), B.getCenterY()) / 40));
+            case "AC"-> super.propLineTr.set(index, new PropLineTreangle("AC", model.distance(A.getCenterX(), A.getCenterY(), C.getCenterX(), C.getCenterY()) / 40));
+            case "BC"-> super.propLineTr.set(index, new PropLineTreangle("BC", model.distance(B.getCenterX(), B.getCenterY(), C.getCenterX(), C.getCenterY()) / 40));
+            case "AD"-> super.propLineTr.set(index, new PropLineTreangle("AD", model.distance(A.getCenterX(), A.getCenterY(), mA.getCenterX(), mA.getCenterY())/40));
+            case "BE"-> super.propLineTr.set(index, new PropLineTreangle("BE", model.distance(B.getCenterX(), B.getCenterY(), mB.getCenterX(), mB.getCenterY())/40));
+            case "CF"-> super.propLineTr.set(index, new PropLineTreangle("CF", model.distance(C.getCenterX(), C.getCenterY(), mC.getCenterX(), mC.getCenterY())/40));
+            case "AG"-> super.propLineTr.set(index, new PropLineTreangle("AG", model.distance(A.getCenterX(), A.getCenterY(), bA.getCenterX(), bA.getCenterY())/40));
+            case "BH"-> super.propLineTr.set(index, new PropLineTreangle("BH", model.distance(B.getCenterX(), B.getCenterY(), bB.getCenterX(), bB.getCenterY())/40));
+            case "CI"-> super.propLineTr.set(index, new PropLineTreangle("CI", model.distance(C.getCenterX(), C.getCenterY(), bC.getCenterX(), bC.getCenterY())/40));
+            case "AJ"-> super.propLineTr.set(index, new PropLineTreangle("AJ", model.distance(A.getCenterX(), A.getCenterY(), hA.getCenterX(), hA.getCenterY())/40));
+            case "BK"-> super.propLineTr.set(index, new PropLineTreangle("BK", model.distance(B.getCenterX(), B.getCenterY(), hB.getCenterX(), hB.getCenterY())/40));
+            case "CL"-> super.propLineTr.set(index, new PropLineTreangle("CL", model.distance(C.getCenterX(), C.getCenterY(), hC.getCenterX(), hC.getCenterY())/40));
+        }
     }
 
         //Перемещение вершин
@@ -565,7 +604,7 @@ public class  Controller extends View {
             model.mestopolojenie(A, bA,poindA); //Обозначение угла А
             angleAccess(); //занесение координат и углов в таблицу
             model.tableGo(TableTreangle);//вывод в таблицу
-            lineAccess();
+          //  lineAccess();
             model.tableGo(LineTreangle);
         }
         if (mouseEvent.getSource() == B) {
@@ -576,7 +615,7 @@ public class  Controller extends View {
             model.mestopolojenie(B,bB,poindB); //Угол В
             angleAccess();
             model.tableGo(TableTreangle);
-            lineAccess();
+          //  lineAccess();
             model.tableGo(LineTreangle);
         }
         if (mouseEvent.getSource() == C) {
@@ -587,12 +626,17 @@ public class  Controller extends View {
             model.mestopolojenie(C,bC,poindC);//Угол С
             angleAccess();
             model.tableGo(TableTreangle);
-            lineAccess();
+           // lineAccess();
             model.tableGo(LineTreangle);
+        }
+        //Изменение всех длин в таблице
+        for (PropLineTreangle e : propLineTr) {
+           // System.out.println(e.getPropLine());
+            lineAccess(e.getPropLine(),indexTr(e.getPropLine()));
         }
         visibleLine();
         visibleRectangle90();
-        splitPane.widthProperty().addListener((obj,oldValue,newValue)->{System.out.println(newValue);});
+        splitPane.widthProperty().addListener((obj,oldValue,newValue)-> System.out.println(newValue));
 
 
     }
@@ -711,7 +755,7 @@ public class  Controller extends View {
     }
     //Выполняется перерасчет все линий и точек
     public void visibleLine(){
-        //Медианa А
+        //МедианaА
         model.median(B,C,A,mA,ma);//медиана из угла А
         model.mestopolojenie(mA,A,poindD);//Точка D
         //MedianaB
@@ -731,13 +775,13 @@ public class  Controller extends View {
         model.mestopolojenie(bC,C,poindI);//Точка I
         //Высоты
         //HigthA
-        model.HightTreangle(A,B,C,hA,ha, la,la1);
+        model.HeightTreangle(A,B,C,hA,ha, la,la1);
         model.mestopolojenie(hA,A,poindJ);//Точка J
         //HigthB
-        model.HightTreangle(B,C,A,hB,hb, lb,lb1);
+        model.HeightTreangle(B,C,A,hB,hb, lb,lb1);
         model.mestopolojenie(hB,A,poindK);//Точка K
         //HigthC
-        model.HightTreangle(C,A,B,hC,hc,lc,lc1);
+        model.HeightTreangle(C,A,B,hC,hc,lc,lc1);
         model.mestopolojenie(hC,B,poindL);//Точка L
         //Серединные перпендикуляры
         //MiddlePerpendicularAB
@@ -781,7 +825,7 @@ public class  Controller extends View {
     }
 
 
-    public void onClickSplit(MouseEvent mouseEvent) {
+    public void onClickSplit() {
         double[] spg=splitPane.getDividerPositions();
         System.out.println(spg[0]);
     }

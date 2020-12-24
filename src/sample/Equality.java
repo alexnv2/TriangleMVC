@@ -45,9 +45,8 @@ public class Equality extends View {
 
 
     //Анимация для совмещения треугольников
-    public void onClicCombine() {
+    public void onClickCombine() {
         //Перемещениe
-
         TranslateTransition tr=new TranslateTransition(Duration.seconds(10), groupTriangles);
         tr.setFromX(0);
         tr.setFromY(0);

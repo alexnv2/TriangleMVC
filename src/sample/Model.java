@@ -68,13 +68,13 @@ class Model implements  Observable {
 
     //Текст для левой части
     public void webViewLeftString(WebView o, int c){
-       String puthImages= new File(".").getAbsolutePath()+"\\src\\Images\\formula_bis.jpg";
-       String puthImg1="<img src=file:\\"+puthImages+" width=360 height=105>";
+       String pathImages= new File(".").getAbsolutePath()+"\\src\\Images\\formula_bis.jpg";
+       String pathImg1="<img src=file:\\"+pathImages+" width=360 height=105>";
 
     switch (c) {
         case 0: setStringWebView(WEB_HTML+TR_OPR + TR_ANGLE + TR_NERAVENSVO+ TR_SUNANGLE+WEB_END);break;
         case 1: setStringWebView(WEB_HTML+TR_TEOREMA33+TR_TEOREMA34+WEB_END);break;
-        case 2: setStringWebView(WEB_HTML+TR_BISSECTOR+TR_BISSEC_FOR+puthImg1+WEB_END);break;
+        case 2: setStringWebView(WEB_HTML+TR_BISSECTOR+TR_BISSEC_FOR+pathImg1+WEB_END);break;
         case 3: setStringWebView((WEB_HTML+TR_MEDIANA+WEB_END));break;
         case 4: setStringWebView(WEB_HTML+TR_HIGTH+TR_ORTOSENTR+WEB_END);break;
      //   default:
@@ -275,7 +275,7 @@ class Model implements  Observable {
         SideGo(l);
     }
     //Высоты
-    public void HightTreangle(Circle o1, Circle o2, Circle o3, Circle o4, Line l1, Line l2, Line l3){
+    public void HeightTreangle(Circle o1, Circle o2, Circle o3, Circle o4, Line l1, Line l2, Line l3){
         intersection(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
         VertexGo(o4);
         setVerX1(o1.getCenterX());
