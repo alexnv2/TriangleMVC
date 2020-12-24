@@ -34,6 +34,7 @@ class View implements Observer{
             case "TextGo" -> this.TextGo(model.getTextGo());//буквы
             case "ColorGo" -> this.SrokeColor(model.getColorLine());//цвет
             case "ArcGo" -> this.arcGo(model.getArcGo());//дуги
+            case "ArcColorGo"->this.ArcColor(model.getArcGo());
             case "TableGo"->this.tableGo(model.getMTableView());//таблица
             case "WebView"->this.webViewGo(model.getWebView());//Заполнение слева и внизу
             case "ToolTip"->this.toolTipGo(model.getOToolTip());//Подсказка
@@ -73,6 +74,12 @@ class View implements Observer{
     private void SrokeColor(Line line){
        Color c=model.getColorGo();
         line.setStroke(c);
+    }
+    //Изменение цвета линий
+    private void ArcColor(Arc arc){
+        Color c=model.getColorGo();
+        System.out.println("arccolor");
+        arc.setStroke(c);
     }
     //Заполнение web страниц слева и внизу
     private void webViewGo(WebView webView) {

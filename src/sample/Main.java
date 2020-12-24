@@ -16,7 +16,7 @@ public class Main extends Application {
         Dimension sSize = Toolkit.getDefaultToolkit ().getScreenSize ();
         int vSize = sSize.height;//разрешение монитора
         int hSize  = sSize.width;
-        System.out.println(vSize+"   " +hSize);
+        //System.out.println(vSize+"   " +hSize);
         primaryStage.setScene(new Scene(root, hSize-200, vSize-100));
 
         primaryStage.show();

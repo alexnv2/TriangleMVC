@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -24,7 +25,9 @@ import org.jetbrains.annotations.NotNull;
 
 //Конструктор класса
 public class  Controller extends View {
-//Переменные
+
+
+    //Переменные
     private int accMedianaA=0;//счетчик для точек для медиан  и середииных перепендикуляров
     private int accMedianaB=0;
     private int accMedianaC=0;
@@ -55,12 +58,16 @@ public class  Controller extends View {
     public CheckMenuItem menuCircleIn, menuCircleOut;
     public RadioMenuItem menuOxygon, menuObtuse, menuRegular, menuIsosceles, menuEquilateral;
     public MenuItem menuEqualTr;
+    public MenuItem menuSecondTr;
+    public MenuItem menuTread;
+
    //Web браузер для вывода данных
     public WebView webViewLeft,webViewBotton;
     //Контейнер Pane
     public Pane BP, setka;
     public VBox vBox;
     public SplitPane splitPane;
+    public StackPane st_pane;
 
     //Таблица свойств
     @FXML
@@ -133,10 +140,11 @@ public class  Controller extends View {
         }else {
             ma.setVisible(false);
             accMedianaA--;
+            super.propLineTr.remove(indexTr("AD"));
             if(accMedianaA==0) {
                 mA.setVisible(false);
                 poindD.setVisible(false);
-                super.propLineTr.remove(indexTr("AD"));
+
             }
         }
     }
@@ -152,10 +160,11 @@ public class  Controller extends View {
         }else {
             mb.setVisible(false);
             accMedianaB--;
+            super.propLineTr.remove(indexTr("BE"));
             if(accMedianaB==0) {
                 mB.setVisible(false);
                 poindE.setVisible(false);
-                super.propLineTr.remove(indexTr("BE"));
+
             }
         }
     }
@@ -171,10 +180,11 @@ public class  Controller extends View {
         }else {
             mc.setVisible(false);
             accMedianaC--;
+            super.propLineTr.remove(indexTr("CF"));
             if (accMedianaC == 0) {
                 mC.setVisible(false);
                 poindF.setVisible(false);
-                super.propLineTr.remove(indexTr("CF"));
+
             }
         }
     }
@@ -418,6 +428,12 @@ public class  Controller extends View {
         model.arcVertex(A,B,C,arcA);
         model.arcVertex(B,C, A, arcB);
         model.arcVertex(C, A, B, arcC);
+        model.setColorGo(Color.BLUE);
+        model.ArcColorGo(arcA);
+        model.setColorGo(Color.RED);
+        model.ArcColorGo(arcB);
+        model.setColorGo(Color.GREEN);
+        model.ArcColorGo(arcC);
         //формуруем и выводим таблицу
         angleAccess();
         model.tableGo(TableTreangle);
@@ -503,6 +519,8 @@ public class  Controller extends View {
         model.arcVertex(B,C, A, arcB);
         arcB.setVisible(false);//запрет отображения дуги угла В
         model.arcVertex(C, A, B, arcC);
+        model.ArcColorGo(arcA);
+        model.ArcColorGo(arcC);
         angleAccess();
         model.tableGo(TableTreangle);
     }
@@ -522,13 +540,16 @@ public class  Controller extends View {
         arcC.setVisible(true);
         model.setColorGo(Color.RED);
         model.ColorGo(a);
-        model.setColorGo(Color.RED);
+       // model.setColorGo(Color.RED);
         model.ColorGo(b);
-        model.setColorGo(Color.RED);
+       // model.setColorGo(Color.RED);
         model.ColorGo(c);
         model.arcVertex(A,B,C,arcA);
         model.arcVertex(B,C, A, arcB);
         model.arcVertex(C, A, B, arcC);
+        model.ArcColorGo(arcA);
+        model.ArcColorGo(arcB);
+        model.ArcColorGo(arcC);
         angleAccess();
         model.tableGo(TableTreangle);
     }
@@ -599,8 +620,14 @@ public class  Controller extends View {
             model.sideAll(A,B,C,c,b);//две смежных стороны с и b
             model.TextGo(poindA);//вершина угла
             model.arcVertex(A,B,C,arcA);//дуга угла А
+            model.setColorGo(Color.BLUE);
+            model.ArcColorGo(arcA);
             model.arcVertex(B,C, A, arcB);//дуга угла В
+            model.setColorGo(Color.RED);
+            model.ArcColorGo(arcB);
             model.arcVertex(C, A, B, arcC); //Дуга угла С
+            model.setColorGo(Color.GREEN);
+            model.ArcColorGo(arcC);
             model.mestopolojenie(A, bA,poindA); //Обозначение угла А
             angleAccess(); //занесение координат и углов в таблицу
             model.tableGo(TableTreangle);//вывод в таблицу
@@ -609,9 +636,15 @@ public class  Controller extends View {
         }
         if (mouseEvent.getSource() == B) {
             model.sideAll(B,A,C,c,a);
-            model.arcVertex(B,C, A, arcB);
-            model.arcVertex(C, A, B, arcC);
+            model.arcVertex(C, A, B, arcC); //Дуга угла С
+            model.setColorGo(Color.GREEN);
+            model.ArcColorGo(arcC);
             model.arcVertex(A,B,C,arcA);
+            model.setColorGo(Color.BLUE);
+            model.ArcColorGo(arcA);
+            model.arcVertex(B,C, A, arcB);//дуга угла В
+            model.setColorGo(Color.RED);
+            model.ArcColorGo(arcB);
             model.mestopolojenie(B,bB,poindB); //Угол В
             angleAccess();
             model.tableGo(TableTreangle);
@@ -620,23 +653,25 @@ public class  Controller extends View {
         }
         if (mouseEvent.getSource() == C) {
             model.sideAll(C,A,B,b,a);
-            model.arcVertex(C, A, B, arcC);
             model.arcVertex(A,B,C,arcA);
+            model.setColorGo(Color.BLUE);
+            model.ArcColorGo(arcA);
             model.arcVertex(B,C, A, arcB);
-            model.mestopolojenie(C,bC,poindC);//Угол С
+            model.setColorGo(Color.RED);
+            model.ArcColorGo(arcB);
+            model.setColorGo(Color.GREEN);
+            model.ArcColorGo(arcC);
+            model.arcVertex(C,A, B, arcC); //Дуга угла С
+            model.mestopolojenie(C, bC,poindC); //Обозначение угла А
             angleAccess();
             model.tableGo(TableTreangle);
            // lineAccess();
             model.tableGo(LineTreangle);
         }
-        //Изменение всех длин в таблице
-        for (PropLineTreangle e : propLineTr) {
-           // System.out.println(e.getPropLine());
-            lineAccess(e.getPropLine(),indexTr(e.getPropLine()));
-        }
+
         visibleLine();
         visibleRectangle90();
-        splitPane.widthProperty().addListener((obj,oldValue,newValue)-> System.out.println(newValue));
+       // splitPane.widthProperty().addListener((obj,oldValue,newValue)-> System.out.println(newValue));
 
 
     }
@@ -755,6 +790,7 @@ public class  Controller extends View {
     }
     //Выполняется перерасчет все линий и точек
     public void visibleLine(){
+
         //МедианaА
         model.median(B,C,A,mA,ma);//медиана из угла А
         model.mestopolojenie(mA,A,poindD);//Точка D
@@ -799,6 +835,11 @@ public class  Controller extends View {
         //Описанная окружность
         //CircleOut
         model.outCircle(vC,A,B,C,vc,poindS);
+        //Изменение всех длин в таблице
+        for (PropLineTreangle e : propLineTr) {
+            // System.out.println(e.getPropLine());
+            lineAccess(e.getPropLine(),indexTr(e.getPropLine()));
+        }
     }
     public void reshetka(){
         Group group=new Group();
@@ -821,12 +862,12 @@ public class  Controller extends View {
             group.getChildren().add(shapes1[i]);
         }
         setka.getChildren().add(group);
-        System.out.println("Setca "+w+"  "+h);
+       // System.out.println("Setca "+w+"  "+h);
     }
 
 
     public void onClickSplit() {
         double[] spg=splitPane.getDividerPositions();
-        System.out.println(spg[0]);
+       // System.out.println(spg[0]);
     }
 }

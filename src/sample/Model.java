@@ -214,14 +214,19 @@ class Model implements  Observable {
         setAngleLength(angleABC);
         setArcRadius(30);
         double arcLight=angleTriangle(o1.getCenterX(),o1.getCenterY(), o1.getCenterX()+200, o1.getCenterY(), o3.getCenterX(), o3.getCenterY());
-
-        if(o1.getCenterY()<o3.getCenterY()){
-            arcLight=360-arcLight;
+        double str=areaTriangle(o1.getCenterX(), o1.getCenterY(), o1.getCenterX()+200, o1.getCenterY(), o3.getCenterX(), o3.getCenterY());
+         double str1=areaTriangle(o3.getCenterX(), o3.getCenterY(), o2.getCenterX(), o2.getCenterY(), o1.getCenterX(), o1.getCenterY());
+        if (str<0){
+            arcLight=360+arcLight;
+        }else {
+            arcLight=-arcLight;
+        }
+        if(str1>0){
+            arcLight=arcLight-angleABC;
         }
         setAngleStart(arcLight);
         setVerX(o1.getCenterX());
         setVerY(o1.getCenterY());
-     //   System.out.println(angleABC+" "+arcLight);
         ArcGo(a1);
     }
     //Прямой угол вместо дуги
@@ -298,8 +303,6 @@ class Model implements  Observable {
         setVerX1(getVerX());
         setVerY1(getVerY());
         middlePerpendicular(o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY(), o4.getCenterX(),o4.getCenterY());
-        //intersection(o4.getCenterX(),o4.getCenterY(),o1.getCenterX(), o1.getCenterY(), o2.getCenterX(), o2.getCenterY());
-        //intersection(o2.getCenterX(), o2.getCenterY(), o4.getCenterX(), o4.getCenterY(), o1.getCenterX(),o1.getCenterY());
         VertexGo(o5);
         SideGo(l);
         setTextX(o5.getCenterX()+10);
@@ -323,9 +326,7 @@ class Model implements  Observable {
     public void outCircle(Circle o1, Circle o2, Circle o3, Circle o4, Circle o5, Text t){
         o1.setRadius(radiusOutCircle(o2.getCenterX(),o2.getCenterY(), o3.getCenterX(),o3.getCenterY(),o4.getCenterX(),o4.getCenterY()));
         middlePerpendicular(o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY(), o4.getCenterX(),o4.getCenterY());
-        //intersection(o4.getCenterX(),o4.getCenterY(),o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
         VertexGo(o1);
-        //intersection(o4.getCenterX(),o4.getCenterY(),o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY());
         middlePerpendicular(o2.getCenterX(), o2.getCenterY(), o3.getCenterX(), o3.getCenterY(), o4.getCenterX(),o4.getCenterY());
         VertexGo(o5);
         setTextX(o5.getCenterX()+10);
@@ -357,6 +358,10 @@ class Model implements  Observable {
     void ArcGo(Arc o){
         arcGo=o;
         notifyObservers("ArcGo");
+    }
+    void ArcColorGo(Arc o){
+        arcGo=o;
+        notifyObservers("ArcColorGo");
     }
     //Таблица
     void tableGo(TableView o){
