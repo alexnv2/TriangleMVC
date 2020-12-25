@@ -26,7 +26,8 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<VBox fx:id="vBox" prefHeight="600.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox fx:id="vBox" prefHeight="600.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
 
   <MenuBar>
     <Menu mnemonicParsing="false" text="Треугольники">
@@ -71,7 +72,7 @@
       <CheckMenuItem fx:id="menuCircleOut" mnemonicParsing="false" onAction="#onClickCircleOut" text="Описанная окружность" />
     </Menu>
   </MenuBar>
-  <SplitPane fx:id="splitPane" dividerPositions="0.7, 0.4" focusTraversable="true" onDragDetected="#onClickSplit"
+  <SplitPane fx:id="splitPane" dividerPositions="0.7, 0.4" focusTraversable="true"
               VBox.vgrow="ALWAYS">
     <VBox.margin>
       <Insets/>

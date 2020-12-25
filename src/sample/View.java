@@ -78,7 +78,6 @@ class View implements Observer{
     //Изменение цвета линий
     private void ArcColor(Arc arc){
         Color c=model.getColorGo();
-        System.out.println("arccolor");
         arc.setStroke(c);
     }
     //Заполнение web страниц слева и внизу
