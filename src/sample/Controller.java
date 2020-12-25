@@ -14,10 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
+import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -875,28 +872,86 @@ public class  Controller extends View {
     }
     public void reshetka(){
         Group group=new Group();
+        Group group2=new Group();
         double w=vBox.getPrefWidth();
         double h=vBox.getPrefHeight();
+        double w1=BP.getPrefWidth();
+        double h1=BP.getPrefHeight();
         int z1,z2;
-        z1= (int) (w/mk);
-        z2= (int) (h/mk);
-        Shape[] shapes=new Shape[z1];
-        Shape[] shapes1=new Shape[z2];
+        z1= (int) (w1/mk/2);
+        z2= (int) (h1/mk/2);
+        Shape[] shapes0=new Shape[z1];
+        Shape[] shapes1=new Shape[z1];
+        Shape[] shapes2=new Shape[z2];
+        Shape[] shapes3=new Shape[z2];
+        //Для текста
+        Shape[] shapes4=new Shape[z1];
+        Shape[] shapes5=new Shape[z2];
         //Веркикальнаяя сетка
+        for(int i=0; i<z1;i++) {
+            shapes0[i] = new Line(w1/2+i*mk, 0, w1/2+i*mk, h);
+            shapes0[i].setStrokeWidth(1);
+            shapes0[i].setStroke(Color.LIGHTBLUE);
+            if (i % 5 == 0) {
+                shapes0[i].setStrokeWidth(2);
+                if (i != 0) {
+                    shapes5[i] = new Text(w1 / 2 + 5, h1 / 2 + i * mk, String.valueOf(-i));
+                    group2.getChildren().add(shapes5[i]);
+                }
+            }
+            group.getChildren().add(shapes0[i]);
+        }
         for(int i=0; i<z1;i++){
-            shapes[i]=new Line(i*mk,0,i*mk,h);
-            shapes[i].setStroke(Color.LIGHTBLUE);
-            group.getChildren().add(shapes[i]);
+            shapes1[i]=new Line(w1/2-i*mk,0,w1/2-i*mk,h);
+            shapes1[i].setStrokeWidth(1);
+            shapes1[i].setStroke(Color.LIGHTBLUE);
+            if(i%5==0){
+                shapes1[i].setStrokeWidth(2);
+                if(i!=0) {
+                    shapes5[i] = new Text(w1 / 2 + 5, h1 / 2 - i * mk, String.valueOf(i));
+                    group2.getChildren().add(shapes5[i]);
+                }
+            }
+            group.getChildren().add(shapes1[i]);
         }
         //Горизонтальная сетка
         for(int i=0; i<z2;i++){
-            shapes1[i]=new Line(0,i*mk+10,w,i*mk+10);
-            shapes1[i].setStroke(Color.LIGHTBLUE);
-            shapes1[i].setStrokeWidth(1);
-            group.getChildren().add(shapes1[i]);
+            shapes2[i]=new Line(0,h1/2+i*mk,w,h1/2+i*mk);
+            shapes2[i].setStroke(Color.LIGHTBLUE);
+            shapes2[i].setStrokeWidth(1);
+            if(i%5==0){
+                shapes2[i].setStrokeWidth(2);
+                if (i != 0) {
+                    shapes4[i] = new Text(w1 / 2 + i * mk, h1 / 2 + 15, String.valueOf(i));
+                    group2.getChildren().add(shapes4[i]);
+                }
+            }
+            group.getChildren().add(shapes2[i]);
         }
-        setka.getChildren().add(group);
-       // System.out.println("Setca "+w+"  "+h);
+        for(int i=0; i<z2;i++){
+            shapes3[i]=new Line(0,h1/2-i*mk,w,h1/2-i*mk);
+            shapes3[i].setStroke(Color.LIGHTBLUE);
+            shapes3[i].setStrokeWidth(1);
+            if(i%5==0){
+                shapes3[i].setStrokeWidth(2);
+                shapes4[i]=new Text(w1/2-i*mk-10,h1/2+15,String.valueOf(-i));
+                group2.getChildren().add(shapes4[i]);
+            }
+            group.getChildren().add(shapes3[i]);
+        }
+        Line l1=new Line(0,h1/2,w1,h1/2);
+        l1.setStroke(Color.BLACK);
+        Line l2=new Line(w1/2,0,w1/2,h1);
+        l1.setStroke(Color.BLACK);
+        Polygon p1=new Polygon(
+          w1/2, 0,w1/2-5,10,w1/2+5,10
+        );
+        Polygon p2=new Polygon(
+          w1,h1/2,w1-10,h1/2+5,w1-10,h1/2-5
+        );
+        group.getChildren().addAll(l1,l2,p1,p2);
+        setka.getChildren().addAll(group,group2);
+
     }
 
 
