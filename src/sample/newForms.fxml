@@ -49,21 +49,18 @@
       <CheckMenuItem fx:id="menuCircleOut" mnemonicParsing="false" onAction="#onClickCircleOut" text="Описанная окружность" />
     </Menu>
   </MenuBar>
-  <SplitPane fx:id="splitPane" dividerPositions="0.7, 0.4" focusTraversable="true" VBox.vgrow="ALWAYS">
+  <SplitPane fx:id="splitPane" dividerPositions="0.6, 0.5" focusTraversable="true" VBox.vgrow="ALWAYS">
     <VBox.margin>
       <Insets />
     </VBox.margin>
-    <ScrollPane>
-      <WebView fx:id="webViewLeft" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="480.0" />
-      <opaqueInsets>
-        <Insets />
-      </opaqueInsets>
-    </ScrollPane>
+    <AnchorPane>
+      <WebView fx:id="webViewLeft" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+    </AnchorPane>
     <StackPane fx:id="st_pane" SplitPane.resizableWithParent="false">
-      <Pane fx:id="setka" prefHeight="500.0" prefWidth="600.0">
+      <Pane fx:id="setka">
 
       </Pane>
-      <Pane fx:id="BP" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <Pane fx:id="BP" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="554.0" BorderPane.alignment="CENTER">
         <Arc fx:id="arcA" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="BLUE" strokeWidth="2" />
         <Arc fx:id="arcB" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="RED" strokeWidth="2" />
         <Arc fx:id="arcC" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="GREEN" strokeWidth="2" />
@@ -190,7 +187,7 @@
         </Text>
       </Pane>
     </StackPane>
-    <VBox>
+    <VBox SplitPane.resizableWithParent="false">
       <Accordion>
         <panes>
           <TitledPane animated="false" text="Вершины треугольника">
