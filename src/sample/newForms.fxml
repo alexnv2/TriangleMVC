@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 
-<VBox fx:id="vBox" prefHeight="600.0" prefWidth="970.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<VBox fx:id="vBox" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
 
   <MenuBar>
     <Menu mnemonicParsing="false" text="Треугольники">
@@ -49,35 +49,30 @@
       <CheckMenuItem fx:id="menuCircleOut" mnemonicParsing="false" onAction="#onClickCircleOut" text="Описанная окружность" />
     </Menu>
   </MenuBar>
-  <SplitPane fx:id="splitPane" dividerPositions="0.6, 0.5" focusTraversable="true" VBox.vgrow="ALWAYS">
-    <VBox.margin>
-      <Insets />
-    </VBox.margin>
-    <AnchorPane>
-      <WebView fx:id="webViewLeft" minHeight="-Infinity" minWidth="-Infinity" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+  <SplitPane fx:id="splitPane" dividerPositions="0.2, 0.7" focusTraversable="true" VBox.vgrow="SOMETIMES">
+    <AnchorPane SplitPane.resizableWithParent="false">
+      <WebView fx:id="webViewLeft" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
     </AnchorPane>
-    <StackPane fx:id="st_pane" SplitPane.resizableWithParent="false">
-      <Pane fx:id="setka">
-
-      </Pane>
-      <Pane fx:id="BP" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="554.0" BorderPane.alignment="CENTER">
-        <Arc fx:id="arcA" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="BLUE" strokeWidth="2" />
-        <Arc fx:id="arcB" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="RED" strokeWidth="2" />
-        <Arc fx:id="arcC" fill="TRANSPARENT" onMouseEntered="#mouseEntered" stroke="GREEN" strokeWidth="2" />
+    <StackPane fx:id="Cartesian" >
+      <Pane fx:id="paneGrid"  />
+      <Pane fx:id="paneShape" accessibleRole="NODE" onMouseDragged="#onMouseDraggen" onMousePressed="#onMousePressed" onScroll="#onScroll" >
+        <Arc fx:id="arcA" fill="TRANSPARENT" stroke="BLUE" strokeWidth="2" />
+        <Arc fx:id="arcB" fill="TRANSPARENT" stroke="RED" strokeWidth="2" />
+        <Arc fx:id="arcC" fill="TRANSPARENT" stroke="GREEN" strokeWidth="2" />
         <Circle fx:id="iC" fill="TRANSPARENT" stroke="GREEN" strokeWidth="2" visible="false" />
         <Circle fx:id="ic" fill="GREEN" radius="3" strokeWidth="2" visible="false" />
         <Circle fx:id="vc" fill="BLUE" radius="3" strokeWidth="2" visible="false" />
         <Circle fx:id="vC" fill="TRANSPARENT" stroke="Blue" strokeWidth="2" visible="false" />
 
-        <Circle fx:id="A" centerX="50" centerY="200" fill="blue" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
-        <Circle fx:id="B" centerX="100" centerY="50" fill="RED" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
-        <Circle fx:id="C" centerX="200" centerY="200" fill="green" onMouseDragExited="#mouseDragExited" onMouseDragged="#mouseDraggen" onMouseEntered="#mouseEntered" onMousePressed="#mousePressed" onMouseReleased="#mouseReleased" radius="5" />
-        <Line fx:id="a" endX="200" endY="200" onMouseEntered="#mouseEntered" startX="100.0" startY="50.0" stroke="Black" strokeWidth="2.0" />
-        <Line fx:id="b" endX="200" endY="200" onMouseEntered="#mouseEntered" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
-        <Line fx:id="c" endX="100.0" endY="51.0" onMouseEntered="#mouseEntered" startX="50" startY="200" stroke="Black" strokeWidth="2.0" />
+        <Circle fx:id="A" fill="blue" onMouseDragged="#onMouseDraggen" onMouseEntered="#onMouseEntered" onMousePressed="#onMousePressed" onMouseReleased="#mouseReleased" radius="5" />
+        <Circle fx:id="B" fill="RED" onMouseDragged="#onMouseDraggen" onMouseEntered="#onMouseEntered" onMousePressed="#onMousePressed" onMouseReleased="#mouseReleased" radius="5" />
+        <Circle fx:id="C" fill="green" onMouseDragged="#onMouseDraggen" onMouseEntered="#onMouseEntered" onMousePressed="#onMousePressed" onMouseReleased="#mouseReleased" radius="5" />
+        <Line fx:id="a" stroke="Black" strokeWidth="2.0" />
+        <Line fx:id="b" stroke="Black" strokeWidth="2.0" />
+        <Line fx:id="c" stroke="Black" strokeWidth="2.0" />
 
         <Circle fx:id="mA" fill="cornflowerblue" radius="3" visible="false" />
-        <Line fx:id="ma" onMouseEntered="#mouseEntered" stroke="blue" visible="false" />
+        <Line fx:id="ma" stroke="blue" visible="false" />
         <Circle fx:id="mB" fill="cornflowerblue" radius="3" visible="false" />
         <Line fx:id="mb" stroke="blue" visible="false" />
         <Circle fx:id="mC" fill="cornflowerblue" radius="3" visible="false" />
@@ -115,83 +110,85 @@
         <Line fx:id="angle90By" stroke="grey" strokeWidth="2" visible="false" />
         <Line fx:id="angle90Cx" stroke="gray" strokeWidth="2" visible="false" />
         <Line fx:id="angle90Cy" stroke="grey" strokeWidth="2" visible="false" />
-        <Text fx:id="poindA" strokeType="OUTSIDE" strokeWidth="0.0" text="A" x="30" y="200">
+        <Text fx:id="poindA" strokeType="OUTSIDE" strokeWidth="0.0" text="A">
           <font>
             <Font size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindB" strokeType="OUTSIDE" strokeWidth="0.0" text="B" x="100" y="40">
+        <Text fx:id="poindB" strokeType="OUTSIDE" strokeWidth="0.0" text="B">
           <font>
             <Font size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindC" strokeType="OUTSIDE" strokeWidth="0.0" text="C" x="210" y="200">
+        <Text fx:id="poindC" strokeType="OUTSIDE" strokeWidth="0.0" text="C">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindE" strokeType="OUTSIDE" strokeWidth="0.0" text="E" visible="false" x="210" y="200">
+        <Text fx:id="poindE" strokeType="OUTSIDE" strokeWidth="0.0" text="E" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindD" strokeType="OUTSIDE" strokeWidth="0.0" text="D" visible="false" x="210" y="200">
+        <Text fx:id="poindD" strokeType="OUTSIDE" strokeWidth="0.0" text="D" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindF" strokeType="OUTSIDE" strokeWidth="0.0" text="F" visible="false" x="210" y="200">
+        <Text fx:id="poindF" strokeType="OUTSIDE" strokeWidth="0.0" text="F" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindG" strokeType="OUTSIDE" strokeWidth="0.0" text="G" visible="false" x="210" y="200">
+        <Text fx:id="poindG" strokeType="OUTSIDE" strokeWidth="0.0" text="G" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindH" strokeType="OUTSIDE" strokeWidth="0.0" text="H" visible="false" x="210" y="200">
+        <Text fx:id="poindH" strokeType="OUTSIDE" strokeWidth="0.0" text="H" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindI" strokeType="OUTSIDE" strokeWidth="0.0" text="I" visible="false" x="210" y="200">
+        <Text fx:id="poindI" strokeType="OUTSIDE" strokeWidth="0.0" text="I" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindJ" strokeType="OUTSIDE" strokeWidth="0.0" text="J" visible="false" x="210" y="200">
+        <Text fx:id="poindJ" strokeType="OUTSIDE" strokeWidth="0.0" text="J" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindK" strokeType="OUTSIDE" strokeWidth="0.0" text="K" visible="false" x="210" y="200">
+        <Text fx:id="poindK" strokeType="OUTSIDE" strokeWidth="0.0" text="K" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindL" strokeType="OUTSIDE" strokeWidth="0.0" text="L" visible="false" x="210" y="200">
+        <Text fx:id="poindL" strokeType="OUTSIDE" strokeWidth="0.0" text="L" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindO" strokeType="OUTSIDE" strokeWidth="0.0" text="O" visible="false" x="210" y="200">
+        <Text fx:id="poindO" strokeType="OUTSIDE" strokeWidth="0.0" text="O" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
-        <Text fx:id="poindS" strokeType="OUTSIDE" strokeWidth="0.0" text="S" visible="false" x="210" y="200">
+        <Text fx:id="poindS" strokeType="OUTSIDE" strokeWidth="0.0" text="S" visible="false">
           <font>
             <Font name="Times New Roman" size="18.0" />
           </font>
         </Text>
       </Pane>
+
     </StackPane>
-    <VBox SplitPane.resizableWithParent="false">
-      <Accordion>
+    <AnchorPane>
+    <VBox nodeOrientation="LEFT_TO_RIGHT" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Accordion VBox.vgrow="ALWAYS">
         <panes>
           <TitledPane animated="false" text="Вершины треугольника">
-            <TableView fx:id="TableTreangle" prefHeight="200.0" prefWidth="161.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="TableTreangle" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="vertex" prefWidth="65.0" text="Углы треугольника" />
                 <TableColumn prefWidth="102.0" text="Координаты">
@@ -206,11 +203,11 @@
           </TitledPane>
         </panes>
       </Accordion>
-      <Accordion>
+      <Accordion VBox.vgrow="ALWAYS">
         <panes>
           <TitledPane animated="false" text="Длины треугольника">
 
-            <TableView fx:id="LineTreangle" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="LineTreangle">
               <columns>
                 <TableColumn fx:id="LineS" prefWidth="95.0" text="Сторона" />
                 <TableColumn fx:id="LineD" prefWidth="55.0" text="Длина, см" />
@@ -219,21 +216,23 @@
         </TitledPane>
       </panes>
     </Accordion>
-      <Accordion>
+      <Accordion prefHeight="15.0" prefWidth="266.0" VBox.vgrow="ALWAYS">
         <panes>
           <TitledPane animated="false" text="Дополнительно">
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            <AnchorPane />
           </TitledPane>
         </panes>
       </Accordion>
     </VBox>
-
+    </AnchorPane>
   </SplitPane>
-  <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="500.0" prefWidth="970.0" spacing="5.0" VBox.vgrow="NEVER">
+  <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="190.0" prefWidth="900.0" spacing="5.0" VBox.vgrow="NEVER">
     <padding>
       <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
     </padding>
-    <WebView fx:id="webViewBotton" prefHeight="197.0" prefWidth="600.0" BorderPane.alignment="BOTTOM_LEFT" />
-  </HBox>
+    <AnchorPane>
+    <WebView fx:id="webViewBotton" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 
+    </AnchorPane>
+  </HBox>
 </VBox>

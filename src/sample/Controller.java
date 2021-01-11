@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -18,20 +19,21 @@ import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import lombok.val;
 import org.jetbrains.annotations.NotNull;
 
-import static java.lang.Math.rint;
+import static java.lang.Math.*;
 
 //Конструктор класса
 public class  Controller extends View {
-
 
     //Переменные
     private int accMedianaA=0;//счетчик для точек для медиан  и середииных перепендикуляров
     private int accMedianaB=0;
     private int accMedianaC=0;
     private int accCircle=0;//счетчик для центра вписанной окружности и серединного перпендикуляра
-    private final int mk=20;//коээфициент масштабирования координат
+    private double poindAx, poindAy, poindBx,poindBy, poindCx, poindCy; //координаты вершин
+   // private final int mk=20;//коээфициент масштабирования координат
     @FXML
     //Точки вершин A,B,C, медиан mA,mB,mC, биссектрис bA,bB,bC, высот hA,hB,hC
     //центр вписанной окружности ic, вписанная окружность iС,
@@ -64,10 +66,11 @@ public class  Controller extends View {
    //Web браузер для вывода данных
     public WebView webViewLeft,webViewBotton;
     //Контейнер Pane
-    public Pane BP, setka;
+    public Pane paneGrid;
     public VBox vBox;
+    public Pane paneShape;
+    public StackPane Cartesian;
     public SplitPane splitPane;
-    public StackPane st_pane;
 
     //Таблица свойств
     @FXML
@@ -81,9 +84,31 @@ public class  Controller extends View {
     public TableColumn<PropLineTreangle,String>LineS;
     public TableColumn<PropTreangles,Double>LineD;
     //Перерасчет координат
-    WView k=new WView(-250,250,-300,300,500,0,0,600);
+    WView k=new WView();//Объявляем класс
+
     @FXML
     private void initialize(){
+        //Изменение ширины окна
+        Cartesian.widthProperty().addListener((obs, oldVal, newVal) -> {
+            k.setVr(Cartesian.getWidth());
+            k.setWl(-Cartesian.getWidth()/2);
+            k.setWr(Cartesian.getWidth()/2);
+            k.rate();//Перерасчет коэффициентов
+            paneGrid.getChildren().clear();//Очистить экран и память
+            gridCartesian();//Вывод сетки
+            planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
+        });
+        //Изменение высоты окна
+        Cartesian.heightProperty().addListener((obs, oldVal, newVal) -> {
+            k.setVb(Cartesian.getHeight());
+            k.setWt(Cartesian.getHeight()/2);
+            k.setWb(-Cartesian.getHeight()/2);
+            k.rate();//Перерасчет коэффициентов
+            paneGrid.getChildren().clear();//Очистить экран и память
+            gridCartesian();//Вывод сетки
+            planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
+        });
+        //Вывод в WebView
         model.webViewLeftString(webViewLeft,0);
         //Реализация радиоменю
         ToggleGroup group = new ToggleGroup();
@@ -105,8 +130,8 @@ public class  Controller extends View {
         onClickOxygon();
 
         //Pane для сетки белого цвета
-        setka.setStyle("-fx-background-color: white;");
-        reshetka();
+        //setka.setStyle("-fx-background-color: white;");
+        gridCartesian();
 
         //Реализация интерфейса обратного вызова для заполнения колонок 2 таблицы
         initDataLine();
@@ -114,18 +139,17 @@ public class  Controller extends View {
         LineD.setCellValueFactory(new PropertyValueFactory<>("propRazmer"));
         LineTreangle.setItems(super.propLineTr);
     }
-
+    //Вершины треугольника
     private void initData() {
-        super.propView.add(new PropTreangles("A", k.revAccessX(A.getCenterX())/mk,k.revAccessY(A.getCenterY())/mk,60));
-        super.propView.add(new PropTreangles("B", k.revAccessX(B.getCenterX())/mk,k.revAccessY(B.getCenterY())/mk,60));
-        super.propView.add(new PropTreangles("C",k.revAccessX(C.getCenterX())/mk,k.revAccessY(C.getCenterY())/mk,60));
+        super.propView.add(new PropTreangles("A", k.revAccessX(A.getCenterX()),k.revAccessY(A.getCenterY()),60));
+        super.propView.add(new PropTreangles("B", k.revAccessX(B.getCenterX()),k.revAccessY(B.getCenterY()),60));
+        super.propView.add(new PropTreangles("C",k.revAccessX(C.getCenterX()),k.revAccessY(C.getCenterY()),60));
 
     }//Длина в см (делитель 40)
     private void initDataLine() {
-        super.propLineTr.add(new PropLineTreangle("AB",model.distance(A.getCenterX(),A.getCenterY(),B.getCenterX(),B.getCenterY())/mk));
-        super.propLineTr.add(new PropLineTreangle("AC",model.distance(A.getCenterX(),A.getCenterY(),C.getCenterX(),C.getCenterY())/mk));
-        super.propLineTr.add(new PropLineTreangle("BC",model.distance(B.getCenterX(),B.getCenterY(),C.getCenterX(),C.getCenterY())/mk));
-
+        super.propLineTr.add(new PropLineTreangle("AB",model.distance(A.getCenterX(),A.getCenterY(),B.getCenterX(),B.getCenterY())));
+        super.propLineTr.add(new PropLineTreangle("AC",model.distance(A.getCenterX(),A.getCenterY(),C.getCenterX(),C.getCenterY())));
+        super.propLineTr.add(new PropLineTreangle("BC",model.distance(B.getCenterX(),B.getCenterY(),C.getCenterX(),C.getCenterY())));
     }
 
     //Меню Медианы->Из угла А
@@ -137,7 +161,7 @@ public class  Controller extends View {
             poindD.setVisible(true);
             model.webViewLeftString(webViewLeft,3);
             model.webViewBotton(webViewBotton,6);
-            super.propLineTr.add(new PropLineTreangle("AD", model.distance(A.getCenterX(), A.getCenterY(), mA.getCenterX(), mA.getCenterY())/mk));
+            super.propLineTr.add(new PropLineTreangle("AD", model.distance(A.getCenterX(), A.getCenterY(), mA.getCenterX(), mA.getCenterY())));
         }else {
             ma.setVisible(false);
             accMedianaA--;
@@ -145,7 +169,6 @@ public class  Controller extends View {
             if(accMedianaA==0) {
                 mA.setVisible(false);
                 poindD.setVisible(false);
-
             }
         }
     }
@@ -157,7 +180,7 @@ public class  Controller extends View {
         mB.setVisible(true);
         poindE.setVisible(true);
         model.webViewLeftString(webViewLeft,3);
-        super.propLineTr.add(new PropLineTreangle("BE", model.distance(B.getCenterX(), B.getCenterY(), mB.getCenterX(), mB.getCenterY())/mk));
+        super.propLineTr.add(new PropLineTreangle("BE", model.distance(B.getCenterX(), B.getCenterY(), mB.getCenterX(), mB.getCenterY())));
         }else {
             mb.setVisible(false);
             accMedianaB--;
@@ -165,7 +188,6 @@ public class  Controller extends View {
             if(accMedianaB==0) {
                 mB.setVisible(false);
                 poindE.setVisible(false);
-
             }
         }
     }
@@ -177,7 +199,7 @@ public class  Controller extends View {
             mC.setVisible(true);
             poindF.setVisible(true);
             model.webViewLeftString(webViewLeft,3);
-            super.propLineTr.add(new PropLineTreangle("CF", model.distance(C.getCenterX(), C.getCenterY(), mC.getCenterX(), mC.getCenterY())/mk));
+            super.propLineTr.add(new PropLineTreangle("CF", model.distance(C.getCenterX(), C.getCenterY(), mC.getCenterX(), mC.getCenterY())));
         }else {
             mc.setVisible(false);
             accMedianaC--;
@@ -193,7 +215,6 @@ public class  Controller extends View {
     public int indexTr(String s) {
         int i = 0;
         for (PropLineTreangle e : propLineTr) {
-          //  System.out.println(e.getPropLine());
             if (e.getPropLine().equals(s)) {break;}
             i++;
         }
@@ -207,7 +228,7 @@ public class  Controller extends View {
             poindG.setVisible(true);
             model.webViewLeftString(webViewLeft,2);
             model.webViewBotton(webViewBotton,5);
-            super.propLineTr.add(new PropLineTreangle("AG", model.distance(A.getCenterX(), A.getCenterY(), bA.getCenterX(), bA.getCenterY())/mk));
+            super.propLineTr.add(new PropLineTreangle("AG", model.distance(A.getCenterX(), A.getCenterY(), bA.getCenterX(), bA.getCenterY())));
         }else {
             ba.setVisible(false);
             bA.setVisible(false);
@@ -222,7 +243,7 @@ public class  Controller extends View {
             bB.setVisible(true);
             poindH.setVisible(true);
             model.webViewLeftString(webViewLeft,2);
-            super.propLineTr.add(new PropLineTreangle("BH", model.distance(B.getCenterX(), B.getCenterY(), bB.getCenterX(), bB.getCenterY())/mk));
+            super.propLineTr.add(new PropLineTreangle("BH", model.distance(B.getCenterX(), B.getCenterY(), bB.getCenterX(), bB.getCenterY())));
         }else {
             bb.setVisible(false);
             bB.setVisible(false);
@@ -237,7 +258,7 @@ public class  Controller extends View {
             bC.setVisible(true);
             poindI.setVisible(true);
             model.webViewLeftString(webViewLeft,2);
-            super.propLineTr.add(new PropLineTreangle("CI", model.distance(C.getCenterX(), C.getCenterY(), bC.getCenterX(), bC.getCenterY())/mk));
+            super.propLineTr.add(new PropLineTreangle("CI", model.distance(C.getCenterX(), C.getCenterY(), bC.getCenterX(), bC.getCenterY())));
         }else {
             bic.setVisible(false);
             bC.setVisible(false);
@@ -255,7 +276,7 @@ public class  Controller extends View {
             poindJ.setVisible(true);
             model.webViewLeftString(webViewLeft,4);
             model.webViewBotton(webViewBotton,7);
-            super.propLineTr.add(new PropLineTreangle("AJ", model.distance(A.getCenterX(), A.getCenterY(), hA.getCenterX(), hA.getCenterY())/mk));
+            super.propLineTr.add(new PropLineTreangle("AJ", model.distance(A.getCenterX(), A.getCenterY(), hA.getCenterX(), hA.getCenterY())));
        }else {
             ha.setVisible(false);
             hA.setVisible(false);
@@ -274,7 +295,7 @@ public class  Controller extends View {
             lb1.setVisible(true);
             poindK.setVisible(true);
             model.webViewLeftString(webViewLeft,4);
-            super.propLineTr.add(new PropLineTreangle("BK", model.distance(B.getCenterX(), B.getCenterY(), hB.getCenterX(), hB.getCenterY())/mk));
+            super.propLineTr.add(new PropLineTreangle("BK", model.distance(B.getCenterX(), B.getCenterY(), hB.getCenterX(), hB.getCenterY())));
         }else {
             hb.setVisible(false);
             hB.setVisible(false);
@@ -293,7 +314,7 @@ public class  Controller extends View {
             lc1.setVisible(true);
             poindL.setVisible(true);
             model.webViewLeftString(webViewLeft,4);
-            super.propLineTr.add(new PropLineTreangle("CL", model.distance(C.getCenterX(), C.getCenterY(), hC.getCenterX(), hC.getCenterY())/mk));
+            super.propLineTr.add(new PropLineTreangle("CL", model.distance(C.getCenterX(), C.getCenterY(), hC.getCenterX(), hC.getCenterY())));
         }else {
             hc.setVisible(false);
             hC.setVisible(false);
@@ -406,14 +427,13 @@ public class  Controller extends View {
     //Меню Треугольники->Остроугольный
     public void onClickOxygon() {
         //Координаты треугольника по умолчанию
-        A.setCenterX(80);
-        A.setCenterY(320);
-        B.setCenterX(260);
-        B.setCenterY(70);
-        C.setCenterX(360);
-        C.setCenterY(290);
-        side();//вывод на экран
-        visibleLine();
+        poindAx=-1.6;
+        poindAy=-1;
+        poindBx=-0.6;
+        poindBy=1.4;
+        poindCx=1.8;
+        poindCy=-0.4;
+        planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
         arcB.setVisible(true);//разрешение на отображение дуги угла В
         arcC.setVisible(true);
         model.webViewBotton(webViewBotton,0);//Определения остроугольного треугольника
@@ -441,14 +461,13 @@ public class  Controller extends View {
     }
     //Меню Треугольники->Тупоугольный
     public void onClickObtuse() {
-        A.setCenterX(210);
-        A.setCenterY(370);
-        B.setCenterX(60);
-        B.setCenterY(70);
-        C.setCenterX(630);
-        C.setCenterY(230);
-        side();
-        visibleLine();
+        poindAx=-0.4;
+        poindAy=-1.4;
+        poindBx=2;
+        poindBy=-1.4;
+        poindCx=-2.4;
+        poindCy=1;
+        planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
         arcB.setVisible(true);//разрешение на отображение дуги угла В
         model.webViewLeftString(webViewLeft,0);
         model.webViewBotton(webViewBotton,1);
@@ -468,14 +487,13 @@ public class  Controller extends View {
     }
     //Меню Треугольники->Прямоугольный
     public void onClickRegular() {
-        A.setCenterX(110);
-        A.setCenterY(80);
-        B.setCenterX(490);
-        B.setCenterY(370);
-        C.setCenterX(110);
-        C.setCenterY(370);
-        side();
-        visibleLine();
+        poindAx=2;
+        poindAy=-1;
+        poindBx=-2;
+        poindBy=2;
+        poindCx=-2;
+        poindCy=-1;
+        planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
         arcB.setVisible(true);//разрешение на отображение дуги угла В
         arcC.setVisible(true);
         model.webViewLeftString(webViewLeft,0);
@@ -498,14 +516,13 @@ public class  Controller extends View {
     }
     //Меню Треугольники->Равнобедренный
     public void onClickIsosceles() {
-        A.setCenterX(40);
-        A.setCenterY(430);
-        B.setCenterX(280);
-        B.setCenterY(124);
-        C.setCenterX(520);
-        C.setCenterY(430);
-        side();
-        visibleLine();
+        poindAx=-2;
+        poindAy=-1;
+        poindBx=0;
+        poindBy=2;
+        poindCx=2;
+        poindCy=-1;
+        planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
         arcB.setVisible(true);//разрешение на отображение дуги угла В
         arcC.setVisible(true);
         model.webViewBotton(webViewBotton,3);
@@ -527,14 +544,13 @@ public class  Controller extends View {
     }
     //Меню Треугольники->Равносторонний
     public void onClickEquilateral() {
-        A.setCenterX(100);
-        A.setCenterY(480);
-        B.setCenterX(349);
-        B.setCenterY(47);
-        C.setCenterX(598);
-        C.setCenterY(480);
-        side();
-        visibleLine();
+        poindAx=-1.6;
+        poindAy=-1;
+        poindBx=0;
+        poindBy=1.77;
+        poindCx=1.6;
+        poindCy=-1;
+        planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
         model.webViewLeftString(webViewLeft,0);
         model.webViewBotton(webViewBotton,4);
         arcB.setVisible(true);//разрешение на отображение дуги угла В
@@ -582,100 +598,100 @@ public class  Controller extends View {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
     }
-
-    public void mouseDragExited() {
-        System.out.println("Exit");
-    }
-
 
     //Внести изменения в таблицу
     public void angleAccess(){
         //угол
-        super.propView.set(0, new PropTreangles("A",k.revAccessX(A.getCenterX())/mk,k.revAccessY(A.getCenterY())/mk,arcA.getLength()));
-        super.propView.set(1, new PropTreangles("B",k.revAccessX(B.getCenterX())/mk,k.revAccessY(B.getCenterY())/mk,arcB.getLength()));
-        super.propView.set(2, new PropTreangles("C",k.revAccessX(C.getCenterX())/mk,k.revAccessY(C.getCenterY())/mk,arcC.getLength()));
+        super.propView.set(0, new PropTreangles("A",k.revAccessX(A.getCenterX()),k.revAccessY(A.getCenterY()),arcA.getLength()));
+        super.propView.set(1, new PropTreangles("B",k.revAccessX(B.getCenterX()),k.revAccessY(B.getCenterY()),arcB.getLength()));
+        super.propView.set(2, new PropTreangles("C",k.revAccessX(C.getCenterX()),k.revAccessY(C.getCenterY()),arcC.getLength()));
         }
     public void lineAccess(String s, int index){
         //длина
         switch (s) {
-            case "AB"-> super.propLineTr.set(index, new PropLineTreangle("AB", model.distance(A.getCenterX(), A.getCenterY(), B.getCenterX(), B.getCenterY()) / mk));
-            case "AC"-> super.propLineTr.set(index, new PropLineTreangle("AC", model.distance(A.getCenterX(), A.getCenterY(), C.getCenterX(), C.getCenterY()) / mk));
-            case "BC"-> super.propLineTr.set(index, new PropLineTreangle("BC", model.distance(B.getCenterX(), B.getCenterY(), C.getCenterX(), C.getCenterY()) / mk));
-            case "AD"-> super.propLineTr.set(index, new PropLineTreangle("AD", model.distance(A.getCenterX(), A.getCenterY(), mA.getCenterX(), mA.getCenterY())/mk));
-            case "BE"-> super.propLineTr.set(index, new PropLineTreangle("BE", model.distance(B.getCenterX(), B.getCenterY(), mB.getCenterX(), mB.getCenterY())/mk));
-            case "CF"-> super.propLineTr.set(index, new PropLineTreangle("CF", model.distance(C.getCenterX(), C.getCenterY(), mC.getCenterX(), mC.getCenterY())/mk));
-            case "AG"-> super.propLineTr.set(index, new PropLineTreangle("AG", model.distance(A.getCenterX(), A.getCenterY(), bA.getCenterX(), bA.getCenterY())/mk));
-            case "BH"-> super.propLineTr.set(index, new PropLineTreangle("BH", model.distance(B.getCenterX(), B.getCenterY(), bB.getCenterX(), bB.getCenterY())/mk));
-            case "CI"-> super.propLineTr.set(index, new PropLineTreangle("CI", model.distance(C.getCenterX(), C.getCenterY(), bC.getCenterX(), bC.getCenterY())/mk));
-            case "AJ"-> super.propLineTr.set(index, new PropLineTreangle("AJ", model.distance(A.getCenterX(), A.getCenterY(), hA.getCenterX(), hA.getCenterY())/mk));
-            case "BK"-> super.propLineTr.set(index, new PropLineTreangle("BK", model.distance(B.getCenterX(), B.getCenterY(), hB.getCenterX(), hB.getCenterY())/mk));
-            case "CL"-> super.propLineTr.set(index, new PropLineTreangle("CL", model.distance(C.getCenterX(), C.getCenterY(), hC.getCenterX(), hC.getCenterY())/mk));
+            case "AB"-> super.propLineTr.set(index, new PropLineTreangle("AB", model.distance(A.getCenterX(), A.getCenterY(), B.getCenterX(), B.getCenterY()) ));
+            case "AC"-> super.propLineTr.set(index, new PropLineTreangle("AC", model.distance(A.getCenterX(), A.getCenterY(), C.getCenterX(), C.getCenterY()) ));
+            case "BC"-> super.propLineTr.set(index, new PropLineTreangle("BC", model.distance(B.getCenterX(), B.getCenterY(), C.getCenterX(), C.getCenterY()) ));
+            case "AD"-> super.propLineTr.set(index, new PropLineTreangle("AD", model.distance(A.getCenterX(), A.getCenterY(), mA.getCenterX(), mA.getCenterY())));
+            case "BE"-> super.propLineTr.set(index, new PropLineTreangle("BE", model.distance(B.getCenterX(), B.getCenterY(), mB.getCenterX(), mB.getCenterY())));
+            case "CF"-> super.propLineTr.set(index, new PropLineTreangle("CF", model.distance(C.getCenterX(), C.getCenterY(), mC.getCenterX(), mC.getCenterY())));
+            case "AG"-> super.propLineTr.set(index, new PropLineTreangle("AG", model.distance(A.getCenterX(), A.getCenterY(), bA.getCenterX(), bA.getCenterY())));
+            case "BH"-> super.propLineTr.set(index, new PropLineTreangle("BH", model.distance(B.getCenterX(), B.getCenterY(), bB.getCenterX(), bB.getCenterY())));
+            case "CI"-> super.propLineTr.set(index, new PropLineTreangle("CI", model.distance(C.getCenterX(), C.getCenterY(), bC.getCenterX(), bC.getCenterY())));
+            case "AJ"-> super.propLineTr.set(index, new PropLineTreangle("AJ", model.distance(A.getCenterX(), A.getCenterY(), hA.getCenterX(), hA.getCenterY())));
+            case "BK"-> super.propLineTr.set(index, new PropLineTreangle("BK", model.distance(B.getCenterX(), B.getCenterY(), hB.getCenterX(), hB.getCenterY())));
+            case "CL"-> super.propLineTr.set(index, new PropLineTreangle("CL", model.distance(C.getCenterX(), C.getCenterY(), hC.getCenterX(), hC.getCenterY())));
         }
     }
-
         //Перемещение вершин
-    public void mouseDraggen(MouseEvent mouseEvent) {
+    public void onMouseDraggen(MouseEvent mouseEvent) {
         model.setVerX(mouseEvent.getX());
         model.setVerY(mouseEvent.getY());
         //Стороны
         if (mouseEvent.getSource() == A) {
+            poindAx=k.revAccessX(mouseEvent.getX());
+            poindAy=k.revAccessY(mouseEvent.getY());
             model.sideAll(A,B,C,c,b);//две смежных стороны с и b
             model.TextGo(poindA);//вершина угла
-            model.arcVertex(A,B,C,arcA);//дуга угла А
-            model.setColorGo(Color.BLUE);
-            model.ArcColorGo(arcA);
-            model.arcVertex(B,C, A, arcB);//дуга угла В
-            model.setColorGo(Color.RED);
-            model.ArcColorGo(arcB);
-            model.arcVertex(C, A, B, arcC); //Дуга угла С
-            model.setColorGo(Color.GREEN);
-            model.ArcColorGo(arcC);
-            model.mestopolojenie(A, bA,poindA); //Обозначение угла А
             angleAccess(); //занесение координат и углов в таблицу
             model.tableGo(TableTreangle);//вывод в таблицу
-          //  lineAccess();
             model.tableGo(LineTreangle);
         }
         if (mouseEvent.getSource() == B) {
+            poindBx=k.revAccessX(mouseEvent.getX());
+            poindBy=k.revAccessY(mouseEvent.getY());
             model.sideAll(B,A,C,c,a);
-            model.arcVertex(C, A, B, arcC); //Дуга угла С
-            model.setColorGo(Color.GREEN);
-            model.ArcColorGo(arcC);
-            model.arcVertex(A,B,C,arcA);
-            model.setColorGo(Color.BLUE);
-            model.ArcColorGo(arcA);
-            model.arcVertex(B,C, A, arcB);//дуга угла В
-            model.setColorGo(Color.RED);
-            model.ArcColorGo(arcB);
-            model.mestopolojenie(B,bB,poindB); //Угол В
             angleAccess();
             model.tableGo(TableTreangle);
-          //  lineAccess();
             model.tableGo(LineTreangle);
         }
         if (mouseEvent.getSource() == C) {
+            poindCx=k.revAccessX(mouseEvent.getX());
+            poindCy=k.revAccessY(mouseEvent.getY());
             model.sideAll(C,A,B,b,a);
-            model.arcVertex(A,B,C,arcA);
-            model.setColorGo(Color.BLUE);
-            model.ArcColorGo(arcA);
-            model.arcVertex(B,C, A, arcB);
-            model.setColorGo(Color.RED);
-            model.ArcColorGo(arcB);
-            model.setColorGo(Color.GREEN);
-            model.ArcColorGo(arcC);
-            model.arcVertex(C,A, B, arcC); //Дуга угла С
-            model.mestopolojenie(C, bC,poindC); //Обозначение угла А
             angleAccess();
             model.tableGo(TableTreangle);
-           // lineAccess();
             model.tableGo(LineTreangle);
         }
 
+        //Перемещение сетки
+        if(mouseEvent.getTarget()==paneShape){
+            val dx = k.getVPx() - mouseEvent.getX();//Вычисляем смещение мышки по Х
+            val dy = k.getVPy() - mouseEvent.getY();// по Y
+            k.setVPx(mouseEvent.getX()); //Сохраняем текущие координаты мышки
+            k.setVPy(mouseEvent.getY());
+            //Вычисляем смещение окна
+            k.setWl(k.getWl() + dx);
+            k.setWr(k.getWr() + dx);
+            k.setWt(k.getWt() - dy);
+            k.setWb(k.getWb() - dy);
+            k.rate();//Перерасчет коэффициентов
+            paneGrid.getChildren().clear();//Очистить экран и память
+            gridCartesian();//Вывод сетки
+            planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
+        }
         visibleLine();
+        updateTreangle();
         visibleRectangle90();
-       // splitPane.widthProperty().addListener((obj,oldValue,newValue)-> System.out.println(newValue));
+
+    }
+
+    public void updateTreangle(){
+        //Арки углов
+        model.arcVertex(A,B,C,arcA);//дуга угла А
+        model.setColorGo(Color.BLUE);
+        model.ArcColorGo(arcA);
+        model.arcVertex(B,C, A, arcB);//дуга угла В
+        model.setColorGo(Color.RED);
+        model.ArcColorGo(arcB);
+        model.arcVertex(C, A, B, arcC); //Дуга угла С
+        model.setColorGo(Color.GREEN);
+        model.ArcColorGo(arcC);
+        model.mestopolojenie(A, bA,poindA); //Обозначение угла А
+        model.mestopolojenie(B,bB,poindB); //Угол В
+        model.mestopolojenie(C, bC,poindC); //Обозначение угла А
+
 
 
     }
@@ -712,13 +728,13 @@ public class  Controller extends View {
             angle90By.setVisible(false);
         }
     }
-    //При наведении на вершину меняется курсор
-    public void mouseEntered(@NotNull MouseEvent mouseEvent) {
+    //При наведении на вершину меняется курсор и появляются подсказки
+    public void onMouseEntered(@NotNull MouseEvent mouseEvent) {
         A.setCursor(Cursor.HAND);
         B.setCursor(Cursor.HAND);
         C.setCursor(Cursor.HAND);
+
         //Подсказки
-        //System.out.println(mouseEvent.getSource());
         if (mouseEvent.getSource()==arcA) {
             arcA.setCursor(Cursor.HAND);
             model.setSToolTip("Угол А=" + arcA.getLength() + " гр.");
@@ -753,39 +769,53 @@ public class  Controller extends View {
             model.oToolTip(ma);
         }
     }
-    //При нжатии левой кнопки меняется курсор
+    //При нажатии левой кнопки меняется курсор
     //Начало операции перемещения
-    public void mousePressed(@NotNull MouseEvent mouseEvent) {
-        if (mouseEvent.getSource() == A) {
+    public void onMousePressed(@NotNull MouseEvent mouseEvent) {
+        if (mouseEvent.getTarget() == A) {
             A.setMouseTransparent(true);
             A.setCursor(Cursor.CLOSED_HAND);
         }
-        if (mouseEvent.getSource() == B) {
+        if (mouseEvent.getTarget() == B) {
             B.setMouseTransparent(true);
             B.setCursor(Cursor.CLOSED_HAND);
         }
-        if (mouseEvent.getSource() == C) {
+        if (mouseEvent.getTarget() == C) {
             C.setMouseTransparent(true);
             C.setCursor(Cursor.CLOSED_HAND);
+        }
+        // Фиксируем точку нажатия кнопки мыши
+        if(mouseEvent.getTarget()==paneShape) {
+            k.setVPx(mouseEvent.getX());
+            k.setVPy(mouseEvent.getY());
         }
         mouseEvent.consume();
     }
     //Окончание операции перемещения и курсор в исходный вид
-    public void mouseReleased(MouseEvent mouseEvent) {
+    public void mouseReleased(@NotNull MouseEvent mouseEvent) {
+
         //Приклеивание точек к вершинам сетки после завершения перемещения
-        model.setVerX(rint(mouseEvent.getX()/10)*10);
-        model.setVerY(rint(mouseEvent.getY()/10)*10);
+        double sdrX=rint(k.revAccessX(mouseEvent.getX())*10)/10;
+        double sdrY=rint(k.revAccessY(mouseEvent.getY())*10)/10;
+         model.setVerX(k.accessX(sdrX));
+        model.setVerY(k.accessY(sdrY));
         if (mouseEvent.getSource() == A) {
             model.VertexGo(A);
+            poindAx=sdrX;
+            poindAy=sdrY;
         }
         if (mouseEvent.getSource() == B) {
             model.VertexGo(B);
+            poindBx=sdrX;
+            poindBy=sdrY;
         }
         if (mouseEvent.getSource() == C) {
             model.VertexGo(C);
+            poindCx=sdrX;
+            poindCy=sdrY;
         }
-        side();
-        visibleLine();
+
+        planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
         angleAccess(); //занесение координат и углов в таблицу
         //Курсор по умолчанию
         A.setMouseTransparent(false);
@@ -796,6 +826,21 @@ public class  Controller extends View {
         C.setCursor(Cursor.DEFAULT);
         mouseEvent.consume();
     }
+
+    ////Обновление всез параметров треугольника
+    void planeCircle(double Ax,double Ay,double Bx, double By,double Cx, double Cy){
+        A.setCenterX(k.accessX(Ax));
+        A.setCenterY(k.accessY(Ay));
+        B.setCenterX(k.accessX(Bx));
+        B.setCenterY(k.accessY(By));
+        C.setCenterX(k.accessX(Cx));
+        C.setCenterY(k.accessY(Cy));
+        side();
+        visibleLine();
+        updateTreangle();
+
+
+    }
     //Вывод треугольников по умолчанию
     private void side(){
         a.setStartX(B.getCenterX());
@@ -803,7 +848,6 @@ public class  Controller extends View {
         a.setEndX(C.getCenterX());
         a.setEndY(C.getCenterY());
         b.setStartX(A.getCenterX());
-       // System.out.println(A.getCenterX());
         b.setStartY(A.getCenterY());
         b.setEndX(C.getCenterX());
         b.setEndY(C.getCenterY());
@@ -866,94 +910,198 @@ public class  Controller extends View {
         model.outCircle(vC,A,B,C,vc,poindS);
         //Изменение всех длин в таблице
         for (PropLineTreangle e : propLineTr) {
-            // System.out.println(e.getPropLine());
             lineAccess(e.getPropLine(),indexTr(e.getPropLine()));
         }
     }
-    public void reshetka(){
+
+    //Изменение мастштаба мирового окна
+    public void onScroll(ScrollEvent scrollEvent) {
+        double sc=scrollEvent.getDeltaY();//
+        k.setWl(k.getWl()+(k.getVr()/sc));//для пропорциональности
+        k.setWr(k.getWr()-(k.getVr()/sc));
+        k.setWt(k.getWt()-(k.getVb()/sc));
+        k.setWb( k.getWb()+(k.getVb()/sc));
+        k.rate();//Перерасчет коэффициентов
+        //Увеличить масштаб
+        if(k.getA()<0.7){
+            switch (k.getK1()) {
+                case 1 -> {
+                    k.setK3(2 * pow(10, k.getK2()));
+                    k.setK1(2) ;
+                }
+                case 2 -> {
+                    k.setK3(5 * pow(10, k.getK2()));
+                    k.setK1(5);
+                }
+                case 5 -> {
+                    k.setK2(k.getK2()+1);
+                    k.setK3(pow(10, k.getK2()));
+                    k.setK1(1);
+                }
+            }
+            k.setWl(-Cartesian.getWidth()/2);
+            k.setWr(Cartesian.getWidth()/2);
+            k.setWt(Cartesian.getHeight()/2);
+            k.setWb(-Cartesian.getHeight()/2);
+        }
+        //Уменьшить масштаб
+        if(k.getA()>1.4){
+            switch (k.getK1()) {
+                case 1 -> {
+                    k.setK2(k.getK2()-1);
+                    k.setK3(5 * pow(10, k.getK2()));
+                    k.setK1(2);
+                }
+                case 2 -> {
+                    k.setK3(2 * pow(10, k.getK2()));
+                    k.setK1(5);
+                }
+                case 5 -> {
+                    k.setK3(pow(10, k.getK2()));
+                    k.setK1(1);
+                }
+            }
+            //Исходные размеры
+            k.setWl(-Cartesian.getWidth()/2);
+            k.setWr(Cartesian.getWidth()/2);
+            k.setWt(Cartesian.getHeight()/2);
+            k.setWb(-Cartesian.getHeight()/2);
+        }
+        paneGrid.getChildren().clear();//Очистить экран и память
+        gridCartesian();
+        planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
+    }
+
+    //Сформировать сетку и линии координат
+    public void gridCartesian(){
         Group group=new Group();
         Group group2=new Group();
-        double w=vBox.getPrefWidth();
-        double h=vBox.getPrefHeight();
-        double w1=BP.getPrefWidth();
-        double h1=BP.getPrefHeight();
-        int z1,z2;
-        z1= (int) (w1/mk/2);
-        z2= (int) (h1/mk/2);
+        double mk=k.getM();//Масштаб
+        double rk=k.getK0()*k.getK3();
+        int z1,z2,z3,z4;
+
+        z1= (int) (abs(k.getWr()/mk*2));
+        z2= (int) (abs(k.getWl()/mk*2));
+        z3= (int) (abs(k.getWt()/mk*2));
+        z4= (int) (abs(k.getWb()/mk*2));
+        //ДЛя хранения линий
         Shape[] shapes0=new Shape[z1];
-        Shape[] shapes1=new Shape[z1];
-        Shape[] shapes2=new Shape[z2];
-        Shape[] shapes3=new Shape[z2];
+        Shape[] shapes1=new Shape[z2];
+        Shape[] shapes2=new Shape[z3];
+        Shape[] shapes3=new Shape[z4];
         //Для текста
-        Shape[] shapes4=new Shape[z1];
-        Shape[] shapes5=new Shape[z2];
+        Shape[] shapes4=new Shape[z3+z4];
+        Shape[] shapes5=new Shape[z1+z2];
         //Веркикальнаяя сетка
         for(int i=0; i<z1;i++) {
-            shapes0[i] = new Line(w1/2+i*mk, 0, w1/2+i*mk, h);
+            shapes0[i] = new Line(k.gridShowX(i), 0, k.gridShowX(i), k.getVb());
             shapes0[i].setStrokeWidth(1);
             shapes0[i].setStroke(Color.LIGHTBLUE);
+            //Нулевая координата
+            if(i==0) {
+                if (k.gridShowY(0) <= 0) {
+                    shapes5[i]=new Text(k.gridShowX(0)-10,k.getVt()+12,String.valueOf(0));
+                } else if (k.gridShowY(0) >= k.getVb() - 12) {
+                    shapes5[i]=new Text(k.gridShowX(0)-10,k.getVb(),String.valueOf(0));
+                } else {
+                    shapes5[i]=new Text(k.gridShowX(0)-10,k.gridShowY(0)+12,String.valueOf(0));
+                }
+                group2.getChildren().add(shapes5[i]);
+            }
             if (i % 5 == 0) {
                 shapes0[i].setStrokeWidth(2);
                 if (i != 0) {
-                    shapes5[i] = new Text(w1 / 2 + 5, h1 / 2 + i * mk, String.valueOf(-i));
+                    //Если начало координат выше зоны прсмотра
+                    if (k.gridShowY(0) <= 0) {
+                        shapes5[i] = new Text(k.gridShowX(i) - 10, k.getVt() + 12, k.doubleString( i * rk));
+
+                        //Если начало координат ниже зоны просмотра
+                    } else if (k.gridShowY(0) >= k.getVb() - 12) {
+                        shapes5[i] = new Text(k.gridShowX(i) - 10, k.getVb(), k.doubleString( i * rk));
+                    } else {
+                        //В зоне окна просмотра
+                        shapes5[i] = new Text(k.gridShowX(i) - 10, k.gridShowY(0) + 12, k.doubleString( i * rk));
+                    }
                     group2.getChildren().add(shapes5[i]);
                 }
             }
             group.getChildren().add(shapes0[i]);
         }
-        for(int i=0; i<z1;i++){
-            shapes1[i]=new Line(w1/2-i*mk,0,w1/2-i*mk,h);
+        for(int i=0; i<z2;i++){
+            shapes1[i]= new Line(k.gridShowX(-i ), 0, k.gridShowX(-i), k.getVb());
             shapes1[i].setStrokeWidth(1);
             shapes1[i].setStroke(Color.LIGHTBLUE);
             if(i%5==0){
                 shapes1[i].setStrokeWidth(2);
                 if(i!=0) {
-                    shapes5[i] = new Text(w1 / 2 + 5, h1 / 2 - i * mk, String.valueOf(i));
+                    //Если начало координат левее зоны просмотра
+                    if (k.gridShowY(0) <= 0) {
+                        shapes5[i] = new Text(k.gridShowX(-i) - 8, k.getVt() + 12, "-"+k.doubleString( i * rk));
+                        //Если начало координат правее зоны просмотра
+                    } else if (k.gridShowY(0) >= k.getVb() - 12) {
+                        shapes5[i] = new Text(k.gridShowX(-i) - 8, k.getVb(),"-"+ k.doubleString( i * rk));
+                        //В зоне просмотра
+                    } else {
+                        shapes5[i] = new Text(k.gridShowX(-i) - 8, k.gridShowY(0) + 12,"-"+ k.doubleString( i * rk));
+                    }
                     group2.getChildren().add(shapes5[i]);
                 }
             }
             group.getChildren().add(shapes1[i]);
         }
-        //Горизонтальная сетка
-        for(int i=0; i<z2;i++){
-            shapes2[i]=new Line(0,h1/2+i*mk,w,h1/2+i*mk);
+        //Горизонтальная сетка положительная
+        for(int i=0; i<z3;i++){
+            shapes2[i]=new Line(k.getVl(),k.gridShowY(i ), k.getVr(),k.gridShowY(i ));
             shapes2[i].setStroke(Color.LIGHTBLUE);
             shapes2[i].setStrokeWidth(1);
             if(i%5==0){
                 shapes2[i].setStrokeWidth(2);
                 if (i != 0) {
-                    shapes4[i] = new Text(w1 / 2 + i * mk, h1 / 2 + 15, String.valueOf(i));
+                    if (k.gridShowX(0) <= 0) {
+                        shapes4[i] = new Text(k.getVl(), k.gridShowY(i)+5, k.doubleString( i * rk));
+                    } else if (k.gridShowX(0) >= k.getVr()-25) {
+                        shapes4[i] = new Text(k.getVr() - 25, k.gridShowY(i)+5, k.doubleString( i * rk));
+                    } else {
+                        shapes4[i] = new Text(k.gridShowX(0) +5, k.gridShowY(i)+5, k.doubleString( i * rk));
+                    }
                     group2.getChildren().add(shapes4[i]);
                 }
             }
             group.getChildren().add(shapes2[i]);
         }
-        for(int i=0; i<z2;i++){
-            shapes3[i]=new Line(0,h1/2-i*mk,w,h1/2-i*mk);
+        //Горизонтальная сетка отрицательная
+        for(int i=0; i<z4;i++){
+            shapes3[i]=new Line(k.getVl(),k.gridShowY(-i), k.getVr(),k.gridShowY(-i ));
             shapes3[i].setStroke(Color.LIGHTBLUE);
             shapes3[i].setStrokeWidth(1);
             if(i%5==0){
                 shapes3[i].setStrokeWidth(2);
-                shapes4[i]=new Text(w1/2-i*mk-10,h1/2+15,String.valueOf(-i));
-                group2.getChildren().add(shapes4[i]);
+                if (i != 0) {
+                    if (k.gridShowX(0) <= 0) {
+                        shapes4[i] = new Text(k.getVl(), k.gridShowY(-i)+5, "-"+k.doubleString( i*rk ));
+                    } else if (k.gridShowX(0) >= k.getVr()-25) {
+                        shapes4[i] = new Text(k.getVr() - 25, k.gridShowY(-i)+5,"-"+ k.doubleString( i*rk));
+                    } else {
+                        shapes4[i] = new Text(k.gridShowX(0) +5, k.gridShowY(-i)+5,"-"+ k.doubleString( i *rk));
+                    }
+                    group2.getChildren().add(shapes4[i]);
+                }
             }
             group.getChildren().add(shapes3[i]);
         }
-        Line l1=new Line(0,h1/2,w1,h1/2);
+        //Абсцисса и ордината
+        Line l1=new Line(k.getVl(),k.gridShowY(0),k.getVr(),k.gridShowY(0));
         l1.setStroke(Color.BLACK);
-        Line l2=new Line(w1/2,0,w1/2,h1);
+        Line l2=new Line(k.gridShowX(0),k.getVt(),k.gridShowX(0),k.getVb());
         l1.setStroke(Color.BLACK);
-        Polygon p1=new Polygon(
-          w1/2, 0,w1/2-5,10,w1/2+5,10
-        );
-        Polygon p2=new Polygon(
-          w1,h1/2,w1-10,h1/2+5,w1-10,h1/2-5
-        );
+        //Треугольные концы
+        Polygon p1=new Polygon(k.getVr(), k.gridShowY(0),
+                k.getVr()-10,k.gridShowY(0)-4,
+                k.getVr()-10,k.gridShowY(0)+4);
+        Polygon p2=new Polygon(k.gridShowX(0), k.getVt(),
+                k.gridShowX(0)-4,k.getVt()+10,
+                k.gridShowX(0)+4,k.getVt()+10);
         group.getChildren().addAll(l1,l2,p1,p2);
-        setka.getChildren().addAll(group,group2);
-
+        paneGrid.getChildren().addAll(group,group2);
     }
-
-
-
 }
