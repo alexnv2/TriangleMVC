@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -6,14 +7,18 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="800" prefHeight="600.0"
-      prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="sample.Equality" >
-    <Button fx:id="bntCombine" layoutX="30.0" layoutY="340.0" mnemonicParsing="false" onAction="#onClickCombine" text="Совместить треугольники" />
+<Pane prefHeight="680.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Equality">
+    <Text fx:id="namePr" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" textOrigin="CENTER" x="220.0" y="10.0">
+        <font>
+            <Font name="Times New Roman Bold" size="18.0" />
+        </font>
+    </Text>
+    <VBox>
 
-    <Group fx:id="groupTriangles" layoutX="0" layoutY="1">
-        <Polygon fill="#e02d2d00" points="40.0, 285.0, 190.0, 70.0, 340.0, 190.0" stroke="#1605f7" strokeType="INSIDE" strokeWidth="2.0" />
-        <Arc centerX="40.0" centerY="285.0" fill="#cbff1f00" length="35.0" radiusX="30.0" radiusY="30.0" startAngle="20.0" stroke="#081bee" strokeType="INSIDE" type="ROUND">
+        <HBox>
+           <Group fx:id="groupTriangles" layoutX="0" layoutY="30.0">
+        <Polygon fx:id="treagle1" fill="#e02d2d00" points="40.0, 285.0, 251.0, 43.0, 338.0, 191.0" stroke="#1605f7" strokeType="INSIDE" strokeWidth="2.0" />
+        <Arc fx:id="arcA" centerX="40.0" centerY="285.0" fill="#cbff1f00" length="29.0" radiusX="30.0" radiusY="30.0" startAngle="20.0" stroke="#081bee" strokeType="INSIDE" type="ROUND">
             <rotationAxis>
                 <Point3D />
             </rotationAxis>
@@ -23,76 +28,106 @@
                 <Font size="20.0" />
             </font>
         </Text>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="B" textAlignment="CENTER" x="185.0" y="65.0">
+        <Text fx:id="poindB" strokeType="OUTSIDE" strokeWidth="0.0" text="B" textAlignment="CENTER" x="245.0" y="40.0">
             <font>
                 <Font size="20.0" />
             </font>
         </Text>
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="C" textAlignment="CENTER" x="345.0" y="195.0">
+        <Text fx:id="poindC" strokeType="OUTSIDE" strokeWidth="0.0" text="C" textAlignment="CENTER" x="345.0" y="195.0">
             <font>
                 <Font size="20.0" />
             </font>
         </Text>
-        <Line endX="122.0" endY="179.0" startX="112.0" startY="172.0" />
-        <Line endX="193.0" endY="229.0" startX="197.0" startY="241.0" />
-        <Line endX="188.0" endY="230.0" startX="192.0" startY="242.0" />
+        <Line endX="166.0" endY="153.0" startX="154.0" startY="142.0" />
+        <Line fx:id="hatch_2" endX="193.0" endY="229.0" startX="197.0" startY="241.0" />
+        <Line fx:id="hatch_1" endX="188.0" endY="230.0" startX="192.0" startY="242.0" />
+         <Group fx:id="hatchB">
+        <Line endX="285.0" endY="123.0" startX="300.0" startY="113.0" />
+        <Line endX="282.0" endY="119.0" startX="297.0" startY="109.0" />
+        <Line endX="280.0" endY="115.0" startX="295.0" startY="105.0" />
+         </Group>
+        <Arc fx:id="arcB_1" centerX="250.0" centerY="44.0" fill="#cbff1f00" length="72.0" radiusX="30.0" radiusY="30.0" startAngle="-130.0" stroke="#081bee" strokeType="INSIDE" type="ROUND" />
+        <Arc fx:id="arcB_2" centerX="240.0" centerY="35.0" fill="#cbff1f00" layoutX="10.0" layoutY="10.0" length="74.0" radiusX="35.0" radiusY="35.0" startAngle="-131.6" stroke="#081bee" strokeType="INSIDE" type="ROUND" />
     </Group>
-    <Group layoutX="300.0" rotate="-30.0">
-        <Polygon fill="#e02d2d00" points="40.0, 285.0, 190.0, 70.0, 340.0, 190.0" stroke="#f50707" strokeType="INSIDE" strokeWidth="2.0" />
-        <Arc centerX="40.0" centerY="285.0" fill="#cbff1f00" length="35.0" radiusX="30.0" radiusY="30.0" startAngle="20.0" stroke="#ed0909" strokeType="INSIDE" type="ROUND">
+           <Group fx:id="groupTr2" rotate="-30.0" translateX="-50.0" translateY="10.0">
+        <Polygon fill="#e02d2d00" points="40.0, 285.0, 251.0, 43.0, 338.0, 191.0" stroke="#f50707" strokeType="INSIDE" strokeWidth="3.0" />
+        <Arc fx:id="arcA1" centerX="40.0" centerY="285.0" fill="#cbff1f00" length="29.0" radiusX="30.0" radiusY="30.0" startAngle="20.0" stroke="#ed0909" strokeType="INSIDE" type="ROUND">
             <rotationAxis>
                 <Point3D />
             </rotationAxis>
         </Arc>
-        <Text rotate="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A₁" textAlignment="CENTER" x="5.0" y="290.0">
+        <Text fx:id="txtA1" rotate="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A₁" textAlignment="CENTER" x="25.0" y="310.0">
             <font>
                 <Font size="20.0" />
             </font>
         </Text>
-        <Text rotate="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B₁" textAlignment="CENTER" x="170.0" y="65.0">
+        <Text fx:id="poindB1" rotate="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B₁" textAlignment="CENTER" x="250.0" y="35.0">
             <font>
                 <Font size="20.0" />
             </font>
         </Text>
-        <Text rotate="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C₁" textAlignment="CENTER" x="365.0" y="195.0">
+        <Text fx:id="txtC1" rotate="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C₁" textAlignment="CENTER" x="345.0" y="210.0">
             <font>
                 <Font size="20.0" />
             </font>
         </Text>
-        <Line endX="122.0" endY="179.0" startX="112.0" startY="172.0" />
-        <Line endX="193.0" endY="229.0" startX="197.0" startY="241.0" />
-        <Line endX="188.0" endY="230.0" startX="192.0" startY="242.0" />
+        <Line endX="166.0" endY="153.0" startX="154.0" startY="142.0" />
+        <Line fx:id="hatch2_2" endX="193.0" endY="229.0" startX="197.0" startY="241.0" />
+        <Line fx:id="hatch2_1" endX="188.0" endY="230.0" startX="192.0" startY="242.0" />
+            <Group fx:id="hatchB1">
+        <Line endX="285.0" endY="123.0" startX="300.0" startY="113.0" />
+        <Line endX="282.0" endY="119.0" startX="297.0" startY="109.0" />
+        <Line endX="280.0" endY="115.0" startX="295.0" startY="105.0" />
+            </Group>
+
+        <Arc fx:id="arcB1_1" centerX="250.0" centerY="44.0" fill="#cbff1f00" length="72.0" radiusX="30.0" radiusY="30.0" startAngle="-130.0" stroke="#f50707" strokeType="INSIDE" type="ROUND" />
+        <Arc fx:id="arcB1_2" centerX="240.0" centerY="35.0" fill="#cbff1f00" layoutX="10.0" layoutY="10.0" length="74.0" radiusX="35.0" radiusY="35.0" startAngle="-131.6" stroke="#f50707" strokeType="INSIDE" type="ROUND" />
+            <HBox.margin>
+               <Insets />
+            </HBox.margin>
+
     </Group>
-    <Text fx:id="namePr" strokeType="OUTSIDE" strokeWidth="0.0"  textAlignment="CENTER" x="220.0" y="30.0">
-        <font>
-            <Font name="Times New Roman Bold" size="18.0" />
-        </font>
-    </Text>
-    <VBox layoutX="30" layoutY="380.0" prefHeight="190.0" prefWidth="752.0">
-        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Теорема (признак равенства треугольников по двум сторонам и углу между ними.)" x="30.0" y="410.0">
+        </HBox>
+
+    <Button fx:id="bntCombine" layoutX="30.0" layoutY="360.0" mnemonicParsing="false" onAction="#onClickCombine" text="Совместить треугольники">
+         <VBox.margin>
+            <Insets bottom="10.0" top="50.0" />
+         </VBox.margin></Button>
+
+
+        <Text fx:id="proof" strokeType="OUTSIDE" strokeWidth="0.0" x="30.0" y="410.0">
             <font>
                 <Font name="Times New Roman" size="14.0" />
             </font>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
         </Text>
-        <TextFlow layoutX="-Infinity" layoutY="-Infinity" prefHeight="35.0" prefWidth="770">
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Если две стороны и угол между ними одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники равны. ">
+        <TextFlow prefWidth="800.0">
+            <Text fx:id="theorem" strokeType="OUTSIDE" strokeWidth="0.0">
                 <font>
                     <Font name="Times New Roman Bold" size="14.0" />
                 </font>
             </Text>
             <padding>
-                <Insets top="10.0" />
+                <Insets bottom="10" top="10.0" />
             </padding>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
         </TextFlow>
 
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Доказательство:">>
             <font>
                 <Font name="Times New Roman Bold" size="14.0" />
             </font>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
         </Text>
 
-        <TextFlow layoutX="-Infinity" layoutY="-Infinity" prefHeight="-Infinity" prefWidth="770.0">
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Рассмотрим треугольники АВС и А₁В₁С₁, у которых АВ=А₁В₁, АС=А₁С₁, углы А и А₁ равны. Докажем что  △АВС=△А₁В₁С₁ ">
+        <TextFlow prefWidth="800.0">
+            <Text fx:id="proposition_1" strokeType="OUTSIDE" strokeWidth="0.0">
                 <font>
                     <Font name="Times New Roman" size="14.0" />
                 </font>
@@ -101,9 +136,12 @@
             <padding>
                 <Insets top="10.0" />
             </padding>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
         </TextFlow>
-        <TextFlow layoutX="-Infinity" layoutY="-Infinity" prefHeight="-Infinity" prefWidth="770.0">
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Так как ∠А=∠А ₁, то треугольник АВС можно наложить на треугольник А₁В₁С₁ так, что вершина А совместится с вершиной А₁, а стороны АВ и АС наложатся соответственно на лучи А₁В₁ и А₁С₁. Поскольку АВ=А₁В₁, АС=А₁С₁, то сторона АВ совместится со стороной А₁В₁, а сторона АС - со стороной А₁С₁ в частности совместятся точки В и В₁, С и С₁. Следовательно совместятся стороны ВС и В₁С₁. Итак треугольники АВС и А₁В₁С₁ полностью совместятся, значит, они равны. Теорема Доказана.">
+        <TextFlow prefWidth="800.0">
+            <Text fx:id="proposition_2" strokeType="OUTSIDE" strokeWidth="0.0">
                 <font>
                     <Font name="Times New Roman" size="14.0" />
                 </font>
@@ -112,5 +150,38 @@
                 <Insets top="10.0" />
             </padding>
         </TextFlow>
+      <padding>
+         <Insets bottom="30.0" left="10.0" right="10.0" top="50.0" />
+      </padding>
     </VBox>
+    <Group fx:id="groupTr3" visible="false">
+        <Arc centerX="272.0" centerY="290.0" fill="#00800004" length="22.0" radiusX="30.0" radiusY="30.0" startAngle="41.0" stroke="#097c1e" strokeType="INSIDE" strokeWidth="2.0" type="ROUND" />
+        <Arc centerX="517.0" centerY="77.0" fill="#00800004" length="22.0" radiusX="30.0" radiusY="30.0" startAngle="197.0" stroke="#097c1e" strokeType="INSIDE" strokeWidth="2.0" type="ROUND" />
+        <Arc centerX="272.0" centerY="290.0" fill="#00800004" length="58.0" radiusX="30.0" radiusY="30.0" startAngle="-13.0" stroke="#a10707" strokeType="INSIDE" strokeWidth="2.0" type="ROUND" />
+        <Arc centerX="517.0" centerY="77.0" fill="#00800004" length="57.0" radiusX="30.0" radiusY="30.0" startAngle="218.0" stroke="#8d0606" strokeType="INSIDE" strokeWidth="2.0" type="ROUND" />
+        <Arc centerX="272.0" centerY="290.0" fill="#00800004" length="58.0" radiusX="35.0" radiusY="35.0" startAngle="-13.0" stroke="#a10707" strokeType="INSIDE" strokeWidth="2.0" type="ROUND" />
+        <Arc centerX="517.0" centerY="77.0" fill="#00800004" length="57.0" radiusX="35.0" radiusY="35.0" startAngle="218.0" stroke="#8d0606" strokeType="INSIDE" strokeWidth="2.0" type="ROUND" />
+        <Line endX="514" endY="79" startX="275" startY="287" stroke="green" strokeWidth="3" />
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" x="300.0" y="255.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2" textAlignment="CENTER" x="455.0" y="118.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3" textAlignment="CENTER" x="310.0" y="285.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4" textAlignment="CENTER" x="490.0" y="125.0">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Text>
+    </Group>
+
 </Pane>

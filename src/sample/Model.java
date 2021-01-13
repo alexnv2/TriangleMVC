@@ -77,9 +77,7 @@ class Model implements  Observable {
         case 2: setStringWebView(WEB_HTML+TR_BISSECTOR+TR_BISSEC_FOR+pathImg1+WEB_END);break;
         case 3: setStringWebView((WEB_HTML+TR_MEDIANA+WEB_END));break;
         case 4: setStringWebView(WEB_HTML+TR_HIGTH+TR_ORTOSENTR+WEB_END);break;
-     //   default:
-     //       throw new IllegalStateException("Неожиданное значение: " + c);
-        }
+    }
     webViewGo(o);//на вывод
     }
     //Текст для нижней части
@@ -93,9 +91,7 @@ class Model implements  Observable {
         case 5: setStringWebView(WEB_HTML+TR_BISSECTOR_AG+WEB_END);break;
         case 6: setStringWebView((WEB_HTML+TR_MEDIANA_AD+WEB_END));break;
         case 7: setStringWebView(WEB_HTML+TR_HIGTH_AJ+WEB_END);break;
-     //   default:
-     //       throw new IllegalStateException("Неожиданное значение: " + c);
-        }
+    }
     webViewGo(o);
     }
     //Нахождение середины отрезка
@@ -377,7 +373,6 @@ class Model implements  Observable {
     void oToolTip(Object o){
         setOToolTip(o);
         notifyObservers("ToolTip");
-
     }
 }
 
