@@ -19,7 +19,11 @@ class View implements Observer{
     public   ObservableList<PropTreangles> propView = FXCollections.observableArrayList();
     //Список для второй таблицы
     public  ObservableList<PropLineTreangle> propLineTr =FXCollections.observableArrayList();
-
+    //Объявляем класс пересчетв мировых координат в в окнл просмотра
+   // WView k = new WView();
+    //Объявляем класс сетки
+    GridView gridViews=new GridView();
+    //Обявляем класс модели
     Model model=new Model();
     View(){
         model.registerObserver(this);

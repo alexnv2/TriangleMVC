@@ -4,7 +4,6 @@ package sample;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,14 +14,17 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import lombok.val;
-import org.jetbrains.annotations.NotNull;
 
-import static java.lang.Math.*;
+import static java.lang.Math.rint;
+
+//import org.jetbrains.annotations.NotNull;
 
 //Конструктор класса
 public class  Controller extends View {
@@ -84,30 +86,35 @@ public class  Controller extends View {
     public TableColumn<PropLineTreangle, String> LineS;
     public TableColumn<PropTreangles, Double> LineD;
     //Перерасчет координат
-    WView k = new WView();//Объявляем класс
+   // WView k = new WView();//Объявляем класс
+
+
 
     @FXML
     private void initialize() {
+        gridViews.setPaneGrid(paneGrid);
+        gridViews.setCartesian(Cartesian);
         //Изменение ширины окна
         Cartesian.widthProperty().addListener((obs, oldVal, newVal) -> {
-            k.setVr(Cartesian.getWidth());
-            k.setWl(-Cartesian.getWidth() / 2);
-            k.setWr(Cartesian.getWidth() / 2);
-            k.rate();//Перерасчет коэффициентов
+            gridViews.setVr(Cartesian.getWidth());
+            gridViews.setWl(-Cartesian.getWidth() / 2);
+            gridViews.setWr(Cartesian.getWidth() / 2);
+            gridViews.rate();//Перерасчет коэффициентов
             paneGrid.getChildren().clear();//Очистить экран и память
-            gridCartesian();//Вывод сетки
+            gridViews.gridCartesian();//Вывод сетки
             planeCircle(poindAx, poindAy, poindBx, poindBy, poindCx, poindCy);
         });
         //Изменение высоты окна
         Cartesian.heightProperty().addListener((obs, oldVal, newVal) -> {
-            k.setVb(Cartesian.getHeight());
-            k.setWt(Cartesian.getHeight() / 2);
-            k.setWb(-Cartesian.getHeight() / 2);
-            k.rate();//Перерасчет коэффициентов
+            gridViews.setVb(Cartesian.getHeight());
+            gridViews.setWt(Cartesian.getHeight() / 2);
+            gridViews.setWb(-Cartesian.getHeight() / 2);
+            gridViews.rate();//Перерасчет коэффициентов
             paneGrid.getChildren().clear();//Очистить экран и память
-            gridCartesian();//Вывод сетки
+            gridViews.gridCartesian();//Вывод сетки
             planeCircle(poindAx, poindAy, poindBx, poindBy, poindCx, poindCy);
         });
+
         //Вывод в WebView
         model.webViewLeftString(webViewLeft, 0);
         //Реализация радиоменю
@@ -131,7 +138,7 @@ public class  Controller extends View {
 
         //Pane для сетки белого цвета
         //setka.setStyle("-fx-background-color: white;");
-        gridCartesian();
+        gridViews.gridCartesian();
 
         //Реализация интерфейса обратного вызова для заполнения колонок 2 таблицы
         initDataLine();
@@ -142,9 +149,9 @@ public class  Controller extends View {
 
     //Вершины треугольника
     private void initData() {
-        super.propView.add(new PropTreangles("A", k.revAccessX(A.getCenterX()), k.revAccessY(A.getCenterY()), 60));
-        super.propView.add(new PropTreangles("B", k.revAccessX(B.getCenterX()), k.revAccessY(B.getCenterY()), 60));
-        super.propView.add(new PropTreangles("C", k.revAccessX(C.getCenterX()), k.revAccessY(C.getCenterY()), 60));
+        super.propView.add(new PropTreangles("A", gridViews.revAccessX(A.getCenterX()), gridViews.revAccessY(A.getCenterY()), 60));
+        super.propView.add(new PropTreangles("B", gridViews.revAccessX(B.getCenterX()), gridViews.revAccessY(B.getCenterY()), 60));
+        super.propView.add(new PropTreangles("C", gridViews.revAccessX(C.getCenterX()), gridViews.revAccessY(C.getCenterY()), 60));
 
     }//Длина в см (делитель 40)
 
@@ -625,9 +632,9 @@ public class  Controller extends View {
     //Внести изменения в таблицу
     public void angleAccess(){
         //угол
-        super.propView.set(0, new PropTreangles("A",k.revAccessX(A.getCenterX()),k.revAccessY(A.getCenterY()),arcA.getLength()));
-        super.propView.set(1, new PropTreangles("B",k.revAccessX(B.getCenterX()),k.revAccessY(B.getCenterY()),arcB.getLength()));
-        super.propView.set(2, new PropTreangles("C",k.revAccessX(C.getCenterX()),k.revAccessY(C.getCenterY()),arcC.getLength()));
+        super.propView.set(0, new PropTreangles("A",gridViews.revAccessX(A.getCenterX()),gridViews.revAccessY(A.getCenterY()),arcA.getLength()));
+        super.propView.set(1, new PropTreangles("B",gridViews.revAccessX(B.getCenterX()),gridViews.revAccessY(B.getCenterY()),arcB.getLength()));
+        super.propView.set(2, new PropTreangles("C",gridViews.revAccessX(C.getCenterX()),gridViews.revAccessY(C.getCenterY()),arcC.getLength()));
         }
     public void lineAccess(String s, int index){
         //длина
@@ -652,8 +659,8 @@ public class  Controller extends View {
         model.setVerY(mouseEvent.getY());
         //Стороны
         if (mouseEvent.getSource() == A) {
-            poindAx=k.revAccessX(mouseEvent.getX());
-            poindAy=k.revAccessY(mouseEvent.getY());
+            poindAx=gridViews.revAccessX(mouseEvent.getX());
+            poindAy=gridViews.revAccessY(mouseEvent.getY());
             model.sideAll(A,B,C,c,b);//две смежных стороны с и b
             model.TextGo(poindA);//вершина угла
             angleAccess(); //занесение координат и углов в таблицу
@@ -661,16 +668,16 @@ public class  Controller extends View {
             model.tableGo(LineTreangle);
         }
         if (mouseEvent.getSource() == B) {
-            poindBx=k.revAccessX(mouseEvent.getX());
-            poindBy=k.revAccessY(mouseEvent.getY());
+            poindBx=gridViews.revAccessX(mouseEvent.getX());
+            poindBy=gridViews.revAccessY(mouseEvent.getY());
             model.sideAll(B,A,C,c,a);
             angleAccess();
             model.tableGo(TableTreangle);
             model.tableGo(LineTreangle);
         }
         if (mouseEvent.getSource() == C) {
-            poindCx=k.revAccessX(mouseEvent.getX());
-            poindCy=k.revAccessY(mouseEvent.getY());
+            poindCx=gridViews.revAccessX(mouseEvent.getX());
+            poindCy=gridViews.revAccessY(mouseEvent.getY());
             model.sideAll(C,A,B,b,a);
             angleAccess();
             model.tableGo(TableTreangle);
@@ -679,18 +686,18 @@ public class  Controller extends View {
 
         //Перемещение сетки
         if(mouseEvent.getTarget()==paneShape){
-            val dx = k.getVPx() - mouseEvent.getX();//Вычисляем смещение мышки по Х
-            val dy = k.getVPy() - mouseEvent.getY();// по Y
-            k.setVPx(mouseEvent.getX()); //Сохраняем текущие координаты мышки
-            k.setVPy(mouseEvent.getY());
+            val dx = gridViews.getVPx() - mouseEvent.getX();//Вычисляем смещение мышки по Х
+            val dy = gridViews.getVPy() - mouseEvent.getY();// по Y
+            gridViews.setVPx(mouseEvent.getX()); //Сохраняем текущие координаты мышки
+            gridViews.setVPy(mouseEvent.getY());
             //Вычисляем смещение окна
-            k.setWl(k.getWl() + dx);
-            k.setWr(k.getWr() + dx);
-            k.setWt(k.getWt() - dy);
-            k.setWb(k.getWb() - dy);
-            k.rate();//Перерасчет коэффициентов
+            gridViews.setWl(gridViews.getWl() + dx);
+            gridViews.setWr(gridViews.getWr() + dx);
+            gridViews.setWt(gridViews.getWt() - dy);
+            gridViews.setWb(gridViews.getWb() - dy);
+            gridViews.rate();//Перерасчет коэффициентов
             paneGrid.getChildren().clear();//Очистить экран и память
-            gridCartesian();//Вывод сетки
+            gridViews.gridCartesian();//Вывод сетки
             planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
         }
         visibleLine();
@@ -748,7 +755,7 @@ public class  Controller extends View {
         }
     }
     //При наведении на вершину меняется курсор и появляются подсказки
-    public void onMouseEntered(@NotNull MouseEvent mouseEvent) {
+    public void onMouseEntered(MouseEvent mouseEvent) {
         A.setCursor(Cursor.HAND);
         B.setCursor(Cursor.HAND);
         C.setCursor(Cursor.HAND);
@@ -790,7 +797,7 @@ public class  Controller extends View {
     }
     //При нажатии левой кнопки меняется курсор
     //Начало операции перемещения
-    public void onMousePressed(@NotNull MouseEvent mouseEvent) {
+    public void onMousePressed(MouseEvent mouseEvent) {
         if (mouseEvent.getTarget() == A) {
             A.setMouseTransparent(true);
             A.setCursor(Cursor.CLOSED_HAND);
@@ -805,19 +812,19 @@ public class  Controller extends View {
         }
         // Фиксируем точку нажатия кнопки мыши
         if(mouseEvent.getTarget()==paneShape) {
-            k.setVPx(mouseEvent.getX());
-            k.setVPy(mouseEvent.getY());
+            gridViews.setVPx(mouseEvent.getX());
+            gridViews.setVPy(mouseEvent.getY());
         }
         mouseEvent.consume();
     }
     //Окончание операции перемещения и курсор в исходный вид
-    public void mouseReleased(@NotNull MouseEvent mouseEvent) {
+    public void mouseReleased(MouseEvent mouseEvent) {
 
         //Приклеивание точек к вершинам сетки после завершения перемещения
-        double sdrX=rint(k.revAccessX(mouseEvent.getX())*10)/10;
-        double sdrY=rint(k.revAccessY(mouseEvent.getY())*10)/10;
-         model.setVerX(k.accessX(sdrX));
-        model.setVerY(k.accessY(sdrY));
+        double sdrX=rint(gridViews.revAccessX(mouseEvent.getX())*10)/10;
+        double sdrY=rint(gridViews.revAccessY(mouseEvent.getY())*10)/10;
+         model.setVerX(gridViews.accessX(sdrX));
+         model.setVerY(gridViews.accessY(sdrY));
         if (mouseEvent.getSource() == A) {
             model.VertexGo(A);
             poindAx=sdrX;
@@ -848,12 +855,12 @@ public class  Controller extends View {
 
     ////Обновление всез параметров треугольника
     void planeCircle(double Ax,double Ay,double Bx, double By,double Cx, double Cy){
-        A.setCenterX(k.accessX(Ax));
-        A.setCenterY(k.accessY(Ay));
-        B.setCenterX(k.accessX(Bx));
-        B.setCenterY(k.accessY(By));
-        C.setCenterX(k.accessX(Cx));
-        C.setCenterY(k.accessY(Cy));
+        A.setCenterX(gridViews.accessX(Ax));
+        A.setCenterY(gridViews.accessY(Ay));
+        B.setCenterX(gridViews.accessX(Bx));
+        B.setCenterY(gridViews.accessY(By));
+        C.setCenterX(gridViews.accessX(Cx));
+        C.setCenterY(gridViews.accessY(Cy));
         side();
         visibleLine();
         updateTreangle();
@@ -933,193 +940,10 @@ public class  Controller extends View {
     }
 
     //Изменение мастштаба мирового окна
-    public void onScroll(ScrollEvent scrollEvent) {
-        double sc=scrollEvent.getDeltaY();//
-        k.setWl(k.getWl()+(k.getVr()/sc));//для пропорциональности
-        k.setWr(k.getWr()-(k.getVr()/sc));
-        k.setWt(k.getWt()-(k.getVb()/sc));
-        k.setWb( k.getWb()+(k.getVb()/sc));
-        k.rate();//Перерасчет коэффициентов
-        //Увеличить масштаб
-        if(k.getA()<0.7){
-            switch (k.getK1()) {
-                case 1 -> {
-                    k.setK3(2 * pow(10, k.getK2()));
-                    k.setK1(2) ;
-                }
-                case 2 -> {
-                    k.setK3(5 * pow(10, k.getK2()));
-                    k.setK1(5);
-                }
-                case 5 -> {
-                    k.setK2(k.getK2()+1);
-                    k.setK3(pow(10, k.getK2()));
-                    k.setK1(1);
-                }
-            }
-            k.setWl(-Cartesian.getWidth()/2);
-            k.setWr(Cartesian.getWidth()/2);
-            k.setWt(Cartesian.getHeight()/2);
-            k.setWb(-Cartesian.getHeight()/2);
-        }
-        //Уменьшить масштаб
-        if(k.getA()>1.4){
-            switch (k.getK1()) {
-                case 1 -> {
-                    k.setK2(k.getK2()-1);
-                    k.setK3(5 * pow(10, k.getK2()));
-                    k.setK1(2);
-                }
-                case 2 -> {
-                    k.setK3(2 * pow(10, k.getK2()));
-                    k.setK1(5);
-                }
-                case 5 -> {
-                    k.setK3(pow(10, k.getK2()));
-                    k.setK1(1);
-                }
-            }
-            //Исходные размеры
-            k.setWl(-Cartesian.getWidth()/2);
-            k.setWr(Cartesian.getWidth()/2);
-            k.setWt(Cartesian.getHeight()/2);
-            k.setWb(-Cartesian.getHeight()/2);
-        }
-        paneGrid.getChildren().clear();//Очистить экран и память
-        gridCartesian();
+    public void onScroll(ScrollEvent scrollEvent){
+        double sc=scrollEvent.getDeltaY();
+        gridViews.onScrollView(sc);
         planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
     }
 
-    //Сформировать сетку и линии координат
-    public void gridCartesian(){
-        Group group=new Group();
-        Group group2=new Group();
-        double mk=k.getM();//Масштаб
-        double rk=k.getK0()*k.getK3();
-        int z1,z2,z3,z4;
-
-        z1= (int) (abs(k.getWr()/mk*2));
-        z2= (int) (abs(k.getWl()/mk*2));
-        z3= (int) (abs(k.getWt()/mk*2));
-        z4= (int) (abs(k.getWb()/mk*2));
-        //ДЛя хранения линий
-        Shape[] shapes0=new Shape[z1];
-        Shape[] shapes1=new Shape[z2];
-        Shape[] shapes2=new Shape[z3];
-        Shape[] shapes3=new Shape[z4];
-        //Для текста
-        Shape[] shapes4=new Shape[z3+z4];
-        Shape[] shapes5=new Shape[z1+z2];
-        //Веркикальнаяя сетка
-        for(int i=0; i<z1;i++) {
-            shapes0[i] = new Line(k.gridShowX(i), 0, k.gridShowX(i), k.getVb());
-            shapes0[i].setStrokeWidth(1);
-            shapes0[i].setStroke(Color.LIGHTBLUE);
-            //Нулевая координата
-            if(i==0) {
-                if (k.gridShowY(0) <= 0) {
-                    shapes5[i]=new Text(k.gridShowX(0)-10,k.getVt()+12,String.valueOf(0));
-                } else if (k.gridShowY(0) >= k.getVb() - 12) {
-                    shapes5[i]=new Text(k.gridShowX(0)-10,k.getVb(),String.valueOf(0));
-                } else {
-                    shapes5[i]=new Text(k.gridShowX(0)-10,k.gridShowY(0)+12,String.valueOf(0));
-                }
-                group2.getChildren().add(shapes5[i]);
-            }
-            if (i % 5 == 0) {
-                shapes0[i].setStrokeWidth(2);
-                if (i != 0) {
-                    //Если начало координат выше зоны прсмотра
-                    if (k.gridShowY(0) <= 0) {
-                        shapes5[i] = new Text(k.gridShowX(i) - 10, k.getVt() + 12, k.doubleString( i * rk));
-
-                        //Если начало координат ниже зоны просмотра
-                    } else if (k.gridShowY(0) >= k.getVb() - 12) {
-                        shapes5[i] = new Text(k.gridShowX(i) - 10, k.getVb(), k.doubleString( i * rk));
-                    } else {
-                        //В зоне окна просмотра
-                        shapes5[i] = new Text(k.gridShowX(i) - 10, k.gridShowY(0) + 12, k.doubleString( i * rk));
-                    }
-                    group2.getChildren().add(shapes5[i]);
-                }
-            }
-            group.getChildren().add(shapes0[i]);
-        }
-        for(int i=0; i<z2;i++){
-            shapes1[i]= new Line(k.gridShowX(-i ), 0, k.gridShowX(-i), k.getVb());
-            shapes1[i].setStrokeWidth(1);
-            shapes1[i].setStroke(Color.LIGHTBLUE);
-            if(i%5==0){
-                shapes1[i].setStrokeWidth(2);
-                if(i!=0) {
-                    //Если начало координат левее зоны просмотра
-                    if (k.gridShowY(0) <= 0) {
-                        shapes5[i] = new Text(k.gridShowX(-i) - 8, k.getVt() + 12, "-"+k.doubleString( i * rk));
-                        //Если начало координат правее зоны просмотра
-                    } else if (k.gridShowY(0) >= k.getVb() - 12) {
-                        shapes5[i] = new Text(k.gridShowX(-i) - 8, k.getVb(),"-"+ k.doubleString( i * rk));
-                        //В зоне просмотра
-                    } else {
-                        shapes5[i] = new Text(k.gridShowX(-i) - 8, k.gridShowY(0) + 12,"-"+ k.doubleString( i * rk));
-                    }
-                    group2.getChildren().add(shapes5[i]);
-                }
-            }
-            group.getChildren().add(shapes1[i]);
-        }
-        //Горизонтальная сетка положительная
-        for(int i=0; i<z3;i++){
-            shapes2[i]=new Line(k.getVl(),k.gridShowY(i ), k.getVr(),k.gridShowY(i ));
-            shapes2[i].setStroke(Color.LIGHTBLUE);
-            shapes2[i].setStrokeWidth(1);
-            if(i%5==0){
-                shapes2[i].setStrokeWidth(2);
-                if (i != 0) {
-                    if (k.gridShowX(0) <= 0) {
-                        shapes4[i] = new Text(k.getVl(), k.gridShowY(i)+5, k.doubleString( i * rk));
-                    } else if (k.gridShowX(0) >= k.getVr()-25) {
-                        shapes4[i] = new Text(k.getVr() - 25, k.gridShowY(i)+5, k.doubleString( i * rk));
-                    } else {
-                        shapes4[i] = new Text(k.gridShowX(0) +5, k.gridShowY(i)+5, k.doubleString( i * rk));
-                    }
-                    group2.getChildren().add(shapes4[i]);
-                }
-            }
-            group.getChildren().add(shapes2[i]);
-        }
-        //Горизонтальная сетка отрицательная
-        for(int i=0; i<z4;i++){
-            shapes3[i]=new Line(k.getVl(),k.gridShowY(-i), k.getVr(),k.gridShowY(-i ));
-            shapes3[i].setStroke(Color.LIGHTBLUE);
-            shapes3[i].setStrokeWidth(1);
-            if(i%5==0){
-                shapes3[i].setStrokeWidth(2);
-                if (i != 0) {
-                    if (k.gridShowX(0) <= 0) {
-                        shapes4[i] = new Text(k.getVl(), k.gridShowY(-i)+5, "-"+k.doubleString( i*rk ));
-                    } else if (k.gridShowX(0) >= k.getVr()-25) {
-                        shapes4[i] = new Text(k.getVr() - 25, k.gridShowY(-i)+5,"-"+ k.doubleString( i*rk));
-                    } else {
-                        shapes4[i] = new Text(k.gridShowX(0) +5, k.gridShowY(-i)+5,"-"+ k.doubleString( i *rk));
-                    }
-                    group2.getChildren().add(shapes4[i]);
-                }
-            }
-            group.getChildren().add(shapes3[i]);
-        }
-        //Абсцисса и ордината
-        Line l1=new Line(k.getVl(),k.gridShowY(0),k.getVr(),k.gridShowY(0));
-        l1.setStroke(Color.BLACK);
-        Line l2=new Line(k.gridShowX(0),k.getVt(),k.gridShowX(0),k.getVb());
-        l1.setStroke(Color.BLACK);
-        //Треугольные концы
-        Polygon p1=new Polygon(k.getVr(), k.gridShowY(0),
-                k.getVr()-10,k.gridShowY(0)-4,
-                k.getVr()-10,k.gridShowY(0)+4);
-        Polygon p2=new Polygon(k.gridShowX(0), k.getVt(),
-                k.gridShowX(0)-4,k.getVt()+10,
-                k.gridShowX(0)+4,k.getVt()+10);
-        group.getChildren().addAll(l1,l2,p1,p2);
-        paneGrid.getChildren().addAll(group,group2);
-    }
 }
