@@ -68,15 +68,29 @@ class Model implements  Observable {
 
     //Текст для левой части
     public void webViewLeftString(WebView o, int c){
-       String pathImages= new File(".").getAbsolutePath()+"\\src\\Images\\formula_bis.jpg";
-       String pathImg1="<img src=file:\\"+pathImages+" width=360 height=105>";
+       String pathImages= new File(".").getAbsolutePath();
+       System.out.println(pathImages);
+       String pathImg1="<img src=file:\\"+pathImages+"\\src\\Images\\dlina_bisector.png"+" width=274 height=242>";
+       String pathImg2="<img src=file:\\"+pathImages+"\\src\\Images\\dlina_median.png"+ " width=343 height=194>";
+       String pathImg3="<img src=file:\\"+pathImages+"\\src\\Images\\dlina_higth.png"+" width=344 height=292>";
+       String pathImg4="<img src=file:\\"+pathImages+"\\src\\Images\\Area_1.png"+" width=91 height=53>";
+       String pathImg5="<img src=file:\\"+pathImages+"\\src\\Images\\Area_2.png"+" width=131 height=61>";
+       String pathImg6="<img src=file:\\"+pathImages+"\\src\\Images\\Area_4.png"+" width=91 height=53>";
+       String pathImg7="<img src=file:\\"+pathImages+"\\src\\Images\\Area_5.png"+" width=91 height=53>";
+       String pathImg8="<img src=file:\\"+pathImages+"\\src\\Images\\Area_8.png"+" width=91 height=53>";
+       String pathImg9="<img src=file:\\"+pathImages+"\\src\\Images\\Area_9.png"+" width=83 height=54>";
+       String pathImg10="<img src=file:\\"+pathImages+"\\src\\Images\\Area_10.png"+" width=91 height=55";
+       String pathImg11="<img src=file:\\"+pathImages+"\\src\\Images\\AreaGeron.png"+" width=275 height=122";
 
     switch (c) {
-        case 0: setStringWebView(WEB_HTML+TR_OPR + TR_ANGLE + TR_NERAVENSVO+ TR_SUNANGLE+WEB_END);break;
+        case 0: setStringWebView(WEB_HTML+TR_OPR + TR_ANGLE + TR_NERAVENSVO+ TR_SUNANGLE+TR_AREA_1+
+                pathImg4+TR_AREA_2+pathImg5+TR_AREA_3+pathImg11+WEB_END);break;
         case 1: setStringWebView(WEB_HTML+TR_TEOREMA33+TR_TEOREMA34+WEB_END);break;
         case 2: setStringWebView(WEB_HTML+TR_BISSECTOR+TR_BISSEC_FOR+pathImg1+WEB_END);break;
-        case 3: setStringWebView((WEB_HTML+TR_MEDIANA+WEB_END));break;
-        case 4: setStringWebView(WEB_HTML+TR_HIGTH+TR_ORTOSENTR+WEB_END);break;
+        case 3: setStringWebView((WEB_HTML+TR_MEDIANA+TR_DLINA_MEDIAN+pathImg2+WEB_END));break;
+        case 4: setStringWebView(WEB_HTML+TR_HIGTH+TR_ORTOSENTR+TR_DLINA_HIGHT+pathImg3+WEB_END);break;
+        case 5: setStringWebView(WEB_HTML+TR_AREA_8+pathImg8+TR_AREA_9+pathImg9+WEB_END);break;
+        case 6: setStringWebView(WEB_HTML+TR_AREA_10+pathImg10+WEB_END);break;
     }
     webViewGo(o);//на вывод
     }

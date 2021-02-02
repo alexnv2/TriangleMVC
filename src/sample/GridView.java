@@ -9,17 +9,21 @@ import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import static java.lang.Math.abs;
 import static java.lang.Math.pow;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-//Класс для вывода сетки и координатной оси
+//Класс для вывода сетки и координатых осей
+//Расширение класса пересчета мировых координат в окно просмотра
 public class GridView extends WView{
-   Pane paneGrid;
-   StackPane Cartesian;
+   StackPane Cartesian; //начало стека контейнера
+   Pane paneGrid;//контейнер для координатной сетки
     GridView(){
    }
-
+    //Вывод сетки и координатных осей
     public void gridCartesian(){
         Group group=new Group();
         Group group2=new Group();
@@ -197,7 +201,7 @@ public class GridView extends WView{
                     setK1(1);
                 }
             }
-            //Исходные размеры
+            //Исходные размеры после изменения масштаба
             setWl(-Cartesian.getWidth()/2);
             setWr(Cartesian.getWidth()/2);
             setWt(Cartesian.getHeight()/2);

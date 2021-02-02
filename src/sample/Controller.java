@@ -524,7 +524,7 @@ public class  Controller extends View {
         planeCircle(poindAx, poindAy, poindBx, poindBy, poindCx, poindCy);
         arcB.setVisible(true);//разрешение на отображение дуги угла В
         arcC.setVisible(true);
-        model.webViewLeftString(webViewLeft, 0);
+        model.webViewLeftString(webViewLeft, 5);
         model.webViewBotton(webViewBotton, 2);
         model.setColorGo(Color.BLACK);
         model.ColorGo(a);
@@ -581,7 +581,7 @@ public class  Controller extends View {
         poindCx = 1.6;
         poindCy = -1;
         planeCircle(poindAx, poindAy, poindBx, poindBy, poindCx, poindCy);
-        model.webViewLeftString(webViewLeft, 0);
+        model.webViewLeftString(webViewLeft, 6);
         model.webViewBotton(webViewBotton, 4);
         arcB.setVisible(true);//разрешение на отображение дуги угла В
         arcC.setVisible(true);
