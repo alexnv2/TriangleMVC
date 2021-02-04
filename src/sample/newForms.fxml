@@ -23,6 +23,11 @@
         <MenuItem fx:id="menuSecondTr" mnemonicParsing="false" onAction="#onClickSecond" text="Второй признак равенства треугольников " />
         <MenuItem fx:id="menuTread" mnemonicParsing="false" onAction="#onClickTread" text="Третий признак равенства треугольников" />
       </Menu>
+      <Menu mnemonicParsing="false" text="Признаки подобия">
+        <MenuItem fx:id="menuEqualTrPod" mnemonicParsing="false" onAction="#onClickEquilPod" text="Первый признак подобия треугольников" />
+        <MenuItem fx:id="menuSecondTrPod" mnemonicParsing="false" onAction="#onClickSecondPod" text="Второй признак подобия треугольников " />
+        <MenuItem fx:id="menuTreadPod" mnemonicParsing="false" onAction="#onClickTreadPod" text="Третий признак подобия треугольников" />
+      </Menu>
     </Menu>
     <Menu mnemonicParsing="false" text="Медианы">
       <CheckMenuItem fx:id="menuMedianaA" accelerator="Ctrl+N" mnemonicParsing="false" onAction="#onClickMedianaA" text="Из угла А" />

@@ -1,6 +1,7 @@
 package sample;
 
-//Класс Контролер (управление) sample.fxml
+//Класс Контролер (управление) newForms.fxml
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -21,10 +22,7 @@ import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import lombok.val;
-
 import static java.lang.Math.rint;
-
-//import org.jetbrains.annotations.NotNull;
 
 //Конструктор класса
 public class  Controller extends View {
@@ -945,5 +943,13 @@ public class  Controller extends View {
         gridViews.onScrollView(sc);
         planeCircle(poindAx,poindAy,poindBx,poindBy,poindCx,poindCy);
     }
+//Меню признаки подобия треугольников
+    public void onClickEquilPod(ActionEvent actionEvent) {
+    }
 
+    public void onClickSecondPod(ActionEvent actionEvent) {
+    }
+
+    public void onClickTreadPod(ActionEvent actionEvent) {
+    }
 }
