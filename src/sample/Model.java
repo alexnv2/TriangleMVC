@@ -91,6 +91,10 @@ class Model implements  Observable {
         case 4: setStringWebView(WEB_HTML+TR_HIGTH+TR_ORTOSENTR+TR_DLINA_HIGHT+pathImg3+WEB_END);break;
         case 5: setStringWebView(WEB_HTML+TR_AREA_8+pathImg8+TR_AREA_9+pathImg9+WEB_END);break;
         case 6: setStringWebView(WEB_HTML+TR_AREA_10+pathImg10+WEB_END);break;
+        case 7: setStringWebView(WEB_HTML+TR_CIRCLE+TR_CIRCLE_IN+TR_AREA_4+pathImg6+WEB_END);break;
+        case 8: setStringWebView(WEB_HTML+TR_CIRCLE+TR_CIRCLE_OUT+TR_AREA_5+pathImg7+WEB_END);break;
+        case 9: setStringWebView(WEB_HTML+TR_MIDDLE_PER+WEB_END);break;
+
     }
     webViewGo(o);//на вывод
     }

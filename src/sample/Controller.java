@@ -353,6 +353,7 @@ public class  Controller extends View {
             vc.setVisible(true);
             poindF.setVisible(true);
             poindS.setVisible(true);
+            model.webViewLeftString(webViewLeft, 9);
         } else {
             spc.setVisible(false);
             accMedianaC--;
@@ -378,6 +379,7 @@ public class  Controller extends View {
             vc.setVisible(true);
             poindD.setVisible(true);
             poindS.setVisible(true);
+            model.webViewLeftString(webViewLeft, 9);
         } else {
             spa.setVisible(false);
             accMedianaA--;
@@ -403,6 +405,7 @@ public class  Controller extends View {
             vc.setVisible(true);
             poindE.setVisible(true);
             poindS.setVisible(true);
+            model.webViewLeftString(webViewLeft, 9);
         } else {
             spb.setVisible(false);
             accMedianaB--;
@@ -424,6 +427,7 @@ public class  Controller extends View {
             iC.setVisible(true);
             ic.setVisible(true);
             poindO.setVisible(true);
+            model.webViewLeftString(webViewLeft, 7);
         } else {
             iC.setVisible(false);
             ic.setVisible(false);
@@ -438,6 +442,7 @@ public class  Controller extends View {
             vC.setVisible(true);
             vc.setVisible(true);
             poindS.setVisible(true);
+            model.webViewLeftString(webViewLeft, 8);
         } else {
             accCircle--;
             if (accCircle == 0) {
