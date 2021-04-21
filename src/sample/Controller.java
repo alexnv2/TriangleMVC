@@ -4,6 +4,7 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,10 +19,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.val;
+
 import static java.lang.Math.rint;
 
 //Конструктор класса
@@ -83,9 +90,6 @@ public class  Controller extends View {
     public TableView<PropLineTreangle> LineTreangle;
     public TableColumn<PropLineTreangle, String> LineS;
     public TableColumn<PropTreangles, Double> LineD;
-    //Перерасчет координат
-   // WView k = new WView();//Объявляем класс
-
 
 
     @FXML
@@ -856,7 +860,7 @@ public class  Controller extends View {
         mouseEvent.consume();
     }
 
-    ////Обновление всез параметров треугольника
+    ////Обновление всех параметров треугольника
     void planeCircle(double Ax,double Ay,double Bx, double By,double Cx, double Cy){
         A.setCenterX(gridViews.accessX(Ax));
         A.setCenterY(gridViews.accessY(Ay));
@@ -956,5 +960,40 @@ public class  Controller extends View {
     }
 
     public void onClickTreadPod(ActionEvent actionEvent) {
+    }
+//Вывод окна о программе
+    public void onAbout(ActionEvent actionEvent) {
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);//Блокирует все окна приложения
+        window.initStyle(StageStyle.UTILITY);//Только кнопка закрыть
+        VBox root=new VBox();
+        root.setStyle(
+                "-fx-background-image: url(/Images/About.png); " +
+                "-fx-background-repeat: no-repeat;"
+        );
+        root.setAlignment(Pos.TOP_CENTER);
+
+        Label label2=new Label("МБОУ \"Центр образования Опочецкого района\"\nСтруктурное подразделение \"Средняя школа № 4\"\n\n\n ");
+        label2.setFont(Font.font("Verdana", FontWeight.BOLD,24.0));
+        label2.setTextFill(Color.SANDYBROWN);
+        label2.setTextAlignment(TextAlignment.CENTER);
+        Label label=new Label("Учебно-справочное пособие");
+        label.setFont(Font.font("Verdana", FontWeight.BOLD,34.0));
+        label.setTextFill(Color.YELLOW);
+        label.setTextAlignment(TextAlignment.CENTER);
+        Label label1=new Label("Геометрия\n\n");
+        label1.setFont(Font.font("Verdana", FontWeight.BOLD,58.0));
+        label1.setTextFill(Color.YELLOW);
+        label1.setTextAlignment(TextAlignment.CENTER);
+        Label label3=new Label("Выполнил ученик 8Б класса \n Носов Алексей \n2021 г.");
+        label3.setFont(Font.font("Verdana", FontWeight.BOLD,24.0));
+        label3.setTextFill(Color.YELLOW);
+        label3.setTextAlignment(TextAlignment.CENTER);
+
+        root.getChildren().addAll(label2,label,label1,label3);
+        Scene scene = new Scene(root, 864, 489);
+        window.setScene(scene);
+        window.setTitle("О программе");
+        window.show();
     }
 }

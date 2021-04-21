@@ -53,6 +53,9 @@
       <CheckMenuItem fx:id="menuCircleIn" mnemonicParsing="false" onAction="#onClickCircleIn" text="Вписанная окружность" />
       <CheckMenuItem fx:id="menuCircleOut" mnemonicParsing="false" onAction="#onClickCircleOut" text="Описанная окружность" />
     </Menu>
+    <Menu mnemonicParsing="false" text="О программе">
+      <MenuItem fx:id="menuAbout" mnemonicParsing="false" onAction="#onAbout" text="О программе" />
+    </Menu>
   </MenuBar>
   <SplitPane fx:id="splitPane" dividerPositions="0.2, 0.7" focusTraversable="true" VBox.vgrow="SOMETIMES">
     <AnchorPane>

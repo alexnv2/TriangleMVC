@@ -1,6 +1,6 @@
 package sample;
 import lombok.Data;
-
+//Класс для заполнения таблиц длин отрезков
 @Data
 public class PropLineTreangle {
     private String propLine;
